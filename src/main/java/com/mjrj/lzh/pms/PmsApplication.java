@@ -1,13 +1,18 @@
 package com.mjrj.lzh.pms;
 
+import com.alibaba.druid.support.http.StatViewServlet;
 import okhttp3.OkHttpClient;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.management.MXBean;
+import javax.sql.DataSource;
 
 
 @SpringBootApplication
@@ -26,5 +31,14 @@ public class PmsApplication {
     @Bean
     public OkHttpClient okHttpClient(){
         return new OkHttpClient.Builder().build();
+    }
+
+    @Bean
+    public ServletRegistrationBean statViewServlet() {
+        ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet());
+        bean.addUrlMappings("/druid/*");
+        bean.addInitParameter("loginUsername", "admin");
+        bean.addInitParameter("loginPassword", "123");
+        return bean;
     }
 }
