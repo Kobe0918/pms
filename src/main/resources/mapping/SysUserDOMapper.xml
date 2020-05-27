@@ -1,0 +1,754 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mjrj.lzh.pms.dao.SysUserDOMapper">
+    <resultMap id="BaseResultMap" type="com.mjrj.lzh.pms.entity.SysUserDO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="enabled" property="enabled" jdbcType="BIT"/>
+        <result column="not_expired" property="notExpired" jdbcType="BIT"/>
+        <result column="account_not_locked" property="accountNotLocked" jdbcType="BIT"/>
+        <result column="credentials_not_expired" property="credentialsNotExpired" jdbcType="BIT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="INTEGER"/>
+        <result column="update_user" property="updateUser" jdbcType="INTEGER"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="work_address" property="workAddress" jdbcType="VARCHAR"/>
+        <result column="id_card" property="idCard" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="DATE"/>
+        <result column="work_status" property="workStatus" jdbcType="TINYINT"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="nation" property="nation" jdbcType="TINYINT"/>
+        <result column="family_address" property="familyAddress" jdbcType="VARCHAR"/>
+        <result column="live_address" property="liveAddress" jdbcType="VARCHAR"/>
+        <result column="is_marry" property="isMarry" jdbcType="TINYINT"/>
+        <result column="education" property="education" jdbcType="TINYINT"/>
+        <result column="graduation_time" property="graduationTime" jdbcType="DATE"/>
+        <result column="dept_id" property="deptId" jdbcType="INTEGER"/>
+        <result column="position_id" property="positionId" jdbcType="INTEGER"/>
+        <result column="entry_status" property="entryStatus" jdbcType="TINYINT"/>
+        <result column="work_time" property="workTime" jdbcType="DATE"/>
+        <result column="syon_time" property="syonTime" jdbcType="DATE"/>
+        <result column="correction_time" property="correctionTime" jdbcType="DATE"/>
+        <result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
+        <association property="deptName" column="dept_id" javaType="java.lang.String"
+                     select="com.mjrj.lzh.pms.dao.DeptDOMapper.selectNameByPrimaryKey">
+        </association>
+    </resultMap>
+    <resultMap id="BaseResultMapWithDeptNamePositionName" type="com.mjrj.lzh.pms.entity.SysUserDO">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="telephone" property="telephone" jdbcType="VARCHAR"/>
+        <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+        <result column="enabled" property="enabled" jdbcType="BIT"/>
+        <result column="not_expired" property="notExpired" jdbcType="BIT"/>
+        <result column="account_not_locked" property="accountNotLocked" jdbcType="BIT"/>
+        <result column="credentials_not_expired" property="credentialsNotExpired" jdbcType="BIT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="create_user" property="createUser" jdbcType="INTEGER"/>
+        <result column="update_user" property="updateUser" jdbcType="INTEGER"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="work_address" property="workAddress" jdbcType="VARCHAR"/>
+        <result column="id_card" property="idCard" jdbcType="VARCHAR"/>
+        <result column="birthday" property="birthday" jdbcType="DATE"/>
+        <result column="work_status" property="workStatus" jdbcType="TINYINT"/>
+        <result column="sex" property="sex" jdbcType="TINYINT"/>
+        <result column="live_address" property="liveAddress" jdbcType="VARCHAR"/>
+        <result column="is_marry" property="isMarry" jdbcType="TINYINT"/>
+        <result column="dept_id" property="deptId" jdbcType="INTEGER"/>
+        <result column="position_id" property="positionId" jdbcType="INTEGER"/>
+        <result column="work_time" property="workTime" jdbcType="DATE"/>
+
+        <result column="img_url" property="imgUrl" jdbcType="VARCHAR"/>
+
+        <association property="deptName" column="dept_id" javaType="java.lang.String"
+                     select="com.mjrj.lzh.pms.dao.DeptDOMapper.selectNameByPrimaryKey">
+        </association>
+        <association property="positionName" column="position_id" javaType="java.lang.String"
+                     select="com.mjrj.lzh.pms.dao.PositionDOMapper.selectNameByPrimaryKey">
+        </association>
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, user_name, password, telephone, last_login_time, enabled, not_expired, account_not_locked, 
+    credentials_not_expired, create_time, update_time, create_user, update_user, email, 
+    work_address, id_card, birthday, work_status, sex, nation, family_address, live_address, 
+    is_marry, education, graduation_time, dept_id, position_id, entry_status, work_time, 
+    syon_time, correction_time,img_url
+  </sql>
+
+    <sql id="Base_Column_List2">
+    id, user_name,  telephone, last_login_time, enabled, not_expired, account_not_locked,
+    credentials_not_expired, create_time, update_time, create_user, update_user, email,
+    work_address, id_card, birthday, work_status, sex,  live_address,
+    is_marry,dept_id, position_id,  work_time, img_url
+  </sql>
+
+    <select id="selectUserByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_user
+        where telephone= #{phone,jdbcType=VARCHAR}
+    </select>
+
+
+    <select id="selectNameById" parameterType="java.lang.Integer" resultType="java.lang.String">
+        select
+        user_name
+        from sys_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMapWithDeptNamePositionName" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List2"/>
+        from sys_user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <select id="selectNameByPrimaryKey" resultType="java.lang.String" parameterType="java.lang.Integer">
+    select
+    user_name
+    from sys_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+    <!--<select id="selectNameByPrimaryKeyAndLikeName" resultType="java.lang.String" >-->
+    <!--select-->
+    <!--user_name-->
+    <!--from sys_user-->
+    <!--where id = #{id,jdbcType=INTEGER} and instr(user_name,#{userName,jdbcType=VARCHAR}) >0-->
+    <!--</select>-->
+
+    <select id="selectSomeByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select
+    id, user_name, telephone,last_login_time,live_address
+    from sys_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.mjrj.lzh.pms.entity.SysUserDO">
+    insert into sys_user (id, user_name, password, 
+      telephone, last_login_time, enabled, 
+      not_expired, account_not_locked, credentials_not_expired, 
+      create_time, update_time, create_user, 
+      update_user, email, work_address, 
+      id_card, birthday, work_status, 
+      sex, nation, family_address, 
+      live_address, is_marry, education, 
+      graduation_time, dept_id, position_id, 
+      entry_status, work_time, syon_time, 
+      correction_time,img_url)
+    values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, #{enabled,jdbcType=BIT}, 
+      #{notExpired,jdbcType=BIT}, #{accountNotLocked,jdbcType=BIT}, #{credentialsNotExpired,jdbcType=BIT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=INTEGER}, 
+      #{updateUser,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{workAddress,jdbcType=VARCHAR}, 
+      #{idCard,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{workStatus,jdbcType=TINYINT}, 
+      #{sex,jdbcType=TINYINT}, #{nation,jdbcType=TINYINT}, #{familyAddress,jdbcType=VARCHAR}, 
+      #{liveAddress,jdbcType=VARCHAR}, #{isMarry,jdbcType=TINYINT}, #{education,jdbcType=TINYINT}, 
+      #{graduationTime,jdbcType=DATE}, #{deptId,jdbcType=INTEGER}, #{positionId,jdbcType=INTEGER}, 
+      #{entryStatus,jdbcType=TINYINT}, #{workTime,jdbcType=DATE}, #{syonTime,jdbcType=DATE}, 
+      #{correctionTime,jdbcType=DATE},#{imgUrl,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.mjrj.lzh.pms.entity.SysUserDO" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="imgUrl != null">
+                img_url,
+            </if>
+            <if test="id != null">
+                id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time,
+            </if>
+            <if test="enabled != null">
+                enabled,
+            </if>
+            <if test="notExpired != null">
+                not_expired,
+            </if>
+            <if test="accountNotLocked != null">
+                account_not_locked,
+            </if>
+            <if test="credentialsNotExpired != null">
+                credentials_not_expired,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="updateUser != null">
+                update_user,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="workAddress != null">
+                work_address,
+            </if>
+            <if test="idCard != null">
+                id_card,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="workStatus != null">
+                work_status,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="nation != null">
+                nation,
+            </if>
+            <if test="familyAddress != null">
+                family_address,
+            </if>
+            <if test="liveAddress != null">
+                live_address,
+            </if>
+            <if test="isMarry != null">
+                is_marry,
+            </if>
+            <if test="education != null">
+                education,
+            </if>
+            <if test="graduationTime != null">
+                graduation_time,
+            </if>
+            <if test="deptId != null">
+                dept_id,
+            </if>
+            <if test="positionId != null">
+                position_id,
+            </if>
+            <if test="entryStatus != null">
+                entry_status,
+            </if>
+            <if test="workTime != null">
+                work_time,
+            </if>
+            <if test="syonTime != null">
+                syon_time,
+            </if>
+            <if test="correctionTime != null">
+                correction_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="imgUrl != null">
+                #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime != null">
+                #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="enabled != null">
+                #{enabled,jdbcType=BIT},
+            </if>
+            <if test="notExpired != null">
+                #{notExpired,jdbcType=BIT},
+            </if>
+            <if test="accountNotLocked != null">
+                #{accountNotLocked,jdbcType=BIT},
+            </if>
+            <if test="credentialsNotExpired != null">
+                #{credentialsNotExpired,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="updateUser != null">
+                #{updateUser,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="workAddress != null">
+                #{workAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="idCard != null">
+                #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="workStatus != null">
+                #{workStatus,jdbcType=TINYINT},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="nation != null">
+                #{nation,jdbcType=TINYINT},
+            </if>
+            <if test="familyAddress != null">
+                #{familyAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="liveAddress != null">
+                #{liveAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="isMarry != null">
+                #{isMarry,jdbcType=TINYINT},
+            </if>
+            <if test="education != null">
+                #{education,jdbcType=TINYINT},
+            </if>
+            <if test="graduationTime != null">
+                #{graduationTime,jdbcType=DATE},
+            </if>
+            <if test="deptId != null">
+                #{deptId,jdbcType=INTEGER},
+            </if>
+            <if test="positionId != null">
+                #{positionId,jdbcType=INTEGER},
+            </if>
+            <if test="entryStatus != null">
+                #{entryStatus,jdbcType=TINYINT},
+            </if>
+            <if test="workTime != null">
+                #{workTime,jdbcType=DATE},
+            </if>
+            <if test="syonTime != null">
+                #{syonTime,jdbcType=DATE},
+            </if>
+            <if test="correctionTime != null">
+                #{correctionTime,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mjrj.lzh.pms.entity.SysUserDO">
+        update sys_user
+        <set>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=BIT},
+            </if>
+            <if test="notExpired != null">
+                not_expired = #{notExpired,jdbcType=BIT},
+            </if>
+            <if test="accountNotLocked != null">
+                account_not_locked = #{accountNotLocked,jdbcType=BIT},
+            </if>
+            <if test="credentialsNotExpired != null">
+                credentials_not_expired = #{credentialsNotExpired,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="workAddress != null">
+                work_address = #{workAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="idCard != null">
+                id_card = #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="workStatus != null">
+                work_status = #{workStatus,jdbcType=TINYINT},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="nation != null">
+                nation = #{nation,jdbcType=TINYINT},
+            </if>
+            <if test="familyAddress != null">
+                family_address = #{familyAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="liveAddress != null">
+                live_address = #{liveAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="isMarry != null">
+                is_marry = #{isMarry,jdbcType=TINYINT},
+            </if>
+            <if test="education != null">
+                education = #{education,jdbcType=TINYINT},
+            </if>
+            <if test="graduationTime != null">
+                graduation_time = #{graduationTime,jdbcType=DATE},
+            </if>
+            <if test="deptId != null">
+                dept_id = #{deptId,jdbcType=INTEGER},
+            </if>
+            <if test="positionId != null">
+                position_id = #{positionId,jdbcType=INTEGER},
+            </if>
+            <if test="entryStatus != null">
+                entry_status = #{entryStatus,jdbcType=TINYINT},
+            </if>
+            <if test="workTime != null">
+                work_time = #{workTime,jdbcType=DATE},
+            </if>
+            <if test="syonTime != null">
+                syon_time = #{syonTime,jdbcType=DATE},
+            </if>
+            <if test="correctionTime != null">
+                correction_time = #{correctionTime,jdbcType=DATE},
+            </if>
+            <if test="imgUrl != null">
+                img_url = #{imgUrl,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateEnabledByPrimaryKey">
+        update sys_user
+        <set>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=BIT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByUpdateUserDtoKeySelective" parameterType="com.mjrj.lzh.pms.dto.UserDTO">
+        update sys_user
+        <set>
+            <if test="imgUrl != null">
+                img_url = #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                telephone = #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="enabled != null">
+                enabled = #{enabled,jdbcType=BIT},
+            </if>
+            <if test="notExpired != null">
+                not_expired = #{notExpired,jdbcType=BIT},
+            </if>
+            <if test="accountNotLocked != null">
+                account_not_locked = #{accountNotLocked,jdbcType=BIT},
+            </if>
+            <if test="credentialsNotExpired != null">
+                credentials_not_expired = #{credentialsNotExpired,jdbcType=BIT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createUser != null">
+                create_user = #{createUser,jdbcType=INTEGER},
+            </if>
+            <if test="updateUser != null">
+                update_user = #{updateUser,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="workAddress != null">
+                work_address = #{workAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="idCard != null">
+                id_card = #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                birthday = #{birthday,jdbcType=DATE},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=TINYINT},
+            </if>
+            <if test="liveAddress != null">
+                live_address = #{liveAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="isMarry != null">
+                is_marry = #{isMarry,jdbcType=TINYINT},
+            </if>
+
+            <if test="deptId != null">
+                dept_id = #{deptId,jdbcType=INTEGER},
+            </if>
+            <if test="positionId != null">
+                position_id = #{positionId,jdbcType=INTEGER},
+            </if>
+
+            <if test="workTime != null">
+                work_time = #{workTime,jdbcType=DATE},
+            </if>
+
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="com.mjrj.lzh.pms.entity.SysUserDO">
+    update sys_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      enabled = #{enabled,jdbcType=BIT},
+      not_expired = #{notExpired,jdbcType=BIT},
+      account_not_locked = #{accountNotLocked,jdbcType=BIT},
+      credentials_not_expired = #{credentialsNotExpired,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_user = #{createUser,jdbcType=INTEGER},
+      update_user = #{updateUser,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      work_address = #{workAddress,jdbcType=VARCHAR},
+      id_card = #{idCard,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      work_status = #{workStatus,jdbcType=TINYINT},
+      sex = #{sex,jdbcType=TINYINT},
+      nation = #{nation,jdbcType=TINYINT},
+      family_address = #{familyAddress,jdbcType=VARCHAR},
+      live_address = #{liveAddress,jdbcType=VARCHAR},
+      is_marry = #{isMarry,jdbcType=TINYINT},
+      education = #{education,jdbcType=TINYINT},
+      graduation_time = #{graduationTime,jdbcType=DATE},
+      dept_id = #{deptId,jdbcType=INTEGER},
+      position_id = #{positionId,jdbcType=INTEGER},
+      entry_status = #{entryStatus,jdbcType=TINYINT},
+      work_time = #{workTime,jdbcType=DATE},
+      syon_time = #{syonTime,jdbcType=DATE},
+      correction_time = #{correctionTime,jdbcType=DATE},
+
+            img_url =  #{imgUrl,jdbcType=VARCHAR}
+
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+    <select id="updateLoginTimeAndStatus" statementType="CALLABLE">
+        {call updateUserStatus(#{userId,mode = IN, jdbcType = INTEGER})}
+    </select>
+
+    <select id="selectUserSelect2" resultMap="BaseResultMap" parameterType="java.lang.String">
+        select id,user_name
+        from sys_user
+        <trim prefix="where">
+            <if test="userName != null">
+                instr(user_name,#{userName,jdbcType=VARCHAR})>0
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectBossForLeave" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select a.id,a.user_name from sys_user a
+        left join dept b
+        on (a.id = b.connect_user_id)
+        where a.enabled = 1		and  b.dept_id =  #{deptId,jdbcType=INTEGER}
+  </select>
+    <!--&#45;&#45;     select a.id ,a.user_name from-->
+    <!--&#45;&#45; (select a.dept_id,a.position_id from sys_dept_position_relation a left join  position b on(a.position_id = b.position_id  and b.position_status = 1)-->
+    <!--&#45;&#45; where a.dept_id = #{deptId,jdbcType=INTEGER}  order by-->
+    <!--&#45;&#45; b.position_sort asc limit 1)t  left join  sys_user a-->
+    <!--&#45;&#45; on ( a.dept_id =t.dept_id and  a.position_id = t.position_id)-->
+    <!--&#45;&#45; where a.enabled = 1-->
+
+    <select id="selectPersonnelLeave" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select b.id,b.user_name from pms_config a left join  sys_user b on(a.leave_dept_id =  b.dept_id) where b.enabled = 1
+    </select>
+
+    <select id="selectCaiGoCheckUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select b.id,b.user_name from pms_config a left join  sys_user b on(a.caigo_spiuser_id =  b.id) where b.enabled = 1 limit 1;
+    </select>
+
+    <select id="selectByPage" parameterType="java.lang.Integer" resultMap="BaseResultMapWithDeptNamePositionName">
+        select
+        <include refid="Base_Column_List2"/>
+        from sys_user
+        <trim prefix="where" prefixOverrides="and">
+            <if test="userName != null">
+                and instr(user_name, #{userName,jdbcType=VARCHAR}) > 0
+            </if>
+        </trim>
+    </select>
+
+    <select id="selectLeaveDeptId" resultType="java.lang.Integer">
+        select leave_dept_id from pms_config
+    </select>
+
+
+    <insert id="insertByUserDTO" parameterType="com.mjrj.lzh.pms.dto.UserDTO" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into sys_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="imgUrl != null">
+                img_url,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="telephone != null">
+                telephone,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createUser != null">
+                create_user,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="workAddress != null">
+                work_address,
+            </if>
+            <if test="idCard != null">
+                id_card,
+            </if>
+            <if test="birthday != null">
+                birthday,
+            </if>
+            <if test="workStatus != null">
+                work_status,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+            <if test="liveAddress != null">
+                live_address,
+            </if>
+            <if test="isMarry != null">
+                is_marry,
+            </if>
+            <if test="deptId != null">
+                dept_id,
+            </if>
+            <if test="positionId != null">
+                position_id,
+            </if>
+            <if test="workTime != null">
+                work_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="imgUrl != null">
+                #{imgUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="telephone != null">
+                #{telephone,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="createUser != null">
+                #{createUser,jdbcType=INTEGER},
+            </if>
+
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="workAddress != null">
+                #{workAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="idCard != null">
+                #{idCard,jdbcType=VARCHAR},
+            </if>
+            <if test="birthday != null">
+                #{birthday,jdbcType=DATE},
+            </if>
+            <if test="workStatus != null">
+                #{workStatus,jdbcType=TINYINT},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=TINYINT},
+            </if>
+
+
+            <if test="liveAddress != null">
+                #{liveAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="isMarry != null">
+                #{isMarry,jdbcType=TINYINT},
+            </if>
+
+            <if test="deptId != null">
+                #{deptId,jdbcType=INTEGER},
+            </if>
+            <if test="positionId != null">
+                #{positionId,jdbcType=INTEGER},
+            </if>
+
+            <if test="workTime != null">
+                #{workTime,jdbcType=DATE},
+            </if>
+
+        </trim>
+    </insert>
+</mapper>

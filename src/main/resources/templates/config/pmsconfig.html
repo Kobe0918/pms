@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="commons/common::cssLink(~{::title},~{::link})">
+    <title>系统配置</title>
+    <link th:href="@{/asserts/css/dept.css}" rel="stylesheet">
+
+</head>
+
+<body>
+<div th:replace="~{commons/bar::topbar}"></div>
+
+<style type="text/css">
+    .no-footer {
+        width: 93%;
+    }
+
+    .dataTables_length {
+        padding-top: 10.570px;
+        padding-left: 20px;
+    }
+
+    .table-hover th {
+        text-align: center;
+    }
+
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="commons/bar :: #sidebar(activeUri='/dashboard')"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="chartjs-size-monitor"
+                 style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+            </div>
+
+            <div class="wpp_main">
+                <div class="wpp_main_content">
+                    <div class="wpp_header">系统配置</div>
+
+                    <div class="leave_content">
+
+
+                        <form class="form-horizontal" id="pmsconfig" style="margin-top: 10px">
+<input type="hidden" name="id" id="pms_config_id">
+                            <div class="form-group form-userName">
+                                <label for="attendance_begin_time" class="col-sm-2 control-label"><font size="2"
+                                                                                                        color="red">*</font>打卡开始时间</label>
+                                <div class="col-sm-10">
+                                    <input id="attendance_begin_time" name="attendanceBeginTime" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group form-deptName">
+                                <label for="attendance_end_time" class="col-sm-2 control-label"><font size="2"
+                                                                                                      color="red">*</font>打卡结束时间</label>
+                                <div class="col-sm-10">
+                                    <input id="attendance_end_time" name="attendanceEndTime" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="attendance_x1" class="col-sm-2 control-label"><font size="2"
+                                                                                                color="red">*</font>打卡经度范围1</label>
+                                <div class="col-sm-10">
+                                    <input id="attendance_x1" name="attendanceX1" class="form-control"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="打卡经度范围1 不能为空">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="attendance_x2" class="col-sm-2 control-label"><font size="2"
+                                                                                                color="red">*</font>打卡经度范围2</label>
+                                <div class="col-sm-10">
+                                    <input id="attendance_x2" name="attendanceX2" class="form-control"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="打卡经度范围2 不能为空">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="attendance_y1" class="col-sm-2 control-label"><font size="2"
+                                                                                                color="red">*</font>打卡纬度范围1</label>
+                                <div class="col-sm-10">
+                                    <input id="attendance_y1" name="attendanceY1" class="form-control"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="打卡纬度范围1 不能为空">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="attendance_y2" class="col-sm-2 control-label"><font size="2"
+                                                                                                color="red">*</font>打卡纬度范围2</label>
+                                <div class="col-sm-10">
+                                    <input id="attendance_y2" name="attendanceY2" class="form-control"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="打卡纬度范围2 不能为空">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="leave_dept_id" class="col-sm-2 control-label"><font size="2"
+                                                                                                color="red">*</font>设置人事部门</label>
+                                <div class="col-sm-10">
+                                    <select id="leave_dept_id" name="leaveDeptId" class="form-control"
+                                            data-bv-notempty="true"
+                                            data-bv-notempty-message="设置人事部门 为必填项"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="caigo_spiuser_id" class="col-sm-2 control-label"><font size="2" color="red">*</font>设置采购审批人</label>
+                                <div class="col-sm-10">
+                                    <select id="caigo_spiuser_id" name="caigoSpiuserId" class="form-control"
+                                            data-bv-notempty="true"
+                                            data-bv-notempty-message="设置采购审批人 为必填项"></select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="init_position_id" class="col-sm-2 control-label"><font size="2" color="red">*</font>注册的人的默认职位</label>
+                                <div class="col-sm-10">
+                                    <select id="init_position_id" name="initPositionId" class="form-control"
+                                            data-bv-notempty="true"
+                                            data-bv-notempty-message="注册的人的默认职位 为必填项"></select>
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="submitBtn" class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                    <button type="button" id="submitBtn"
+                                            class="btn btn-outline-primary btn-lg btn-block" style="width: 100%">
+                                        修改设置
+                                    </button>
+                                </div>
+                                <!--<button type="button" id="submitBtn" class="btn btn-lg btn-primary">提交</button>-->
+                            </div>
+                        </form>
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="row" style="height: 100px"></div>
+
+</div>
+
+
+<div th:replace="commons/common::scriptSrc"></div>
+
+<script th:src="@{/asserts/js/my/pmsconfig.js}"></script>
+<script>
+    initSider("/config");
+
+    $('#pmsconfig').bootstrapValidator();
+
+    var $attendance_begin_time = $('#attendance_begin_time').timepicker({
+        uiLibrary: 'bootstrap4'
+    });
+    var attendance_end_time = $('#attendance_end_time').timepicker({
+        uiLibrary: 'bootstrap4'
+    });
+
+
+    //select2 远程搜索数据
+    $('#leave_dept_id').select2({
+        placeholder: '',
+        width: '100%',
+        maximumSelectionLength: 1,  //最多选项数
+        allowClear: true,  //显示清除按钮
+        // multiple: true,   //配置可多选
+        // tags: true,  //自建选项
+        ajax: {
+            url: "/dept/getDeptAll",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data.data
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 2
+    });
+
+    //select2 远程搜索数据
+    $('#caigo_spiuser_id').select2({
+        placeholder: '',
+        width: '100%',
+        maximumSelectionLength: 1,  //最多选项数
+        allowClear: true,  //显示清除按钮
+        // multiple: true,   //配置可多选
+        // tags: true,  //自建选项
+        ajax: {
+            url: "/user/getSelect2ByUserName",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data.data
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 2
+    });
+
+
+    $('#init_position_id').select2({
+        placeholder: '',
+        width: '100%',
+        maximumSelectionLength: 1,  //最多选项数
+        allowClear: true,  //显示清除按钮
+        // multiple: true,   //配置可多选
+        // tags: true,  //自建选项
+        ajax: {
+            url: "/position/getPositionBySearch",
+            dataType: 'json',
+            delay: 250,
+            data: function (params) {
+                return {
+                    search: params.term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: data.data
+                };
+            },
+            cache: true
+        },
+        minimumInputLength: 2
+    });
+
+    initConfig();
+
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 数据库驱动:选择你的本地硬盘上面的数据库驱动包-->
+    <classPathEntry  location="E:\maven\mavenKu\mysql\mysql-connector-java\5.1.47\mysql-connector-java-5.1.47.jar"/>
+    <context id="DB2Tables"  targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库链接URL，用户名、密码 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/bysj_pms" userId="root" password="root"></jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- 生成模型的包名和位置-->
+        <javaModelGenerator targetPackage="com.mjrj.lzh.pms.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!-- 生成映射文件的包名和位置-->
+        <sqlMapGenerator targetPackage="mapping" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成DAO的包名和位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.mjrj.lzh.pms.dao" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
+
+        <!--<table tableName="sys_user" domainObjectName="SysUserDO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="false"></property>-->
+            <!--&lt;!&ndash;生成的entity 保持驼峰  即数据库字段 user_id-->
+                <!--useActualColumnNames 设为 false 后-->
+                <!--生成的entity  成员变量 为userId&ndash;&gt;-->
+        <!--</table>-->
+
+        <!--<table tableName="sys_role" domainObjectName="SysRoleDO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="false"></property>-->
+            <!--&lt;!&ndash;生成的entity 保持驼峰  即数据库字段 user_id-->
+                <!--useActualColumnNames 设为 false 后-->
+                <!--生成的entity  成员变量 为userId&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table tableName="sys_permission" domainObjectName="SysPermissionDO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="false"></property>-->
+            <!--&lt;!&ndash;生成的entity 保持驼峰  即数据库字段 user_id-->
+                <!--useActualColumnNames 设为 false 后-->
+                <!--生成的entity  成员变量 为userId&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table tableName="sys_request_path" domainObjectName="SysRequestPathDO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="false"></property>-->
+            <!--&lt;!&ndash;生成的entity 保持驼峰  即数据库字段 user_id-->
+                <!--useActualColumnNames 设为 false 后-->
+                <!--生成的entity  成员变量 为userId&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table tableName="SYS_USER_ROLE_RELATION" domainObjectName="SysPositionRoleRelationDO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="false"></property>-->
+            <!--&lt;!&ndash;生成的entity 保持驼峰  即数据库字段 user_id-->
+                <!--useActualColumnNames 设为 false 后-->
+                <!--生成的entity  成员变量 为userId&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table tableName="SYS_ROLE_Permission_RELATION" domainObjectName="SysRolePermissionRelationDO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >-->
+        <!--<property name="useActualColumnNames" value="false"></property>-->
+        <!--&lt;!&ndash;生成的entity 保持驼峰  即数据库字段 user_id-->
+            <!--useActualColumnNames 设为 false 后-->
+            <!--生成的entity  成员变量 为userId&ndash;&gt;-->
+    <!--</table>-->
+        <!--<table tableName="SYS_request_Path_Permission_RELATION" domainObjectName="SysPathPermissionRelationDO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="false"></property>-->
+            <!--&lt;!&ndash;生成的entity 保持驼峰  即数据库字段 user_id-->
+                <!--useActualColumnNames 设为 false 后-->
+                <!--生成的entity  成员变量 为userId&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table tableName="dictionary" domainObjectName="DictionaryDO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="false"></property>-->
+            <!--&lt;!&ndash;生成的entity 保持驼峰  即数据库字段 user_id-->
+                <!--useActualColumnNames 设为 false 后-->
+                <!--生成的entity  成员变量 为userId&ndash;&gt;-->
+        <!--</table>-->
+
+        <!--<table tableName="sys_logs" domainObjectName="SysLogsDO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="false"></property>-->
+            <!--&lt;!&ndash;生成的entity 保持驼峰  即数据库字段 user_id-->
+                <!--useActualColumnNames 设为 false 后-->
+                <!--生成的entity  成员变量 为userId&ndash;&gt;-->
+        <!--</table>-->
+
+        <!--<table tableName="attendance" domainObjectName="AttendanceDO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="false"></property>-->
+            <!--&lt;!&ndash;生成的entity 保持驼峰  即数据库字段 user_id-->
+                <!--useActualColumnNames 设为 false 后-->
+                <!--生成的entity  成员变量 为userId&ndash;&gt;-->
+        <!--</table>-->
+
+        <!--<table tableName="leave" domainObjectName="LeaveDO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="false"></property>-->
+            <!--&lt;!&ndash;生成的entity 保持驼峰  即数据库字段 user_id-->
+                <!--useActualColumnNames 设为 false 后-->
+                <!--生成的entity  成员变量 为userId&ndash;&gt;-->
+        <!--</table>-->
+
+        <!--<table tableName="sys_dept_position_relation" domainObjectName="SysDeptPositionRelationDO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="false"></property>-->
+            <!--&lt;!&ndash;生成的entity 保持驼峰  即数据库字段 user_id-->
+                <!--useActualColumnNames 设为 false 后-->
+                <!--生成的entity  成员变量 为userId&ndash;&gt;-->
+        <!--</table>-->
+        <!--<table tableName="sys_user_position_relation" domainObjectName="SysUserPositionRelation" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="false"></property>-->
+            <!--&lt;!&ndash;生成的entity 保持驼峰  即数据库字段 user_id-->
+                <!--useActualColumnNames 设为 false 后-->
+                <!--生成的entity  成员变量 为userId&ndash;&gt;-->
+        <!--</table>-->
+
+        <!--<table tableName="caigo" domainObjectName="CaiGotttDO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >-->
+            <!--<property name="useActualColumnNames" value="false"></property>-->
+            <!--&lt;!&ndash;生成的entity 保持驼峰  即数据库字段 user_id-->
+                <!--useActualColumnNames 设为 false 后-->
+                <!--生成的entity  成员变量 为userId&ndash;&gt;-->
+        <!--</table>-->
+
+        <table tableName="pms_config" domainObjectName="PmsConfigDO" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >
+            <property name="useActualColumnNames" value="false"></property>
+            <!--生成的entity 保持驼峰  即数据库字段 user_id
+                useActualColumnNames 设为 false 后
+                生成的entity  成员变量 为userId-->
+        </table>
+    </context>
+</generatorConfiguration>

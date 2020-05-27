@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="cssLink(title,links)">
+    <meta charset="utf-8"/>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content=""/>
+    <title th:replace="${title}">公共页面</title>
+
+    <!--<link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}" rel="stylesheet">-->
+    <link th:href="@{/asserts/bootstrap/bootstrap.min.css}" rel="stylesheet">
+
+    <link th:href="@{/asserts/toastr/toastr.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/asserts/bootstrap-validator/bootstrapValidator.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/asserts/select2/select2.min.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/asserts/icheck/_all.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/asserts/gijgo/gijgo.min.css}" rel="stylesheet" type="text/css" >
+    <link th:href="@{/asserts/css/font-awesome.css}" rel="stylesheet" type="text/css" >
+
+    <!--<link th:href="@{/asserts/awesome-bootstrap-checkbox/css/font-awesome.css}" rel="stylesheet" type="text/css" />-->
+    <!--<link th:href="@{/asserts/awesome-bootstrap-checkbox/css/build.css}" rel="stylesheet" type="text/css" />-->
+    <link th:href="@{/asserts/fileinput/fileinput.css}" rel="stylesheet"  type="text/css">
+    <link th:href="@{/asserts/datatable/datatable.min.css}" rel="stylesheet" type="text/css" >
+    <link rel="stylesheet" type="text/css" th:href="@{/asserts/datatable/dataTables.bootstrap4.min.css}">
+    <link th:href="@{/asserts/multi-select/multi-select.css}" rel="stylesheet">
+
+    <link th:href="@{/asserts/css/dashboard.css}" rel="stylesheet" type="text/css">
+
+
+    <th:block th:replace="${links}" />
+
+
+</head>
+<body>
+
+
+
+<div th:fragment="scriptSrc">
+    <div class="modal fade" id="forgotModal" tabindex="-1" role="dialog" aria-labelledby="forgotModalLabel">
+        <div class="modal-dialog " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="forgotModalLabel"></h4>
+                    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span-->
+                    <!--aria-hidden="true">&times;</span>-->
+                    <!--</button>-->
+                </div>
+                <div class="modal-body">
+
+                    <form class="form" id="forgotForm">
+                        <!--<span th:text="${ms}" th:if="${not #strings.isEmpty(ms)}" style="color: red"></span>-->
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label style="float: left;margin-left: 17px;"><font style="color: red;" size="2">*</font>
+                                    新密码</label>
+                                <div class="col-lg-12">
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" placeholder="新密码" id="password2"
+                                               name="password">
+                                        <span class="input-group-btn">
+                                      <button class="btn btn-default" type="button"><span
+                                              class="glyphicon glyphicon-eye-close" aria-hidden="true"
+                                              id="registerLook2"></span></button>
+                                </span>
+                                    </div><!-- /input-group -->
+                                </div><!-- /.col-lg-12 -->
+                            </div><!-- /.row -->
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label style="float: left;margin-left: 17px;"><font style="color: red;" size="2">*</font>
+                                    确认密码</label>
+                                <div class="col-lg-12">
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" placeholder="确认密码" id="password3"
+                                               name="checkPassword">
+                                        <span class="input-group-btn">
+                                      <button class="btn btn-default" type="button"><span
+                                              class="glyphicon glyphicon-eye-close" aria-hidden="true"
+                                              id="registerLook3"></span></button>
+                                </span>
+                                    </div><!-- /input-group -->
+                                </div><!-- /.col-lg-12 -->
+                            </div><!-- /.row -->
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label style="float: left;margin-left: 17px;">联系方式</label>
+                                <div class="col-lg-12">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="手机号码" name="telephone"
+                                               id="for_phone">
+                                        <span class="input-group-btn">
+                                      <button class="btn btn-default" type="button" id="post2"><span
+                                              class="glyphicon glyphicon-hand-up" aria-hidden="true"></span></button>
+                                </span>
+                                    </div><!-- /input-group -->
+                                </div><!-- /.col-lg-12 -->
+                            </div><!-- /.row -->
+                        </div>
+
+                        <div class="form-group">
+                            <label style="float: left;">验证码</label>
+                            <input type="text" class="form-control" placeholder="短信验证码" required=""
+                                   name="verify">
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="forgot-submit" class="btn btn-primary">确认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade bs-example-modal-sm" id="delConfirm" tabindex="-1" role="dialog" aria-labelledby="delModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="delModalLabel"></h4>
+                    <a type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </a>
+
+                </div>
+                <div class="modal-body">
+                    <span id="confirmSpan">确定撤回该选项？</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button " id="delete-submit" class="btn btn-outline-primary">Yes</button>
+                    <button type="button" id="delete-close" class="btn btn-outline-secondary" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script th:src="@{/asserts/jquery/jquery-3.2.1.slim.min.js}" type="text/javascript" ></script>
+    <script th:src="@{/asserts/jquery/jquery-3.4.1.min.js}" type="text/javascript" ></script>
+    <script th:src="@{/asserts/jquery/ajax-setup.js}" type="text/javascript" ></script>
+    <script th:src="@{/asserts/bootstrap/popper.min.js}" type="text/javascript"></script>
+
+    <!--<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.js}" type="text/javascript"></script>-->
+    <script th:src="@{/asserts/bootstrap/bootstrap.min.js}" type="text/javascript"></script>
+
+    <script th:src="@{/asserts/bootstrap-validator/bootstrapValidator.min.js}" type="text/javascript"></script>
+    <script th:src="@{/asserts/toastr/toastr.min.js}" type="text/javascript" ></script>
+    <script th:src="@{/asserts/toastr/toastr-setup.js}" type="text/javascript" ></script>
+    <script th:src="@{/asserts/select2/select2.min.js}" type="text/javascript"></script>
+    <script th:src="@{/asserts/select2/zh-CN.js}" type="text/javascript"></script>
+    <script th:src="@{/asserts/icheck/icheck.min.js}" type="text/javascript"></script>
+    <script th:src="@{/asserts/gijgo/gijgo.min.js}" type="text/javascript"></script>
+    <script th:src="@{/asserts/gijgo/messages.zh-cn.min.js}" type="text/javascript" ></script>
+    <script th:src="@{/asserts/fileinput/fileinput.js}"  type="text/javascript" ></script>
+    <script th:src="@{/asserts/fileinput/zh.js}"  type="text/javascript" ></script>
+    <script th:src="@{/asserts/datatable/datatable.min.js}" type="text/javascript" ></script>
+    <script type="text/javascript" language="javascript" th:src="@{/asserts/datatable/dataTables.bootstrap4.min.js}"></script>
+    <script th:src="@{/asserts/multi-select/jquery.multi-select.js}"></script>
+    <!-- Icons -->
+    <script th:src="@{/asserts/js/feather.min.js}" type="text/javascript" ></script>
+    <!-- Graphs -->
+    <script th:src="@{/asserts/js/Chart.min.js}" type="text/javascript"  ></script>
+    <!--Icon-->
+    <script>
+        feather.replace()
+    </script>
+    <!-- Graphs -->
+    <script>
+        <!--线形图-->
+        // var ctx = document.getElementById("myChart");
+        // var myChart = new Chart(ctx, {
+        //     type: 'line',
+        //     data: {
+        //         labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        //         datasets: [{
+        //             data: [15339, 21345, 18483, 24003, 23489, 24092, 12034],
+        //             lineTension: 0,
+        //             backgroundColor: 'transparent',
+        //             borderColor: '#007bff',
+        //             borderWidth: 4,
+        //             pointBackgroundColor: '#007bff'
+        //         }]
+        //     },
+        //     options: {
+        //         scales: {
+        //             yAxes: [{
+        //                 ticks: {
+        //                     beginAtZero: false
+        //                 }
+        //             }]
+        //         },
+        //         legend: {
+        //             display: false,
+        //         }
+        //     }
+        // });
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="commons/common::cssLink(~{::title},~{::link})">
+    <title>申请请假</title>
+    <link th:href="@{https://cdn.datatables.net/buttons/1.6.1/css/buttons.bootstrap4.min.css}" rel="stylesheet" >
+    <link href="https://cdn.bootcss.com/multi-select/0.9.12/css/multi-select.css" rel="stylesheet">
+    <link th:href="@{/asserts/css/leave.css}" rel="stylesheet" >
+
+</head>
+
+<body>
+<div th:replace="~{commons/bar::topbar}"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="commons/bar :: #sidebar(activeUri='/dashboard')" ></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="chartjs-size-monitor"
+                 style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+            </div>
+
+            <div class="wpp_main">
+                <div class="wpp_main_content">
+                    <div class="wpp_header" >部门管理</div>
+                    <div class="leave_content">
+
+                        <div class="row">
+                            <div class="col-5">
+                                <select name="from" class="js-multiselect form-control" size="8" multiple="multiple">
+                                    <option value="1">Item 1</option>
+                                    <option value="2">Item 5</option>
+                                    <option value="2">Item 2</option>
+                                    <option value="2">Item 4</option>
+                                    <option value="3">Item 3</option>
+                                </select>
+                            </div>
+
+                            <div class="col-2">
+                                <button type="button" id="js_right_All_1" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                                <button type="button" id="js_right_Selected_1" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                                <button type="button" id="js_left_Selected_1" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                                <button type="button" id="js_left_All_1" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+                            </div>
+
+                            <div class="col-5">
+                                <select name="to" id="js_multiselect_to_1" class="form-control" size="8" multiple="multiple"></select>
+                            </div>
+                        </div>
+
+
+
+
+                        <!--主内容-->
+                        <style type="text/css">
+                            td.details-control {
+                                background: url('./asserts/img/details_open.png') no-repeat center center;
+                                cursor: pointer;
+                            }
+                            tr.shown td.details-control {
+                                background: url('./asserts/img/details_close.png') no-repeat center center;
+                            }
+                        </style>
+
+                        <table id="example" class="display" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Salary</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+
+                            <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Position</th>
+                                <th>Office</th>
+                                <th>Salary</th>
+                                <th>操作</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+
+                    </div>
+                    <!--<div class="wpp_content_quickLink">-->
+                        <!--<ul>-->
+                            <!--<li><a type="button"  id="take_leave">-->
+                                <!--<div>-->
+                                    <!--<div class="icon icon_4" ></div>-->
+                                    <!--<span>请假申请</span>-->
+                                <!--</div>-->
+                            <!--</a></li>-->
+                            <!--<li><a type="button" id="leave_record" >-->
+                                <!--<div>-->
+                                    <!--<div class="icon icon_3"></div>-->
+                                    <!--<span>请假记录</span>-->
+                                <!--</div>-->
+                            <!--</a></li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <div class="row" style="height: 100px"></div>
+</div>
+
+
+<!--<div class="container kv-main">-->
+    <!--<br>-->
+    <!--<form enctype="multipart/form-data">-->
+        <!--<input id="file-1" type="file" multiple class="file" data-overwrite-initial="false" data-min-file-count="2">-->
+    <!--</form>-->
+<!--</div>-->
+<div th:replace="commons/common::scriptSrc"></div>
+<script th:src="@{https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js}"></script>
+<script th:src="@{https://cdn.datatables.net/buttons/1.6.1/js/buttons.bootstrap4.min.js}"></script>
+<script th:src="@{https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js}"></script>
+<script src="https://cdn.bootcss.com/multi-select/0.9.12/js/jquery.multi-select.js"></script>
+
+
+<script>
+    /* Formatting function for row details - modify as you need */
+    function format ( d ) {
+        // `d` is the original data object for the row
+    //    cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;"
+
+        return '<table class="display" cellspacing="0" width="100%">'+
+            '<tr>'+
+            '<td>子部门:</td>'+
+            '<td>'+d.leaveReason+'</td>'+
+            '<td>Extension number:</td>'+
+            '<td>'+d.leaveStatus+'</td>'+
+            '<td>Extra info:</td>'+
+            '<td>And any further details here (images etc)...</td>'+
+            '</tr>'+
+            // '<tr>'+
+            // '<td>Extension number:</td>'+
+            // '<td>'+d.leaveStatus+'</td>'+
+            // '</tr>'+
+            // '<tr>'+
+            // '<td>Extra info:</td>'+
+            // '<td>And any further details here (images etc)...</td>'+
+            // '</tr>'+
+            '</table>';
+    }
+
+    function dete(e){
+        console.info(JSON.stringify(e) + ":  ++++");
+    }
+
+    $(document).ready(function() {
+
+        $('.js-multiselect').multiSelect({
+            right: '#js_multiselect_to_1',
+            rightAll: '#js_right_All_1',
+            rightSelected: '#js_right_Selected_1',
+            leftSelected: '#js_left_Selected_1',
+            leftAll: '#js_left_All_1'
+        });
+
+        var table = $('#example').DataTable({
+            "pagingType": "full_numbers",  //分页样式  除了数字还有上一页下一页，第一页和最后一页
+            "sLoadingRecords": "正在加载数据...",  //数据较多时加载显示
+            "sZeroRecords": "暂无数据",   //空数据显示
+            serverSide: true,  //服务端分页显示
+            stateSave: true,     //开启缓存
+            "searching": false,   //datatables自带搜索，关闭，用服务端搜索
+            "dom": '<"top">rt<"bottom"iflp<"clear">>',   //显示样式 ，信息，分页栏等均在底部  也可改到top
+            columns: [
+                {
+                    "class":          'details-control',
+                    "orderable":      false,
+                    "data":           null,
+                    "defaultContent": ''
+                },
+                {
+                    "data": null, "orderable": false,"width": "2%",
+                    render: function (data, type, row, meta) {
+                        var result = '<input type="hidden">';
+                        if(data.leaveStatus !== 6){
+
+                            result = '<input type="checkbox" name="ids" class="ids" value="' + data.leaveId + '">';
+                        }
+                        return result ;
+                    }
+                },
+                { "data": "beginTime" },
+                { "data": "endTime" },
+                { "data": "updateTime" },
+                { "data": "leaveStatus" },
+                {"title": "操作","data": "leaveId",render : function (data, type, full) {
+
+
+                        var rechargeBtn = "recharge" + full.leaveId;
+                        console.info(rechargeBtn + " :btn id");
+                        var deductionBtn = "deduction" + full.leaveId;
+                         $('#example').undelegate('tbody #'+rechargeBtn, 'click');
+
+                        $('#example').on('click', 'tbody #'+rechargeBtn, function () {
+                            dete(full);
+                            // console.log(full);
+                        });
+                         $('#example').undelegate('tbody #'+deductionBtn, 'click');
+                        $('#example').on('click', 'tbody #'+deductionBtn, function () {
+                            dete(full);
+                            // console.log(full);
+
+                        });
+
+                        return '<button type="button" class="btn  btn-sm   btn-primary" id=' + rechargeBtn + " >扣费</button>   " +
+                            '<button type="button" class="btn  btn-sm  btn-yellow" id=' + deductionBtn +  '>充值</button>';
+
+                    }
+                }
+
+            ],
+
+            ajax: {  //请求数据
+                url: "/leave/select_leave.do",
+                contentType: "application/json",
+                dataType: "JSON",
+                type: "POST",
+                dataSrc: 'data',  //数据名称
+                data: function (d) {   //后台传回数据对应
+                    var str = {
+                        "draw": d.draw,
+                        "start": d.start,
+                        "length": d.length
+                    };
+                    //自定义需要传递的参数。
+                    return JSON.stringify(str);
+                }
+            }
+        });
+
+
+
+
+        // Add event listener for opening and closing details
+        $('#example tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var row = table.row( tr );
+            if ( row.child.isShown() ) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+            }
+            else {
+                // Open this row
+                row.child( format(row.data()) ).show();
+                tr.addClass('shown');
+            }
+        } );
+    } );
+
+</script>
+
+</body>
+
+
+<!--<script src="./asserts/jquery-1.9.1.min.js" type="text/javascript" ></script>-->
+<!--<script src="../../static/asserts/jquery/jquery-3.2.1.slim.min.js" type="text/javascript" ></script>-->
+<!--<script src="../../static/asserts/jquery/jquery-3.4.1.min.js" type="text/javascript" ></script>-->
+<!--&lt;!&ndash;<script src="./asserts/jquery/ajaxfileupload.js" type="text/javascript" ></script>&ndash;&gt;-->
+<!--&lt;!&ndash;<script src="./asserts/jquery.js" type="text/javascript" ></script>&ndash;&gt;-->
+<!--<script src="../../static/asserts/bootstrap/bootstrap.min.js" type="text/javascript"></script>-->
+<!--&lt;!&ndash;<script src="./asserts/bootstrap.min.js" type="text/javascript"></script>&ndash;&gt;-->
+<!--<script src="../../static/asserts/select2/select2.min.js" type="text/javascript"></script>-->
+<!--<script src="../../static/asserts/gijgo/gijgo.min.js" type="text/javascript"></script>-->
+<!--<script src="../../static/asserts/gijgo/messages.zh-cn.min.js"></script>-->
+<!--<script src="../../static/asserts/fileinput/fileinput.js" ></script>-->
+<!--<script src="../../static/asserts/fileinput/zh.js" ></script>-->
+
+
+
+
+<!--<div class="form-group">-->
+    <!--<label for="bill-end-num" class="col-sm-2 control-label">单据结束号</label>-->
+    <!--<div class="col-sm-10">-->
+        <!--<input type="text" readonly="readonly" class="form-control" id="bill-end-num" name="endNum"-->
+               <!--placeholder="单据结束号">-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="bill-receiver" class="col-sm-2 control-label">结束时间</label>-->
+    <!--<div class="col-sm-10">-->
+        <!--<input type="text" class="form-control" id="bill-receiver" name="receiver"-->
+               <!--placeholder="领票人">-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="bill-receiver-phone" class="col-sm-2 control-label">联系方式</label>-->
+    <!--<div class="col-sm-10">-->
+        <!--<input type="text" class="form-control" id="bill-receiver-phone" name="receiverPhone"-->
+               <!--placeholder="领票人电话">-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="bill-distributePerson" class="col-sm-2 control-label">分发人</label>-->
+    <!--<div class="col-sm-10">-->
+        <!--<input type="text" class="form-control" id="bill-distributePerson" name="distributePerson"-->
+               <!--placeholder="分发人">-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="bill-distributePerson-phone" class="col-sm-2 control-label">联系方式</label>-->
+    <!--<div class="col-sm-10">-->
+        <!--<input type="text" class="form-control" id="bill-distributePerson-phone"-->
+               <!--name="distributePersionPhone" placeholder="分发人电话">-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="bill-receivePlace" class="col-sm-2 control-label">接货点</label>-->
+    <!--<div class="col-sm-10">-->
+        <!--<input type="text" class="form-control" id="bill-receivePlace" name="receivePlace"-->
+               <!--placeholder="地址" list="place">-->
+        <!--<datalist id="place">-->
+        <!--</datalist>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group" id="bill-type-div">-->
+    <!--<label for="bill-type" class="col-sm-2 control-label">类型</label>-->
+    <!--<div class="col-sm-10">-->
+        <!--<input type="text" class="form-control" id="bill-type" name="type" placeholder="">-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group">-->
+    <!--<label for="bill-receiveTime" class="col-sm-2 control-label">接货时间</label>-->
+    <!--<div class="col-sm-10">-->
+        <!--<input type="date" class="form-control" id="bill-receiveTime" name="receiveTime"-->
+               <!--placeholder="">-->
+    <!--</div>-->
+<!--</div>-->
+<!--<div class="form-group" id="create-time">-->
+    <!--<label for="bill-writeTime" class="col-sm-2 control-label">创建时间</label>-->
+    <!--<div class="col-sm-10">-->
+        <!--<input type="text" readonly="readonly" class="form-control" id="bill-writeTime"-->
+               <!--name="writeTime" placeholder="">-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--<div id="upload_adv_box">-->
+<!--<input id="imgUpload" type="file" multiple name="img_upload" value="上传"/>-->
+<!--</div>-->
+<!--<script type="text/javascript">-->
+
+<!--$("#imgUpload").fileinput({-->
+<!--language: 'zh', //设置语言,-->
+<!--uploadUrl: "/upload/uploadimg/",-->
+<!--showCaption: false,-->
+<!--browseClass: "btn blue",-->
+<!--removeClass: "btn red",-->
+<!--allowedFileExtensions: ['jpg', 'png', 'gif'],-->
+<!--overwriteInitial: false,-->
+<!--maxFileSize: 70000,-->
+<!--maxFileCount: 0, // 这里设为0，由于存在bug，这个属性相当于没什么用了，判断是否超限统一用事件钩子来执行-->
+<!--uploadClass: "btn green",-->
+<!--removeClass: "btn red",-->
+<!--uploadAsync: true,-->
+<!--browseLabel: '选择',-->
+<!--dropZoneEnabled: false,-->
+<!--previewSettings: {-->
+<!--image: {width: "auto", height: "100px"}-->
+<!--},-->
+<!--layoutTemplates: {-->
+<!--actionUpload: ""-->
+<!--},-->
+<!--/* minImageWidth: 1205,-->
+<!--minImageHeight: 405,-->
+<!--maxImageWidth: 1205,-->
+<!--maxImageHeight: 405,*/-->
+<!--// maxFileSize: 100,-->
+<!--msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",-->
+<!--uploadExtraData: {-->
+<!--prefix: 'gg_img'-->
+<!--},-->
+<!--initialPreview: {$info.imgs|default='[]'},-->
+<!--initialPreviewAsData: true,-->
+<!--initialPreviewFileType: 'image',-->
+<!--initialPreviewConfig:  {$info.previewconfig|default='[]'},-->
+<!--})-->
+<!--.on('filebatchselected', function (evt, file) {-->
+<!--// 选择图片后执行，用于判断选择的图片是否超出限制，超出限制就禁用选择按钮-->
+<!--// 比如只允许上传4张，我分两次上传，第一次上传两张，第二次上传3张，此时手动禁用选择按钮-->
+<!--if($uploadAdvBox.find('.file-preview-frame').length > $uploadLimit.val()) {-->
+<!--$('#imgUpload').attr('disabled', 'disabled')-->
+<!--$('#imgUpload').closest('div.btn-file').addClass('btn-disabled');-->
+<!--}-->
+<!--})-->
+<!--.on('filebatchuploadcomplete', function (evt, file) {-->
+<!--// 只会调用一次，所有图片都上传成功调用，这是为了弥补上传成功后部分DOM结构重新渲染，导致filebatchselected钩子中执行的操作失效-->
+<!--if($uploadAdvBox.find('.file-preview-frame').length > $uploadLimit.val()) {-->
+<!--$('#imgUpload').attr('disabled', 'disabled')-->
+<!--$('#imgUpload').closest('div.btn-file').addClass('btn-disabled');-->
+<!--}-->
+<!--})-->
+<!--.on('fileuploaded', function (event, data, previewId, index) {-->
+<!--// 上传成功几次就调用几次，把后端返回的地址附加到DOM结构上，为以后得操作做准备-->
+<!--if (data.response.status == 1) {-->
+<!--$uploadAdvBox.find('#'+previewId).attr('data-url', data.response.data.name);-->
+<!--} else {-->
+<!--alert(data.response.info);-->
+<!--}-->
+<!--})-->
+<!--.on('fileclear', function (evt, file) {-->
+<!--// 点击右上角叉叉执行-->
+<!--$('#imgUpload').removeAttr('disabled')-->
+<!--$('#imgUpload').closest('div.btn-file').removeClass('btn-disabled')-->
+<!--$uploadAdvBox.find('.fileinput-upload-button').removeAttr('disabled')-->
+<!--})-->
+<!--.on("filesuccessremove",function(event, uploadedId, index){-->
+<!--// 仅对上传成功的图片有效，未上传的图片不执行这里-->
+<!--// 延迟一秒后删除，否则不准确-->
+<!--setTimeout(function () {-->
+<!--if($uploadAdvBox.find('.file-preview-frame').length < $uploadLimit.val()) {-->
+<!--$('#imgUpload').removeAttr('disabled')-->
+<!--$('#imgUpload').closest('div.btn-file').removeClass('btn-disabled')-->
+<!--}-->
+<!--}, 1000)-->
+<!--})-->
+<!--.on('fileremoved', function () {-->
+<!--// 该事件钩子针对只选择不上传的情况-->
+<!--if($uploadAdvBox.find('.file-preview-frame').length <= $uploadLimit.val()) {-->
+<!--$('#imgUpload').removeAttr('disabled')-->
+<!--$('#imgUpload').closest('div.btn-file').removeClass('btn-disabled')-->
+<!--$uploadAdvBox.find('.fileinput-upload-button').removeAttr('disabled')-->
+<!--}-->
+<!--})-->
+<!--</script>-->
+</html>

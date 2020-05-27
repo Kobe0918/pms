@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>登入</title>
+    <link th:href="@{/asserts/toastr/toastr.css}" rel="stylesheet">
+    <link th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.css}" rel="stylesheet">
+    <link th:href="@{/asserts/bootstrap-validator/bootstrapValidator.min.css}" rel="stylesheet">
+    <link th:href="@{/asserts/select2/select2.min.css}" rel="stylesheet"/>
+    <!-- Custom styles for this template -->
+    <link th:href="@{/asserts/css/signin.css}" rel="stylesheet">
+    <link th:href="@{/asserts/icheck/_all.css}" rel="stylesheet">
+
+</head>
+
+<body class="text-center">
+
+<!--login  表单-->
+<form class="form-signin" id="loginForm">
+    <img class="mb-4" src="/asserts/img/logo.png" th:href="@{/asserts/img/logo.png}" alt=""
+         width="102" height="102">
+    <h1 class="h3 mb-3 font-weight-normal" th:text="#{title}">Please sign in</h1>
+    <!--<span th:text="${ms}" th:if="${not #strings.isEmpty(ms)}" style="color: red"></span>-->
+    <div class="form-group">
+        <label class="sr-only" th:text="#{telephone}">Telephone</label>
+        <input type="text" class="form-control" placeholder="Telephone" th:placeholder="#{telephone}" required=""
+               autofocus=""
+               name="telephone">
+    </div>
+    <div class="form-group">
+        <label class="sr-only" th:text="#{password}">Password</label>
+        <input type="password" class="form-control input-passw" placeholder="Password" th:placeholder="#{password}"
+               required=""
+               name="password">
+    </div>
+    <!--<div class="checkbox mb-3">-->
+    <!--<label>-->
+    <!--<input type="checkbox" class="minimal"> [[#{remember}]]-->
+    <!--<input type="hidden" id="remember" name="remember">-->
+    <!--</label>-->
+    <!--</div>-->
+    <div class="form-group">
+        <button class="btn btn-lg btn-primary btn-block" id="loginButton" type="button" th:text="#{login}"/>
+        <a class="btn btn-sm" th:text="#{register}" id="register">Register</a>
+        <a class="btn btn-sm" th:text="#{forgot}" id="forgot">Forgot Password</a>
+    </div>
+
+    <p class="mt-5 mb-3 text-muted">© 2020 -</p>
+    <a class="btn btn-sm" th:href="@{/login(language = 'zh_CN')}">中文</a>
+    <a class="btn btn-sm" th:href="@{/login(language = 'en_US')}">English</a>
+    <a class="btn btn-sm" th:href="@{/login(language = 'ft_CN')}">繁體</a>
+</form>
+
+<!--register 表单-->
+<style type="text/css">
+    .select2-container .select2-selection--single {
+        box-sizing: border-box;
+        cursor: pointer;
+        display: block;
+        height: 34px;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    .select2-container {
+        box-sizing: border-box;
+        display: inline-block;
+        margin: 0;
+        position: relative;
+        vertical-align: middle;
+        width: 100% !important;
+    }
+
+    .select2-container .select2-selection--single .select2-selection__rendered {
+        display: block;
+        padding-left: 12px;
+        padding-right: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .select2-selection__rendered {
+        text-align: left;
+
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #444;
+        line-height: 34px;
+    }
+</style>
+<div class="modal fade " id="registerModal" role="dialog" aria-labelledby="registerModalLabel">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="registerModalLabel"></h4>
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span-->
+                <!--aria-hidden="true">&times;</span>-->
+                <!--</button>-->
+            </div>
+            <div class="modal-body">
+
+                <form class="form" id="registerForm">
+                    <!--<span th:text="${ms}" th:if="${not #strings.isEmpty(ms)}" style="color: red"></span>-->
+                    <div class="form-group">
+                        <label style="float: left;">姓名</label>
+                        <input type="text" class="form-control" placeholder="请填写真实姓名" required="" autofocus=""
+                               name="userName">
+                    </div>
+                    <div class="form-group">
+                        <label style="float: left;">部门</label>
+                        <div class="selectDept">
+                            <select class="form-control" id="re_dept" name="deptId" placeholder="为你所在行业定制工作方式">
+
+                                <!--multiple="multiple" 多值选项-->
+                            </select>
+                        </div>
+                        <!--<input type="text" class="form-control" placeholder="为你所在行业定制工作方式" required=""-->
+                        <!--list="re_dept_menu" id="re_dept" name="dept" >-->
+                        <!--<datalist id="re_dept_menu">-->
+                        <!--</datalist>-->
+                    </div>
+                    <!--<div class="form-group">-->
+                    <!--<label style="float: left;">职务</label>-->
+                    <!--<div class="selectDept">-->
+                    <!--<select class="form-control" id="re_position" name="positionId" placeholder="获取个性化的体验和服务">-->
+                    <!--<option></option>-->
+                    <!--</select>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;<label style="float: left;">职务</label>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<input type="text" class="form-control" placeholder="获取个性化的体验和服务" required=""&ndash;&gt;-->
+                    <!--&lt;!&ndash;name="position">&ndash;&gt;-->
+                    <!--</div>-->
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="float: left;margin-left: 17px;">密码</label>
+                            <div class="col-lg-12">
+                                <div class="input-group">
+                                    <input type="password" class="form-control" placeholder="密码" id="password1"
+                                           name="password">
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-default" type="button"><span
+                                              class="glyphicon glyphicon-eye-close" aria-hidden="true"
+                                              id="registerLook"></span></button>
+                                </span>
+                                </div><!-- /input-group -->
+                            </div><!-- /.col-lg-12 -->
+                        </div><!-- /.row -->
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="float: left;margin-left: 17px;">联系方式</label>
+                            <div class="col-lg-12">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="手机号码" id="phone"
+                                           name="telephone">
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-default" type="button" id="post1"><span
+                                              class="glyphicon glyphicon-hand-up" aria-hidden="true"></span></button>
+                                </span>
+                                </div><!-- /input-group -->
+                            </div><!-- /.col-lg-12 -->
+                        </div><!-- /.row -->
+                    </div>
+
+                    <div class="form-group">
+                        <label style="float: left;">验证码</label>
+                        <input type="text" class="form-control" placeholder="短信验证码" required="" name="verify">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="registerButton" class="btn btn-primary">注册</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--forgot 表单-->
+<div class="modal fade " id="forgotModal" tabindex="-1" role="dialog" aria-labelledby="forgotModalLabel">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="forgotModalLabel"></h4>
+                <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span-->
+                <!--aria-hidden="true">&times;</span>-->
+                <!--</button>-->
+            </div>
+            <div class="modal-body">
+
+                <form class="form" id="forgotForm">
+                    <!--<span th:text="${ms}" th:if="${not #strings.isEmpty(ms)}" style="color: red"></span>-->
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="float: left;margin-left: 17px;"><font style="color: red;" size="2">*</font>
+                                新密码</label>
+                            <div class="col-lg-12">
+                                <div class="input-group">
+                                    <input type="password" class="form-control" placeholder="新密码" id="password2"
+                                           name="password">
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-default" type="button"><span
+                                              class="glyphicon glyphicon-eye-close" aria-hidden="true"
+                                              id="registerLook2"></span></button>
+                                </span>
+                                </div><!-- /input-group -->
+                            </div><!-- /.col-lg-12 -->
+                        </div><!-- /.row -->
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="float: left;margin-left: 17px;"><font style="color: red;" size="2">*</font>
+                                确认密码</label>
+                            <div class="col-lg-12">
+                                <div class="input-group">
+                                    <input type="password" class="form-control" placeholder="确认密码" id="password3"
+                                           name="checkPassword">
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-default" type="button"><span
+                                              class="glyphicon glyphicon-eye-close" aria-hidden="true"
+                                              id="registerLook3"></span></button>
+                                </span>
+                                </div><!-- /input-group -->
+                            </div><!-- /.col-lg-12 -->
+                        </div><!-- /.row -->
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <label style="float: left;margin-left: 17px;">联系方式</label>
+                            <div class="col-lg-12">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="手机号码" name="telephone" id="for_phone">
+                                    <span class="input-group-btn">
+                                      <button class="btn btn-default" type="button" id="post2"><span
+                                              class="glyphicon glyphicon-hand-up" aria-hidden="true"></span></button>
+                                </span>
+                                </div><!-- /input-group -->
+                            </div><!-- /.col-lg-12 -->
+                        </div><!-- /.row -->
+                    </div>
+
+                    <div class="form-group">
+                        <label style="float: left;">验证码</label>
+                        <input type="text" class="form-control" placeholder="短信验证码" required=""
+                               name="verify">
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="forgot-submit" class="btn btn-primary">确认</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script th:src="@{/webjars/jquery/3.1.1/jquery.js}" type="text/javascript"></script>
+<script th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.js}" type="text/javascript"></script>
+<!--<script th:src="@{/asserts/jquery/ajax-setup.js}" type="text/javascript"></script>-->
+<script th:src="@{/asserts/toastr/toastr.min.js}" type="text/javascript"></script>
+<script th:src="@{/asserts/bootstrap-validator/bootstrapValidator.min.js}" type="text/javascript"></script>
+<!--<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js}"></script>-->
+<script th:src="@{/asserts/select2/select2.min.js}" type="text/javascript"></script>
+<script th:src="@{/asserts/icheck/icheck.min.js}" type="text/javascript"></script>
+<script th:src="@{/asserts/select2/zh-CN.js}" type="text/javascript"></script>
+<script th:src="@{/asserts/toastr/toastr-setup.js}" type="text/javascript"></script>
+<script th:src="@{/asserts/js/my/login.js}" type="text/javascript"></script>
+<!--<script type="text/javascript">-->
+    <!--toastr.options = {-->
+        <!--closeButton: false,  //是否显示关闭按钮（提示框右上角关闭按钮）-->
+        <!--debug: false,   //是否调试状态-->
+        <!--progressBar: false,   //是否显示进度条-->
+        <!--positionClass: "toast-center-center",    //信息框出现位置，在css里面加入了居中样式-->
+        <!--onclick: null,   //点击消息框触发事件-->
+        <!--showDuration: "300",   //显示动作时间-->
+        <!--hideDuration: "1000",//隐藏动作时间-->
+        <!--timeOut: "1500",  //自动关闭超时时间-->
+        <!--extendedTimeOut: "1000",-->
+        <!--showEasing: "swing",-->
+        <!--hideEasing: "linear",-->
+        <!--showMethod: "fadeIn", //显示的方式，和jquery相同-->
+        <!--hideMethod: "fadeOut"  //隐藏的方式，和jquery相同-->
+    <!--};-->
+<!--</script>-->
+<!--<script type="text/javascript">-->
+    <!--$(document).ready(function () {-->
+        <!--if (top != self) {-->
+            <!--parent.location.href = '/login';-->
+        <!--}-->
+
+        <!--var token = localStorage.getItem("token");-->
+        <!--console.info(token);-->
+        <!--if (token != null && token.trim().length > 0) {-->
+            <!--$.get("/user/current", {"token": token}, function (res) {-->
+                <!--console.info(res.success);-->
+                <!--if (res.success) {-->
+                    <!--location.href = '/dashboard';-->
+                <!--}-->
+            <!--})-->
+        <!--};-->
+        <!--//开启bootstrap 校验数据-->
+        <!--validate();-->
+
+        <!--//校验数据-->
+        <!--function validate() {-->
+            <!--// $('#loginForm').bootstrapValidator({-->
+            <!--//     message: 'This value is not valid',-->
+            <!--//     fields: {-->
+            <!--//         telephone: {-->
+            <!--//             validators: {-->
+            <!--//                 notEmpty: {-->
+            <!--//                     message: '请输入手机号码'-->
+            <!--//                 },-->
+            <!--//                 regexp: {-->
+            <!--//                     regexp: /^1[34578]\d{9}$/,-->
+            <!--//                     message: '填入正确的手机号码'-->
+            <!--//                 }-->
+            <!--//             }-->
+            <!--//         },-->
+            <!--//         password: {-->
+            <!--//             validators: {-->
+            <!--//                 notEmpty: {-->
+            <!--//                     message: '用户密码为必填项'-->
+            <!--//                 },-->
+            <!--//                 stringLength: {-->
+            <!--//                     bootstrap-validator: 8,-->
+            <!--//                     max: 15,-->
+            <!--//                     message: '输入区间在8-15个字符'-->
+            <!--//                 },-->
+            <!--//                 // emailAddress: {-->
+            <!--//                 //     message: 'The input is not a valid email address'-->
+            <!--//                 // }-->
+            <!--//             }-->
+            <!--//         }-->
+            <!--//     }-->
+            <!--// });-->
+            <!--$('#registerForm').bootstrapValidator({-->
+                <!--message: 'This value is not valid',-->
+                <!--// feedbackIcons: {-->
+                <!--//     valid: 'glyphicon glyphicon-ok',-->
+                <!--//     invalid: 'glyphicon glyphicon-remove',-->
+                <!--//     validating: 'glyphicon glyphicon-refresh'-->
+                <!--// },-->
+                <!--fields: {-->
+                    <!--name: {-->
+                        <!--message: '真实姓名',-->
+                        <!--validators: {-->
+                            <!--notEmpty: {-->
+                                <!--message: '姓名不能为空'-->
+                            <!--},-->
+                            <!--stringLength: {-->
+                                <!--min: 2,-->
+                                <!--max: 50,-->
+                                <!--message: '请输入真实姓名以方便后续联系'-->
+                            <!--},-->
+                            <!--/*remote: {  //跳转-->
+                                <!--url: 'remote.php',-->
+                                <!--message: 'The username is not available'-->
+                            <!--},*/-->
+                            <!--// regexp: {  正则-->
+                            <!--//     regexp: /^[a-zA-Z0-9_\.]+$/,-->
+                            <!--//     message: 'The username can only consist of alphabetical, number, dot and underscore'-->
+                            <!--// }-->
+                            <!--// callback: {   回调  输入以后判断开始号码和结束号码大小，以区别结束号码》开始号码-->
+                            <!--//     message: '结束号码需要大于等于开始号码',-->
+                            <!--//     callback: function (value, validate) {-->
+                            <!--//         var beginNum = $('#bill-begin-num').val();-->
+                            <!--//         console.info(Number(beginNum) + "ssss" + Number(value));-->
+                            <!--//-->
+                            <!--//         if (Number(beginNum) > Number(value)) {-->
+                            <!--//             console.info("true");-->
+                            <!--//             return false;-->
+                            <!--//         } else {-->
+                            <!--//             return true;-->
+                            <!--//         }-->
+                            <!--//-->
+                            <!--//     }-->
+                            <!--// }-->
+                        <!--}-->
+                    <!--},-->
+                    <!--password: {-->
+                        <!--validators: {-->
+                            <!--notEmpty: {-->
+                                <!--message: '用户密码为必填项'-->
+                            <!--},-->
+                            <!--stringLength: {-->
+                                <!--min: 8,-->
+                                <!--max: 15,-->
+                                <!--message: '输入区间在8-15个字符'-->
+                            <!--},-->
+                        <!--}-->
+                    <!--},-->
+                    <!--telephone: {-->
+                        <!--validators: {-->
+                            <!--notEmpty: {-->
+                                <!--message: '手机号码为必填项'-->
+                            <!--},-->
+                            <!--regexp: {-->
+                                <!--regexp: /^1[34578]\d{9}$/,-->
+                                <!--message: '填入正确的手机号码'-->
+                            <!--}-->
+                        <!--}-->
+                    <!--},-->
+                    <!--verify: {-->
+                        <!--validators: {-->
+                            <!--notEmpty: {-->
+                                <!--message: '必填项'-->
+                            <!--},-->
+                            <!--stringLength: {-->
+                                <!--min: 6,-->
+                                <!--max: 6,-->
+                                <!--message: '请输入6位验证码'-->
+                            <!--},-->
+                            <!--regexp: {-->
+                                <!--regexp: /^\d{6}$/,-->
+                                <!--message: '格式有误'-->
+                            <!--}-->
+                        <!--}-->
+                    <!--},-->
+                <!--}-->
+            <!--})-->
+        <!--};-->
+
+
+        <!--//修改 checkbox 和radio 样式代码-->
+        <!--$('input[type=radio],input[type=checkbox]').iCheck({-->
+            <!--checkboxClass: 'icheckbox_square-green',   // 可以更改red换颜色-->
+            <!--radioClass: 'iradio_square-blue',-->
+            <!--increaseArea: '20%' // optional-->
+        <!--});-->
+        <!--$('input[type=checkbox]').on('ifChanged', function (obj) {-->
+            <!--$('#remember').val(obj.currentTarget.checked);-->
+            <!--console.log($(this).val());   // 获取该复选框的value值-->
+            <!--console.log(obj.currentTarget.checked)   // 获取该复选框当前状态是否选中-->
+            <!--console.log('您更改了复选框的状态');-->
+        <!--});-->
+
+
+        <!--//忘记密码界面初始化-->
+        <!--$('#forgot').off().click(function () {-->
+            <!--$('#forgotModalLabel').text("忘记密码");-->
+            <!--$('#forgotModal').modal('show');-->
+        <!--});-->
+
+
+        <!--$('#forgot-submit').off().on('click', function (index, item) {-->
+            <!--var password = $('#password2').val();-->
+            <!--var checkPassword = $('#password3').val();-->
+            <!--if(password === checkPassword ){-->
+                <!--if(password.length > 7 && password.length < 16 ){-->
+                    <!--var pattern = /^1[34578]\d{9}$/;-->
+                    <!--var phone = $('#for_phone').val();-->
+                    <!--if(pattern.test(phone)){-->
+                        <!--var data = $.serializeForm($('#forgotForm').serializeArray());-->
+
+                        <!--$.ajax({-->
+                            <!--url: '/user/forgot',-->
+                            <!--dataType: 'json',-->
+                            <!--data: data,-->
+                            <!--async: true,-->
+                            <!--contentType: "application/json",-->
+                            <!--method: 'POST',-->
+                            <!--success: function (response) {-->
+                                <!--if (response.success) {-->
+                                    <!--localStorage.setItem("token", response.data);-->
+                                    <!--location.href = '/dashboard';-->
+
+                                <!--} else {-->
+                                    <!--log.info("sssss");-->
+                                    <!--toastr.info(response.errorCode + " : " + response.errorMsg);-->
+
+                                <!--}-->
+                            <!--}-->
+                        <!--});-->
+                    <!--}else{-->
+                        <!--toastr.info("输入的正确格式的手机号码");-->
+                    <!--}-->
+                <!--}else{-->
+                    <!--toastr.info("输入密码长度在8-16个字符");-->
+                <!--}-->
+            <!--}else{-->
+                <!--toastr.info('两次密码不同');-->
+            <!--}-->
+        <!--});-->
+
+
+        <!--//注册界面初始化-->
+        <!--$('#register').off().on('click', function () {-->
+
+            <!--// $.get("/dept/g", null, function (response) {-->
+            <!--//     var data = [];-->
+            <!--//     $.each(response, function (index, item) {-->
+            <!--//         data.push({id: item.deptId, text: item.deptName});-->
+            <!--//     });-->
+            <!--//显示部门列表-->
+            <!--//select2 远程搜索数据-->
+
+            <!--$('#re_dept').select2({-->
+                <!--placeholder: '为你所在行业定制工作方式',-->
+                <!--width: '100%',-->
+                <!--maximumSelectionLength: 1,  //最多选项数-->
+                <!--allowClear: true,  //显示清除按钮-->
+                <!--// multiple: true,   //配置可多选-->
+                <!--// tags: true,  //自建选项-->
+                <!--ajax: {-->
+                    <!--url: "/dept/getDeptAll",-->
+                    <!--dataType: 'json',-->
+                    <!--delay: 250,-->
+                    <!--data: function (params) {-->
+                        <!--return {-->
+                            <!--search: params.term,-->
+                        <!--};-->
+                    <!--},-->
+                    <!--processResults: function (data) {-->
+                        <!--return {-->
+                            <!--results: data.data-->
+                        <!--};-->
+                    <!--},-->
+                    <!--cache: true-->
+                <!--},-->
+                <!--minimumInputLength: 2-->
+            <!--});-->
+            <!--// $("#re_dept").select2({-->
+            <!--//     placeholder: '为你所在行业定制工作方式',-->
+            <!--//     allowClear: true,-->
+            <!--//     data: data ,  //显示数据-->
+            <!--//     // tags: true, 允许输入项为自己输入的值 即option中没有-->
+            <!--//     minimumResultsForSearch: -1,   //隐藏搜索-->
+            <!--// });-->
+            <!--// $("#re_position").select2({-->
+            <!--//     placeholder: '获取个性化的体验和服务（请先选择部门选项）',-->
+            <!--//     minimumResultsForSearch: -1,-->
+            <!--//     allowClear: true,-->
+            <!--// });-->
+            <!--// });-->
+
+
+            <!--$('#registerModalLabel').text("注册/Register");-->
+            <!--$('#registerModal').modal('show');-->
+        <!--});-->
+        <!--//监听清除选项的回调-->
+        <!--// $('#re_dept').on('select2:clear', function () {-->
+        <!--//     $('#re_position').empty();-->
+        <!--// });-->
+        <!--// //根据 部门编号获取 职位列表 监听选择-->
+        <!--// $('#re_dept').on("select2:select", function (e) {-->
+        <!--//     var deptId = $(this).select2('val');-->
+        <!--//     $("#re_position").empty();-->
+        <!--//     $('#re_position').select2({-->
+        <!--//         placeholder: '为你所在行业定制工作方式',-->
+        <!--//         allowClear: true,-->
+        <!--//         ajax: {-->
+        <!--//             url: "/user/getPosition",-->
+        <!--//             dataType: 'json',-->
+        <!--//             data: function (params) {-->
+        <!--//                 return {-->
+        <!--//                     search: deptId,-->
+        <!--//                 };-->
+        <!--//             },-->
+        <!--//             processResults: function (data) {-->
+        <!--//                 var position = [];-->
+        <!--//                 $.each(data, function (index, item) {-->
+        <!--//                     position.push({id: item.positionId, text: item.positionName});-->
+        <!--//                 });-->
+        <!--//                 return {-->
+        <!--//                     results: position-->
+        <!--//                 };-->
+        <!--//             },-->
+        <!--//             cache: true-->
+        <!--//         },-->
+        <!--//         // minimumInputLength: 2-->
+        <!--//     })-->
+        <!--// });-->
+
+
+        <!--// 密码显示隐藏-->
+        <!--var isShow1 = true;-->
+        <!--$('#registerLook').on('click', function () {-->
+            <!--if (isShow1) {-->
+                <!--$('#registerLook').removeClass('glyphicon glyphicon-eye-close');-->
+                <!--$('#registerLook').addClass('glyphicon glyphicon-eye-open');-->
+                <!--$('#password1').attr('type', "text");-->
+                <!--isShow1 = false;-->
+            <!--} else {-->
+                <!--$('#registerLook').removeClass('glyphicon glyphicon-eye-open');-->
+                <!--$('#registerLook').addClass('glyphicon glyphicon-eye-close');-->
+                <!--$('#password1').attr('type', "password");-->
+                <!--isShow1 = true;-->
+            <!--}-->
+        <!--});-->
+        <!--var isShow2 = true;-->
+        <!--$('#registerLook2').on('click', function () {-->
+            <!--if (isShow2) {-->
+                <!--$('#registerLook2').removeClass('glyphicon glyphicon-eye-close');-->
+                <!--$('#registerLook2').addClass('glyphicon glyphicon-eye-open');-->
+                <!--$('#password2').attr('type', "text");-->
+                <!--isShow2 = false;-->
+            <!--} else {-->
+                <!--$('#registerLook2').removeClass('glyphicon glyphicon-eye-open');-->
+                <!--$('#registerLook2').addClass('glyphicon glyphicon-eye-close');-->
+                <!--$('#password2').attr('type', "password");-->
+                <!--isShow2 = true;-->
+            <!--}-->
+        <!--});-->
+        <!--var isShow3 = true;-->
+        <!--$('#registerLook3').on('click', function () {-->
+            <!--if (isShow3) {-->
+                <!--$('#registerLook3').removeClass('glyphicon glyphicon-eye-close');-->
+                <!--$('#registerLook3').addClass('glyphicon glyphicon-eye-open');-->
+                <!--$('#password3').attr('type', "text");-->
+                <!--isShow3 = false;-->
+            <!--} else {-->
+                <!--$('#registerLook3').removeClass('glyphicon glyphicon-eye-open');-->
+                <!--$('#registerLook3').addClass('glyphicon glyphicon-eye-close');-->
+                <!--$('#password3').attr('type', "password");-->
+                <!--isShow3 = true;-->
+            <!--}-->
+        <!--});-->
+
+
+        <!--$(".input-passw").keypress(function (e) {-->
+            <!--if (e.which == 13) {-->
+                <!--login();-->
+            <!--}-->
+        <!--});-->
+
+
+        <!--$('#loginButton').off().on('click', function () {-->
+            <!--login();-->
+        <!--});-->
+
+
+        <!--function login() {-->
+            <!--var form = $('#loginForm').serializeArray();-->
+            <!--var isTrue = true;-->
+            <!--$.each(form, function (index, item) {-->
+                <!--if (item.name == "telephone") {-->
+                    <!--var pattern = /^1[34578]\d{9}$/;-->
+                    <!--if (!pattern.test(item.value)) {-->
+                        <!--toastr.info("输入11位正确的手机号码");-->
+                        <!--isTrue = false;-->
+                    <!--}-->
+                <!--} else if (item.name == "password") {-->
+                    <!--var lengh = item.value.length;-->
+                    <!--if (lengh < 8 || lengh > 16) {-->
+                        <!--toastr.info("输入8~15位密码");-->
+                        <!--isTrue = false;-->
+                    <!--}-->
+                <!--}-->
+            <!--});-->
+            <!--console.info("login :" + isTrue);-->
+            <!--if (isTrue) {-->
+                <!--$.ajax({-->
+                    <!--url: '/login',-->
+                    <!--// contentType: 'application/json',-->
+                    <!--dataType: 'json',-->
+                    <!--data: $("#loginForm").serialize(),-->
+                    <!--method: 'POST',-->
+                    <!--success: function (response) {-->
+                        <!--if (response.success) {-->
+                            <!--console.info("success");-->
+                            <!--localStorage.setItem("token", response.data);-->
+                            <!--location.href = '/dashboard';-->
+                        <!--} else {-->
+                            <!--toastr.error(response.errorCode + " : " + response.errorMsg);-->
+                        <!--}-->
+                    <!--}-->
+                <!--});-->
+            <!--}-->
+        <!--}-->
+
+        <!--$('#registerButton').off().on('click', function () {-->
+            <!--var form = $('#registerForm').data("bootstrapValidator");-->
+            <!--form.validate();-->
+            <!--if (form.isValid()) {-->
+                <!--form = $('#registerForm').serializeArray();-->
+                <!--form = $.serializeForm(form);-->
+                <!--console.info(form + ":form");-->
+                <!--$.ajax({-->
+                    <!--url: '/user/register',-->
+                    <!--dataType: 'json',-->
+                    <!--data: form,-->
+                    <!--async: true,-->
+                    <!--contentType: "application/json",-->
+                    <!--method: 'POST',-->
+                    <!--success: function (response) {-->
+                        <!--if (response.success) {-->
+                            <!--localStorage.setItem("token", response.data);-->
+                            <!--location.href = '/dashboard';-->
+                        <!--} else {-->
+                            <!--toastr.warning(response.errorCode + ":" + response.errorMsg);-->
+                        <!--}-->
+                    <!--}-->
+                <!--});-->
+            <!--}-->
+        <!--});-->
+
+
+        <!--//模态框关闭  回调-->
+        <!--$('body').on('hidden.bs.modal', '.modal', function () {-->
+            <!--$("#registerForm").data('bootstrapValidator').destroy();-->
+            <!--$('#registerForm').data('bootstrapValidator', null);-->
+            <!--$("#registerForm :input[type='text']").each(function (i) {-->
+                <!--this.value = "";-->
+            <!--});-->
+            <!--$("#re_dept").val(null).trigger('change');-->
+            <!--$("#re_position").val(null).trigger('change');-->
+            <!--// $("#forgotForm").data('bootstrapValidator').destroy();-->
+            <!--// $('#forgotForm').data('bootstrapValidator', null);-->
+            <!--validate();-->
+        <!--});-->
+
+
+        <!--//发送短信-->
+        <!--$('#post1').off().on('click', function () {-->
+            <!--var pattern = /^1[34578]\d{9}$/;-->
+            <!--if (pattern.test($(this).parent('span').prev('input').val())) {-->
+                <!--$.sendMessage($(this).parent('span').prev('input').val(), 'post1');-->
+            <!--} else {-->
+                <!--toastr.error("手机号码格式不正确！");-->
+            <!--}-->
+        <!--});-->
+        <!--$('#post2').off().on('click', function () {-->
+            <!--var pattern = /^1[34578]\d{9}$/;-->
+            <!--if (pattern.test($(this).parent('span').prev('input').val())) {-->
+                <!--$.sendMessage($(this).parent('span').prev('input').val(), 'post2');-->
+            <!--} else {-->
+                <!--toastr.error("手机号码格式不正确！");-->
+            <!--}-->
+        <!--});-->
+        <!--$.sendMessage = function (phone, event) {-->
+            <!--$.get('/user/sendMessage', {'phone': phone}, function (response) {-->
+                <!--if (response.code == '4') {-->
+                    <!--$.setTime($('#' + event));-->
+                <!--} else {-->
+                    <!--toastr.warning(response.msg);-->
+                <!--}-->
+            <!--});-->
+        <!--};-->
+
+        <!--//60s倒计时实现逻辑-->
+        <!--var countdown = 120;-->
+        <!--$.setTime = function (obj) {-->
+            <!--if (countdown == 0) {-->
+                <!--obj.prop('disabled', false);-->
+                <!--obj.children('span').text('');-->
+                <!--countdown = 120;//60秒过后button上的文字初始化,计时器初始化;-->
+                <!--return;-->
+            <!--} else {-->
+                <!--obj.prop('disabled', true);-->
+                <!--obj.children('span').text("(" + countdown + "s)");-->
+                <!--countdown&#45;&#45;;-->
+            <!--}-->
+            <!--setTimeout(function () {-->
+                <!--$.setTime(obj)-->
+            <!--}, 1000) //每1000毫秒执行一次-->
+        <!--};-->
+
+
+        <!--//ajax 请求   参数（路径，数据，是否异步false同步，true异步）-->
+        <!--$.postMethod = function (url, data, async) {-->
+            <!--$.ajax({-->
+                <!--url: url,-->
+                <!--dataType: 'json',-->
+                <!--data: data,-->
+                <!--async: async,-->
+                <!--contentType: "application/json",-->
+                <!--method: 'POST',-->
+                <!--success: function (response) {-->
+                    <!--data = response;-->
+                <!--},-->
+                <!--fail: function (response) {-->
+                    <!--toastr.error("系统故障");-->
+                <!--}-->
+            <!--});-->
+            <!--return data;-->
+        <!--};-->
+        <!--//对数组进行封装返回json格式数据-->
+        <!--$.serializeForm = function (data) {-->
+            <!--var returnData = {};-->
+            <!--$.each(data, function (index, item) {-->
+                <!--if (item.name == "deptId") {-->
+                    <!--var s = $('#re_dept').select2('val');-->
+                    <!--returnData[item.name] = item.value;-->
+                <!--} else if (item.name == "positionId") {-->
+                    <!--var s = $('#re_position').select2('val');-->
+                    <!--returnData[item.name] = item.value;-->
+                <!--} else {-->
+                    <!--returnData[item.name] = item.value;-->
+                <!--}-->
+            <!--});-->
+            <!--return JSON.stringify(returnData);-->
+        <!--};-->
+
+    <!--});-->
+
+<!--</script>-->
+</html>

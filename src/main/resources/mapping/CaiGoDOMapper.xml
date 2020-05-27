@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mjrj.lzh.pms.dao.CaiGoDOMapper">
+    <resultMap id="BaseResultMap" type="com.mjrj.lzh.pms.entity.CaiGoDO">
+        <id column="caigo_id" property="caigoId" jdbcType="INTEGER"/>
+        <result column="caigo_name" property="caigoName" jdbcType="VARCHAR"/>
+        <result column="caigo_size" property="caigoSize" jdbcType="VARCHAR"/>
+        <result column="caigo_number" property="caigoNumber" jdbcType="INTEGER"/>
+        <result column="caigo_money" property="caigoMoney" jdbcType="REAL"/>
+        <result column="caigo_remark" property="caigoRemark" jdbcType="VARCHAR"/>
+        <result column="caigo_user_id" property="caigoUserId" jdbcType="INTEGER"/>
+        <result column="caigo_spiuser_id" property="caigoSpiuserId" jdbcType="INTEGER"/>
+        <result column="caigo_status" property="caigoStatus" jdbcType="TINYINT"/>
+        <result column="caigo_reason" property="caigoReason" jdbcType="VARCHAR"/>
+        <result column="caigo_create_time" property="caigoCreateTime" jdbcType="TIMESTAMP"/>
+
+        <association property="caigoUserName" column="caigo_user_id" javaType="java.lang.String"
+                     select="com.mjrj.lzh.pms.dao.SysUserDOMapper.selectNameById">
+        </association>
+        <association property="caigoSpiUserName" column="caigo_spiuser_id" javaType="java.lang.String"
+                     select="com.mjrj.lzh.pms.dao.SysUserDOMapper.selectNameById">
+        </association>
+
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    caigo_id, caigo_name, caigo_size, caigo_number, caigo_money, caigo_remark, caigo_user_id, 
+    caigo_spiuser_id, caigo_status,caigo_reason,caigo_create_time
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from caigo
+        where caigo_id = #{caigoId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from caigo
+    where caigo_id = #{caigoId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.mjrj.lzh.pms.entity.CaiGoDO">
+    insert into caigo (caigo_id, caigo_name, caigo_size, 
+      caigo_number, caigo_money, caigo_remark, 
+      caigo_user_id, caigo_spiuser_id, caigo_status,caigo_reason,caigo_create_time
+      )
+    values (#{caigoId,jdbcType=INTEGER}, #{caigoName,jdbcType=VARCHAR}, #{caigoSize,jdbcType=VARCHAR}, 
+      #{caigoNumber,jdbcType=INTEGER}, #{caigoMoney,jdbcType=REAL}, #{caigoRemark,jdbcType=VARCHAR},
+      #{caigoUserId,jdbcType=INTEGER}, #{caigoSpiuserId,jdbcType=INTEGER}, #{caigoStatus,jdbcType=TINYINT},
+      #{caigoReason,jdbcType=VARCHAR}, #{caigoCreateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.mjrj.lzh.pms.entity.CaiGoDO">
+        insert into caigo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="caigoCreateTime != null">
+                caigo_create_time,
+            </if>
+            <if test="caigoReason != null">
+                caigo_reason,
+            </if>
+            <if test="caigoId != null">
+                caigo_id,
+            </if>
+            <if test="caigoName != null">
+                caigo_name,
+            </if>
+            <if test="caigoSize != null">
+                caigo_size,
+            </if>
+            <if test="caigoNumber != null">
+                caigo_number,
+            </if>
+            <if test="caigoMoney != null">
+                caigo_money,
+            </if>
+            <if test="caigoRemark != null">
+                caigo_remark,
+            </if>
+            <if test="caigoUserId != null">
+                caigo_user_id,
+            </if>
+            <if test="caigoSpiuserId != null">
+                caigo_spiuser_id,
+            </if>
+            <if test="caigoStatus != null">
+                caigo_status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="caigoCreateTime != null">
+                #{caigoCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="caigoReason != null">
+                #{caigoReason,jdbcType=VARCHAR},
+            </if>
+            <if test="caigoId != null">
+                #{caigoId,jdbcType=INTEGER},
+            </if>
+            <if test="caigoName != null">
+                #{caigoName,jdbcType=VARCHAR},
+            </if>
+            <if test="caigoSize != null">
+                #{caigoSize,jdbcType=VARCHAR},
+            </if>
+            <if test="caigoNumber != null">
+                #{caigoNumber,jdbcType=INTEGER},
+            </if>
+            <if test="caigoMoney != null">
+                #{caigoMoney,jdbcType=REAL},
+            </if>
+            <if test="caigoRemark != null">
+                #{caigoRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="caigoUserId != null">
+                #{caigoUserId,jdbcType=INTEGER},
+            </if>
+            <if test="caigoSpiuserId != null">
+                #{caigoSpiuserId,jdbcType=INTEGER},
+            </if>
+            <if test="caigoStatus != null">
+                #{caigoStatus,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.mjrj.lzh.pms.entity.CaiGoDO">
+        update caigo
+        <set>
+            <if test="caigoCreateTime != null">
+                caigo_create_time = #{caigoCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="caigoReason != null">
+                caigo_reason = #{caigoReason,jdbcType=VARCHAR},
+            </if>
+            <if test="caigoName != null">
+                caigo_name = #{caigoName,jdbcType=VARCHAR},
+            </if>
+            <if test="caigoSize != null">
+                caigo_size = #{caigoSize,jdbcType=VARCHAR},
+            </if>
+            <if test="caigoNumber != null">
+                caigo_number = #{caigoNumber,jdbcType=INTEGER},
+            </if>
+            <if test="caigoMoney != null">
+                caigo_money = #{caigoMoney,jdbcType=REAL},
+            </if>
+            <if test="caigoRemark != null">
+                caigo_remark = #{caigoRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="caigoUserId != null">
+                caigo_user_id = #{caigoUserId,jdbcType=INTEGER},
+            </if>
+            <if test="caigoSpiuserId != null">
+                caigo_spiuser_id = #{caigoSpiuserId,jdbcType=INTEGER},
+            </if>
+            <if test="caigoStatus != null">
+                caigo_status = #{caigoStatus,jdbcType=TINYINT},
+            </if>
+        </set>
+        where caigo_id = #{caigoId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.mjrj.lzh.pms.entity.CaiGoDO">
+    update caigo
+    set caigo_name = #{caigoName,jdbcType=VARCHAR},
+      caigo_size = #{caigoSize,jdbcType=VARCHAR},
+      caigo_number = #{caigoNumber,jdbcType=INTEGER},
+      caigo_money = #{caigoMoney,jdbcType=REAL},
+      caigo_remark = #{caigoRemark,jdbcType=VARCHAR},
+      caigo_user_id = #{caigoUserId,jdbcType=INTEGER},
+      caigo_spiuser_id = #{caigoSpiuserId,jdbcType=INTEGER},
+      caigo_status = #{caigoStatus,jdbcType=TINYINT},
+      caigo_reason = #{caigoReason,jdbcType=VARCHAR},
+      caigo_create_time = #{caigoCreateTime,jdbcType=TIMESTAMP}
+    where caigo_id = #{caigoId,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectByPage" parameterType="com.mjrj.lzh.pms.dto.pagedto.CaigoPageDTO" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from caigo
+        <trim prefix="where" prefixOverrides="and">
+            <if test="caigoUserId != null ">
+                and caigo_user_id = #{caigoUserId,jdbcType=INTEGER}
+            </if>
+            <if test="caigoStatus != null ">
+               and  caigo_status= #{caigoStatus,jdbcType=TINYINT}
+            </if>
+            <if test="caigoName != null ">
+               and  instr(caigo_name,  #{caigoName,jdbcType=VARCHAR})>0
+            </if>
+            <if test="caigoSpiuserId != null">
+                and caigo_spiuser_id = #{caigoSpiuserId,jdbcType=INTEGER}
+            </if>
+        </trim>
+        order by caigo_create_time desc
+    </select>
+
+    <update id="updateCaigoStatus" parameterType="java.util.List">
+        update caigo set
+        <if test="status != null">
+            caigo_status = #{status,jdbcType=TINYINT}
+        </if>
+        where
+        <if test=" list != null and list.size()!=0 ">
+            caigo_id  in
+            <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </update>
+
+    <delete id="deleteRecordByIds" parameterType="java.util.List">
+        delete from caigo
+        <if test="list != null">
+            where  caigo_id in
+            <foreach collection="list" index="index" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        </if>
+
+    </delete>
+</mapper>

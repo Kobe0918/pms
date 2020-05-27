@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="commons/common::cssLink(~{::title},~{::link})">
+    <title>请假申请</title>
+
+    <link th:href="@{/asserts/css/leave.css}" rel="stylesheet">
+
+
+</head>
+
+<body>
+<div th:replace="~{commons/bar::topbar}"></div>
+
+<style type="text/css">
+    .hideBtn {
+        display: none;
+    }
+
+    .no-footer {
+        width: 93%;
+    }
+
+    .dataTables_length {
+        padding-top: 10.570px;
+        padding-left: 20px;
+    }
+
+    .table-hover th {
+        text-align: center;
+    }
+
+    .help-block {
+        color: #c21a13;
+    }
+
+    #file {
+        display: none;
+    }
+
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <!--(activeUri='/dashboard')-->
+        <div th:replace="commons/bar :: #sidebar"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="chartjs-size-monitor"
+                 style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+            </div>
+
+            <div class="wpp_main">
+                <div class="wpp_main_content">
+                    <div class="wpp_header">个人基本信息</div>
+
+
+                    <div class="leave_content">
+                        <div class="add_caigo">
+
+                            <form id="userForm">
+
+                                <div class="form-row">
+                                    <img src="../asserts/img/null.jpg" id="image" style="width: 200px;height: 200px"
+                                         class="rounded mx-auto d-block" alt="个人头像">
+                                    <input type="file" name="file" multiple="multiple" id="file">
+                                </div>
+                                <div class="form-row">
+                                    <input type="hidden" name="id">
+                                    <input type="hidden" name="imgUrl">
+                                    <div class="form-group col-md-6">
+                                        <label for="userName"><font size="2" color="red">*</font>昵称</label>
+                                        <!--type="email"-->
+                                        <input class="form-control" id="userName" name="userName"
+                                               placeholder="请以真实姓名方便内部联系">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="telephone"><font size="2" color="red">*</font>电话</label>
+                                        <input type="phone" class="form-control" id="telephone" name="telephone"
+                                               placeholder="请填写">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="idCard">证件号码</label>
+                                        <input type="text" class="form-control" id="idCard" name="idCard"
+                                               placeholder="请填写">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="birthday">出生日期</label>
+                                        <input type="text" class="form-control" id="birthday" name="birthday"
+                                               placeholder="请填写">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="lastLoginTime">上次登入时间</label>
+                                        <input type="text" class="form-control" id="lastLoginTime" name="lastLoginTime"
+                                               placeholder="请填写" disabled>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="createTime">账号创建时间</label>
+                                        <input type="text" class="form-control" id="createTime" name="createTime"
+                                               placeholder="请填写" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="dept">部门</label>
+                                        <input type="hidden" name="deptId">
+                                        <input type="text" class="form-control" name="deptName" id="dept"
+                                               placeholder="请填写" disabled>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="createTime">职位</label>
+                                        <input type="hidden" name="positionId">
+                                        <input type="text" class="form-control" id="position" name="positionName"
+                                               placeholder="请填写" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="email">邮箱</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="email" name="email"
+                                                   placeholder="请输入" aria-label="请输入" aria-describedby="basic-addon2">
+                                            <!--<div class="input-group-append">-->
+                                                <!--<span class="input-group-text" id="basic-addon2">@qq\123\sohu.com</span>-->
+                                            <!--</div>-->
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="workTime">入职时间</label>
+                                        <input type="text" class="form-control" id="workTime" name="workTime"
+                                               placeholder="请填写" disabled>
+                                    </div>
+                                </div>
+
+                                <div class="form-row" id="workAddress" data-toggle="distpicker">
+                                    <div class="form-group col-md-4">
+                                        工作地址: <label for="province" style="padding-left: 30px">省</label>
+                                        <select id="province" name="province" class="form-control">
+                                            <option selected>Choose...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="city">市</label>
+                                        <select id="city" name="city" class="form-control">
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="country">县</label>
+                                        <select id="country" name="country" class="form-control">
+                                            <option selected>Choose...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="liveAddress">家庭住址</label>
+                                    <input type="text" id="liveAddress" name="liveAddress" class="form-control"
+                                           placeholder="请填写">
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-2">
+                                        <label for="isMa">已婚</label>
+                                        <input type="radio" class="form-control" id="isMa" value="1" name="isMarry"
+                                               placeholder="请填写">
+                                        <label for="noMa">未婚</label>
+                                        <input type="radio" class="form-control" id="noMa" name="isMarry" value="0"
+                                               placeholder="请填写">
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                        <label for="isMan">男性</label>
+                                        <input type="radio" class="form-control" id="isMan" value="1" name="sex"
+                                               placeholder="请填写">
+                                        <label for="isWomen">女性</label>
+                                        <input type="radio" class="form-control" id="isWomen" name="sex" value="0"
+                                               placeholder="请填写">
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+
+                                    <button type="button" id="userEdit"
+                                            class="btn btn-outline-primary btn-lg btn-block" style="width: 100%" >
+                                        保存信息
+                                    </button>
+                                </div>
+                            </form>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="row" style="height: 100px"></div>
+</div>
+
+
+<div th:replace="commons/common::scriptSrc"></div>
+<script th:src="@{/asserts/distpicker/distpicker.data.js}"></script>
+<script th:src="@{/asserts/distpicker/distpicker.js}"></script>
+<script th:src="@{/asserts/jquery/ajaxfileupload.js}"></script>
+<script th:src="@{/asserts/js/my/users-user-edit.js}"></script>
+</body>
+</html>

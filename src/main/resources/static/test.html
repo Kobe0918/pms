@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<thead>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="">
+<meta name="author" content="lzh">
+<title>职场常用业务流程</title>
+</thead>
+<body>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .wpp_main {
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.05);
+        border-radius: 6px;
+        width: 100%;
+        height: auto;
+    }
+
+    .wpp_main_content {
+        margin-left: 6px;
+        margin-right: 6px;
+        padding-bottom: 6px;
+        position: relative;
+    }
+
+    .wpp_header {
+        height: 43px;
+        width: 100%;
+        line-height: 43px;
+        font-size: 18px;
+        color: #454B60;
+        text-align: center;
+    }
+
+    .wpp_content {
+        background: url("./asserts/img/EKP_work_bg01@2x.png");
+        background-size: cover;
+        height: 432px;
+        width: 100%;
+        padding-bottom: 6px;
+        border-top: 1px solid #F2F2F2;
+        overflow: hidden;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .wpp_content_item {
+        width: 220px;
+        height: 372px;
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0px 8px 9px -2px rgba(171, 175, 186, 0.2);
+        border-radius: 2px;
+        text-align: center;
+        margin-top: 30px;
+        margin-left: 3%;
+        display: inline-block;
+        /*    float: left; 相当于display: inline-block; +  vertical-align: top;*/
+        vertical-align: top;
+        transition: all 0.3s;
+        margin-bottom: 20px;
+    }
+
+    .wpp_content_item:first-child{
+        margin-left: 0;
+    }
+
+    .wpp_content_item:hover {
+        /* transform: scale(1.05, 1.05);
+        transition: all 0.6s; */
+        margin-top: 4px;
+        transition: all 0.3s;
+    }
+
+    .wpp_content_item span {
+        width: 100%;
+        height: 48px;
+        line-height: 48px;
+        border-radius: 0px 0px 2px 2px;
+        display: block;
+        color: #ffffff;
+    }
+
+    .item_span_1 {
+        background: linear-gradient(90deg, rgba(117, 124, 142, 1) 0%, rgba(79, 86, 109, 1) 100%);
+    }
+
+    .item_span_2 {
+        background: linear-gradient(270deg, rgba(58, 179, 157, 1) 0%, rgba(13, 196, 164, 1) 100%);
+    }
+
+    .item_span_3 {
+        background: linear-gradient(90deg, rgba(87, 150, 255, 1) 0%, rgba(66, 133, 244, 1) 100%);
+    }
+
+    .item_span_4 {
+        background: linear-gradient(90deg, rgba(102, 114, 230, 1) 0%, rgba(89, 86, 204, 1) 100%);
+    }
+
+    .wpp_content_item ul li {
+        width: 150px;
+        height: 32px;
+        line-height: 32px;
+        text-align: center;
+        background: rgba(244, 245, 247, 1);
+        border-radius: 17px;
+        margin: 16px auto;
+    }
+
+    .wpp_content_item ul li a {
+        text-decoration: none;
+        color: #333333;
+    }
+
+    .wpp_content_item ul li a:hover {
+        color: #4285F4;
+    }
+
+    .first_child {
+        margin-top: 24px !important;
+    }
+
+    .wpp_content_quickLink {
+        position: absolute;
+        right: -1px;
+        top: 60px;
+        z-index: 1000;
+        margin: 0px;
+        padding: 0px;
+        width: 80px;
+    }
+
+    .wpp_content_quickLink a {
+        text-decoration: none;
+        color: #333333;
+        font-size: 14px;
+    }
+
+    .wpp_content_quickLink ul li {
+        width: 80px;
+        height: 80px;
+        /* line-height: 80px; */
+        text-align: center;
+        background: rgba(255, 255, 255, 1);
+        box-shadow: 0px 8px 9px -2px rgba(171, 175, 186, 0.2);
+        border-radius: 2px 0px 0px 2px;
+        overflow: hidden;
+        margin-top: 20px;
+        transition: all 0.3s;
+    }
+
+    .wpp_content_quickLink .icon {
+        width: 36px;
+        height: 28px;
+        margin: 0 auto;
+        margin-top: 13px;
+    }
+
+    .wpp_content_quickLink ul li span {
+        margin-top: 2px;
+        display: block;
+    }
+
+    .icon_1 {
+        background: url("./asserts/img/ekp_home_icon_ekp_normal@2x.png");
+        background-size: cover;
+    }
+
+    .icon_2 {
+        background: url("./asserts/img/ekp_home_icon_problem_normal@2x.png");
+        background-size: cover;
+    }
+
+    .icon_3 {
+        background: url("./asserts/img/ekp_home_icon_data_normal@2x.png");
+        background-size: cover;
+    }
+
+    .icon_4 {
+        background: url("./asserts/img/ekp_home_icon_function_normal@2x.png");
+        background-size: cover;
+    }
+
+
+    @-webkit-keyframes fadeInDown {
+        from {
+            opacity: 0;
+            -webkit-transform: translate3d(0, -100%, 0);
+            transform: translate3d(0, -100%, 0);
+        }
+
+        to {
+            opacity: 1;
+            -webkit-transform: none;
+            transform: none;
+        }
+    }
+
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            -webkit-transform: translate3d(0, -100%, 0);
+            transform: translate3d(0, -100%, 0);
+        }
+
+        to {
+            opacity: 1;
+            -webkit-transform: none;
+            transform: none;
+        }
+    }
+
+    .fadeInDown {
+        -webkit-animation-name: fadeInDown;
+        animation-name: fadeInDown;
+    }
+
+
+    .wpp_content_item_1 {
+        -webkit-animation: fadeInDown .5s ease-in-out 0s 1 both;
+        -moz-animation: fadeInDown .5s ease-in-out 0s 1 both;
+        -ms-animation: fadeInDown .5s ease-in-out 0s 1 both;
+        -o-animation: fadeInDown .5s ease-in-out 0s 1 both;
+        animation: fadeInDown .5s ease-in-out 0s 1 both;
+    }
+
+    .wpp_content_item_2 {
+        -webkit-animation: fadeInDown .6s ease-in-out 0s 1 both;
+        -moz-animation: fadeInDown .6s ease-in-out 0s 1 both;
+        -ms-animation: fadeInDown .6s ease-in-out 0s 1 both;
+        -o-animation: fadeInDown .6s ease-in-out 0s 1 both;
+        animation: fadeInDown .6s ease-in-out 0s 1 both;
+    }
+
+    .wpp_content_item_3 {
+        -webkit-animation: fadeInDown .7s ease-in-out 0s 1 both;
+        -moz-animation: fadeInDown .7s ease-in-out 0s 1 both;
+        -ms-animation: fadeInDown .7s ease-in-out 0s 1 both;
+        -o-animation: fadeInDown .7s ease-in-out 0s 1 both;
+        animation: fadeInDown .7s ease-in-out 0s 1 both;
+    }
+
+    .wpp_content_item_4 {
+        -webkit-animation: fadeInDown .8s ease-in-out 0s 1 both;
+        -moz-animation: fadeInDown .8s ease-in-out 0s 1 both;
+        -ms-animation: fadeInDown .8s ease-in-out 0s 1 both;
+        -o-animation: fadeInDown .8s ease-in-out 0s 1 both;
+        animation: fadeInDown .8s ease-in-out 0s 1 both;
+    }
+
+    .wpp_content_quickLink {
+        -webkit-animation: fadeInDown .8s ease-in-out 0s 1 both;
+        -moz-animation: fadeInDown .8s ease-in-out 0s 1 both;
+        -ms-animation: fadeInDown .8s ease-in-out 0s 1 both;
+        -o-animation: fadeInDown .8s ease-in-out 0s 1 both;
+        animation: fadeInDown .8s ease-in-out 0s 1 both;
+    }
+
+    .wpp_content_quickLink ul li a:hover {
+        color: #4285F4;
+    }
+    .wpp_content_quickLink ul li:hover{
+        width: 92px;
+        margin-left: -12px;
+        transition: all 0.3s;
+    }
+
+
+    .wpp_content_quickLink ul li a:hover .icon_1 {
+        background: url("./asserts/img/ekp_home_icon_ekp_hover@2x.png");
+        background-size: cover;
+    }
+
+
+    .wpp_content_quickLink ul li a:hover .icon_2 {
+        background: url("./asserts/img/ekp_home_icon_problem_hover@2x.png");
+        background-size: cover;
+    }
+
+    .wpp_content_quickLink ul li a:hover .icon_3 {
+        background: url("./asserts/img/ekp_home_icon_data_hover@2x.png");
+        background-size: cover;
+    }
+
+    .wpp_content_quickLink ul li a:hover .icon_4 {
+        background: url("./asserts/img/ekp_home_icon_function_hover@2x.png");
+        background-size: cover;
+    }
+
+
+    .wpp_content_quickLink ul li a:active .icon_1 {
+        background: url("./asserts/img/ekp_home_icon_ekp_highlight@2x.png");
+        background-size: cover;
+    }
+
+    .wpp_content_quickLink ul li a:active{
+        color: #2F6DD4;
+    }
+
+    .wpp_content_quickLink ul li a:active .icon_2 {
+        background: url("./asserts/img/ekp_home_icon_problem_highlight@2x.png");
+        background-size: cover;
+    }
+
+    .wpp_content_quickLink ul li a:active .icon_3 {
+        background: url("./asserts/img/ekp_home_icon_data_highlight@2x.png");
+        background-size: cover;
+    }
+
+    .wpp_content_quickLink ul li a:active .icon_4 {
+        background: url("./asserts/img/ekp_home_icon_function_highlight@2x.png");
+        background-size: cover;
+    }
+
+    .wpp_content_spanContent {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        padding: 0 15px 0 15px;
+    }
+</style>
+<div class="wpp_main">
+    <div class="wpp_main_content">
+        <div class="wpp_header">职场常用业务流程</div>
+        <div class="wpp_content">
+            <div class="wpp_content_item wpp_content_item_1">
+                <ul>
+                    <span class="item_span_1">人事</span>
+                    <li class="first_child"><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=16d61590002815e1667eb9d4a60bf195" target="_blank">
+                        <div class="wpp_content_spanContent" title="请假申请">请假申请</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=12f32e3d9067a33cff47a6242ddb936c" target="_blank">
+                        <div class="wpp_content_spanContent" title="转正申请">转正申请</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=12ee6603ca36d127a9ea4c0449aa32f0" target="_blank">
+                        <div class="wpp_content_spanContent" title="招调干（工）申请">招调干（工）申请</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=13b980a65b7e8bda66c732a4f5ab8f29" target="_blank">
+                        <div class="wpp_content_spanContent" title="通讯费补贴申请">通讯费补贴申请</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=132372c7b64ece3e5c0763546179cb7a" target="_blank">
+                        <div class="wpp_content_spanContent" title="年假延期申请">年假延期申请</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=12d978ba5c5e88748e9696444f6a1de9" target="_blank">
+                        <div class="wpp_content_spanContent" title="销假申请">销假申请</div>
+                    </a></li>
+                </ul>
+            </div>
+            <div class="wpp_content_item wpp_content_item_2">
+                <ul>
+                    <span class="item_span_2">行政</span>
+                    <li class="first_child"><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=15c76cce503c367e7ef12a249ba9b338&.fdTemplate=15c76cce503c367e7ef12a249ba9b338&i.docTemplate=15c76cce503c367e7ef12a249ba9b338" target="_blank">
+                        <div class="wpp_content_spanContent" title="用车申请">用车申请</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/oitems/#mydoc=create&j_path=%2FlistCreate" target="_blank">
+                        <div class="wpp_content_spanContent" title="办公用品申请">办公用品申请</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=16adee50b01bdfc6d3ca79c4964bdaa7&.fdTemplate=16adee50b01bdfc6d3ca79c4964bdaa7&i.docTemplate=16adee50b01bdfc6d3ca79c4964bdaa7" target="_blank">
+                        <div class="wpp_content_spanContent" title="人力资源需求">人力资源需求</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=160719fa7e17718d24f813f4fa6947bc&.fdTemplate=160719fa7e17718d24f813f4fa6947bc&i.docTemplate=160719fa7e17718d24f813f4fa6947bc" target="_blank">
+                        <div class="wpp_content_spanContent" title="档案利用登记">档案利用登记</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=1685f827b82a7cb3c5463524853b484f" target="_blank">
+                        <div class="wpp_content_spanContent" title="成本领料申请">成本领料申请</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=1448770b6f946830d77c255410fa560b" target="_blank">
+                        <div class="wpp_content_spanContent" title="证照申请">证照申请</div>
+                    </a></li>
+                </ul>
+            </div>
+            <div class="wpp_content_item wpp_content_item_3">
+                <ul>
+                    <span class="item_span_3">财务</span>
+                    <li class="first_child"><a href="https://demo.landray.com.cn/fssc/expense/index.jsp?j_module=true#j_path=%2FlistDaiFuKuan&fdPaymentStatus=1" target="_blank">
+                        <div class="wpp_content_spanContent" title="报销申请">报销申请</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=14b158b8fa15db74da6b3694380bd87f" target="_blank">
+                        <div class="wpp_content_spanContent" title="借款申请">借款申请</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/fssc/loan/index.jsp?j_module=true#j_path=%2FlistFsscLoanRepayment" target="_blank">
+                        <div class="wpp_content_spanContent" title="还款申请">还款申请</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=view&fdId=16ab606ea5d32d8305558754b1f860cc" target="_blank">
+                        <div class="wpp_content_spanContent" title="社保查询">社保查询</div>
+                    </a></li>
+                </ul>
+            </div>
+            <div class="wpp_content_item wpp_content_item_4">
+                <ul>
+                    <span class="item_span_4">业务</span>
+                    <li class="first_child"><a href="https://demo.landray.com.cn/km/contract/km_contract_main/kmContractMain.do?method=add&fdTemplateId=16a6c4b90c214788cd36f704262b3017&.fdTemplate=16a6c4b90c214788cd36f704262b3017&i.docTemplate=16a6c4b90c214788cd36f704262b3017" target="_blank">
+                        <div class="wpp_content_spanContent" title="合同申请">合同申请</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/sys/portal/page.jsp?j_module=true#j_start=%2Fkm%2Fimeeting%2Findex.jsp&j_target=_iframe&j_path=%2FmyWorkbench" target="_blank">
+                        <div class="wpp_content_spanContent" title="会议室预定">会议室预定</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=15a2356cefcb0d65ec8f8a94d6ea330b&.fdTemplate=15a2356cefcb0d65ec8f8a94d6ea330b&i.docTemplate=15a2356cefcb0d65ec8f8a94d6ea330b" target="_blank">
+                        <div class="wpp_content_spanContent" title="客户拜访登记">客户拜访登记</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=16e1bdfd56118955714715a485284baa&.fdTemplate=16e1bdfd56118955714715a485284baa&i.docTemplate=16e1bdfd56118955714715a485284baa" target="_blank">
+                        <div class="wpp_content_spanContent" title="采购申请">采购申请</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=15c76d8dcd5391137d1d8d94c58acc20&.fdTemplate=15c76d8dcd5391137d1d8d94c58acc20&i.docTemplate=15c76d8dcd5391137d1d8d94c58acc20" target="_blank">
+                        <div class="wpp_content_spanContent" title="项目立项">项目立项</div>
+                    </a></li>
+                    <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=16d6270356e2460fea1820d4c1e82243&.fdTemplate=16d6270356e2460fea1820d4c1e82243&i.docTemplate=16d6270356e2460fea1820d4c1e82243" target="_blank">
+                        <div class="wpp_content_spanContent" title="培训申请">培训申请</div>
+                    </a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="wpp_content_quickLink">
+            <ul>
+                <li><a href="
+                        https://demo.landray.com.cn/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=view&fdId=1705c7908a9f5690a1fb5ab431b980b0" target="_blank">
+                    <div>
+                        <div class="icon icon_1"></div>
+                        <span>了解EKP</span>
+                    </div>
+                </a></li>
+                <li><a href="https://demo.landray.com.cn/kms/multidoc/#j_path=%2FdocCategory&docCategory=1705c69e11b877b26bf4dc34d9d96471" target="_blank">
+                    <div>
+                        <div class="icon icon_4"></div>
+                        <span>功能介绍</span>
+                    </div>
+                </a></li>
+                <li><a href="https://demo.landray.com.cn/demo/feedback/#j_path=%2FdemoFeedbackProblem" target="_blank">
+                    <div>
+                        <div class="icon icon_2"></div>
+                        <span>常见问题</span>
+                    </div>
+                </a></li>
+                <li><a href="https://demo.landray.com.cn/map/map.jsp" target="_blank">
+                    <div>
+                        <div class="icon icon_3"></div>
+                        <span>数据大屏</span>
+                    </div>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script src="./js/data.js"></script>
+<script src="./js/index.js"></script>
+</body>
+
+</html>

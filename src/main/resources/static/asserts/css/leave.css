@@ -1,0 +1,48 @@
+.select2-container--default .select2-selection--single {
+    border-radius: 4px;
+    height: 38px;
+    display: block;
+    width: 100%;
+    padding: .210rem 0.1rem;
+    border: 1px solid #ced4da;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border-radius: .25rem;
+    border: 1px solid #ced4da;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 26px;
+    position: absolute;
+    top: 6px;
+    right: 1px;
+    width: 20px;
+}
+
+
+.kv-upload-progress {
+    display: none;
+}
+
+.select2-container {
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 0;
+    position: relative;
+    vertical-align: middle;
+    width: 100%;
+}
+
+
+.leave_content {
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    padding-bottom: 6px;
+    border-top: 1px solid #F2F2F2;
+    overflow: hidden;
+}

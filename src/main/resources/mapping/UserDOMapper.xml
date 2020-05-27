@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mjrj.lzh.pms.dao.UserDOMapper" >
+  <resultMap id="BaseResultMap" type="com.mjrj.lzh.pms.entity.UserDO" >
+    <result column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="TELEPHONE" property="telephone" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+    <result column="WORK_ADDRESS" property="workAddress" jdbcType="VARCHAR" />
+    <result column="WORK_STATUS" property="workStatus" jdbcType="CHAR" />
+    <result column="ID_CARD" property="idCard" jdbcType="VARCHAR" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="DECIMAL" />
+    <result column="SEX" property="sex" jdbcType="CHAR" />
+    <result column="NATION" property="nation" jdbcType="CHAR" />
+    <result column="FAMILY_ADDRESS" property="familyAddress" jdbcType="VARCHAR" />
+    <result column="LIVE_ADDRESS" property="liveAddress" jdbcType="VARCHAR" />
+    <result column="IS_MARRY" property="isMarry" jdbcType="CHAR" />
+    <result column="WORK_TIME" property="workTime" jdbcType="DECIMAL" />
+    <result column="EDUCATION" property="education" jdbcType="CHAR" />
+    <result column="GRADUATION_TIME" property="graduationTime" jdbcType="DECIMAL" />
+    <result column="BANK_CARD" property="bankCard" jdbcType="VARCHAR" />
+    <result column="DEPT_ID" property="deptId" jdbcType="VARCHAR" />
+    <result column="POSITION_ID" property="positionId" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="ENTRYSTATUS" property="entrystatus" jdbcType="CHAR" />
+    <result column="SYON_TIME" property="syonTime" jdbcType="DECIMAL" />
+    <result column="CORRECTION_TIME" property="correctionTime" jdbcType="DECIMAL" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    ID, NAME, TELEPHONE,
+      PASSWORD, EMAIL, WORK_ADDRESS,
+      WORK_STATUS, ID_CARD, BIRTHDAY,
+      SEX, NATION, FAMILY_ADDRESS,
+      LIVE_ADDRESS, IS_MARRY, WORK_TIME,
+      EDUCATION, GRADUATION_TIME, BANK_CARD,
+      DEPT_ID, POSITION_ID, CREATE_TIME,
+      STATUS, ENTRYSTATUS, SYON_TIME,
+      CORRECTION_TIME
+  </sql>
+
+
+  <insert id="insert" parameterType="com.mjrj.lzh.pms.entity.UserDO" >
+    <selectKey resultType="java.lang.Integer" order="BEFORE" keyProperty="id">
+      select SEQ_USER_ID.nextval from dual
+    </selectKey>
+    insert into USERDO (ID, NAME, TELEPHONE, 
+      PASSWORD, EMAIL, WORK_ADDRESS, 
+      WORK_STATUS, ID_CARD, BIRTHDAY, 
+      SEX, NATION, FAMILY_ADDRESS, 
+      LIVE_ADDRESS, IS_MARRY, WORK_TIME, 
+      EDUCATION, GRADUATION_TIME, BANK_CARD, 
+      DEPT_ID, POSITION_ID, CREATE_TIME, 
+      STATUS, ENTRYSTATUS, SYON_TIME, 
+      CORRECTION_TIME)
+    values (#{id,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{workAddress,jdbcType=VARCHAR}, 
+      #{workStatus,jdbcType=CHAR}, #{idCard,jdbcType=VARCHAR}, #{birthday,jdbcType=DECIMAL}, 
+      #{sex,jdbcType=CHAR}, #{nation,jdbcType=CHAR}, #{familyAddress,jdbcType=VARCHAR}, 
+      #{liveAddress,jdbcType=VARCHAR}, #{isMarry,jdbcType=CHAR}, #{workTime,jdbcType=DECIMAL}, 
+      #{education,jdbcType=CHAR}, #{graduationTime,jdbcType=DECIMAL}, #{bankCard,jdbcType=VARCHAR}, 
+      #{deptId,jdbcType=VARCHAR}, #{positionId,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=CHAR}, #{entrystatus,jdbcType=CHAR}, #{syonTime,jdbcType=DECIMAL}, 
+      #{correctionTime,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mjrj.lzh.pms.entity.UserDO" >
+    <selectKey resultType="java.math.BigDecimal" order="BEFORE" keyProperty="id">
+      select SEQ_USER_ID.nextval from dual
+    </selectKey>
+    insert into USERDO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        ID,
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="telephone != null" >
+        TELEPHONE,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="workAddress != null" >
+        WORK_ADDRESS,
+      </if>
+      <if test="workStatus != null" >
+        WORK_STATUS,
+      </if>
+      <if test="idCard != null" >
+        ID_CARD,
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY,
+      </if>
+      <if test="sex != null" >
+        SEX,
+      </if>
+      <if test="nation != null" >
+        NATION,
+      </if>
+      <if test="familyAddress != null" >
+        FAMILY_ADDRESS,
+      </if>
+      <if test="liveAddress != null" >
+        LIVE_ADDRESS,
+      </if>
+      <if test="isMarry != null" >
+        IS_MARRY,
+      </if>
+      <if test="workTime != null" >
+        WORK_TIME,
+      </if>
+      <if test="education != null" >
+        EDUCATION,
+      </if>
+      <if test="graduationTime != null" >
+        GRADUATION_TIME,
+      </if>
+      <if test="bankCard != null" >
+        BANK_CARD,
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID,
+      </if>
+      <if test="positionId != null" >
+        POSITION_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="entrystatus != null" >
+        ENTRYSTATUS,
+      </if>
+      <if test="syonTime != null" >
+        SYON_TIME,
+      </if>
+      <if test="correctionTime != null" >
+        CORRECTION_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+        #{id,jdbcType=DECIMAL},
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="workAddress != null" >
+        #{workAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="workStatus != null" >
+        #{workStatus,jdbcType=CHAR},
+      </if>
+      <if test="idCard != null" >
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DECIMAL},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="nation != null" >
+        #{nation,jdbcType=CHAR},
+      </if>
+      <if test="familyAddress != null" >
+        #{familyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="liveAddress != null" >
+        #{liveAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isMarry != null" >
+        #{isMarry,jdbcType=CHAR},
+      </if>
+      <if test="workTime != null" >
+        #{workTime,jdbcType=DECIMAL},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=CHAR},
+      </if>
+      <if test="graduationTime != null" >
+        #{graduationTime,jdbcType=DECIMAL},
+      </if>
+      <if test="bankCard != null" >
+        #{bankCard,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null" >
+        #{positionId,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="entrystatus != null" >
+        #{entrystatus,jdbcType=CHAR},
+      </if>
+      <if test="syonTime != null" >
+        #{syonTime,jdbcType=DECIMAL},
+      </if>
+      <if test="correctionTime != null" >
+        #{correctionTime,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>

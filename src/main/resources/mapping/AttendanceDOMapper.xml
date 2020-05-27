@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mjrj.lzh.pms.dao.AttendanceDOMapper" >
+  <resultMap id="BaseResultMap" type="com.mjrj.lzh.pms.entity.AttendanceDO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="take_time" property="takeTime" jdbcType="TIMESTAMP" />
+    <result column="place" property="place" jdbcType="VARCHAR" />
+    <result column="work_hours" property="workHours" jdbcType="DOUBLE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="is_exception" property="isException" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, take_time, place, work_hours, remark, status, is_exception
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from attendance
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from attendance
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mjrj.lzh.pms.entity.AttendanceDO" >
+    insert into attendance (id, user_id, take_time,
+      place, work_hours, remark, 
+      status, is_exception)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{takeTime,jdbcType=TIMESTAMP},
+      #{place,jdbcType=VARCHAR}, #{workHours,jdbcType=DOUBLE}, #{remark,jdbcType=VARCHAR},
+      #{status,jdbcType=TINYINT}, #{isException,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mjrj.lzh.pms.entity.AttendanceDO" >
+    insert into attendance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="takeTime != null" >
+        take_time,
+      </if>
+      <if test="place != null" >
+        place,
+      </if>
+      <if test="workHours != null" >
+        work_hours,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="isException != null" >
+        is_exception,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="takeTime != null" >
+        #{takeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="place != null" >
+        #{place,jdbcType=VARCHAR},
+      </if>
+      <if test="workHours != null" >
+        #{workHours,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="isException != null" >
+        #{isException,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mjrj.lzh.pms.entity.AttendanceDO" >
+    update attendance
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="takeTime != null" >
+        take_time = #{takeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="place != null" >
+        place = #{place,jdbcType=VARCHAR},
+      </if>
+      <if test="workHours != null" >
+        work_hours = #{workHours,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="isException != null" >
+        is_exception = #{isException,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mjrj.lzh.pms.entity.AttendanceDO" >
+    update attendance
+    set user_id = #{userId,jdbcType=INTEGER},
+      take_time = #{takeTime,jdbcType=TIMESTAMP},
+      place = #{place,jdbcType=VARCHAR},
+      work_hours = #{workHours,jdbcType=DOUBLE},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      is_exception = #{isException,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByUserIdAndTakeTime"  resultMap="BaseResultMap">
+    select
+    take_time, place, remark, status, is_exception
+    from attendance
+    where user_id = #{userId,jdbcType=INTEGER}
+    and  instr(take_time,#{time,jdbcType=VARCHAR})>0
+  </select>
+</mapper>

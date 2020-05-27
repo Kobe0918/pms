@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="commons/common::cssLink(~{::title},~{::link})">
+    <title>请假申请</title>
+
+    <link th:href="@{/asserts/css/leave.css}" rel="stylesheet">
+
+
+</head>
+
+<body>
+<div th:replace="~{commons/bar::topbar}"></div>
+
+<style type="text/css">
+    .hideBtn {
+        display: none;
+    }
+    .no-footer {
+        width: 93%;
+    }
+
+    .dataTables_length {
+        padding-top: 10.570px;
+        padding-left: 20px;
+    }
+
+    .table-hover th {
+        text-align: center;
+    }
+
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="commons/bar :: #sidebar(activeUri='/dashboard')"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="chartjs-size-monitor"
+                 style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+            </div>
+
+            <div class="wpp_main">
+                <div class="wpp_main_content">
+                    <div class="wpp_header">请假申请</div>
+
+
+                    <div class="leave_content">
+                        <div class="add_leave">
+                            <form class="form-horizontal" id="form-add" style="margin-top: 10px">
+                                <input type="hidden" name="leaveId">
+                                <div class="form-group form-userName" style="display: none">
+                                    <label for="f_userName" class="col-sm-2 control-label"><font size="2" color="red">*</font>用户名</label>
+                                    <div class="col-sm-10">
+                                        <input id="f_userName" name="userName" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group form-deptName" style="display: none">
+                                    <label for="f_deptName" class="col-sm-2 control-label"><font size="2" color="red">*</font>部门名称</label>
+                                    <div class="col-sm-10">
+                                        <input id="f_deptName" name="deptName" class="form-control" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="leave_style" class="col-sm-2 control-label"><font size="2" color="red">*</font>请假类型</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="leave_style" name="leaveStyle">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="beginTime" class="col-sm-2 control-label"><font size="2" color="red">*</font>开始时间</label>
+                                    <div class="col-sm-10">
+                                        <!--id="beginTime"-->
+                                        <input id="beginTime1" name="beginTime" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="endTime" class="col-sm-2 control-label"><font size="2" color="red">*</font>结束时间</label>
+                                    <div class="col-sm-10">
+                                        <!--id="endTime"-->
+                                        <input id="endTime1" name="endTime" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="leaveReason" class="col-sm-2 control-label"><font size="2" color="red">*</font>请假原因</label>
+                                    <div class="col-sm-10">
+                                        <textarea id="leaveReason" name="leaveReason" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="img_url" class="col-sm-2 control-label">图片上传</label>
+                                    <div class="col-sm-10">
+                                        <input id="img_url" type="file" multiple class="file"
+                                               data-overwrite-initial="false" name="imgUrl">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+
+                                    <font size="4">审批流程</font>
+                                </div>
+                                <div class="form-group">
+                                    <label for="monitor" class="col-sm-2 control-label"><font size="2" color="red">*</font>部门负责人</label>
+                                    <div class="col-sm-10">
+                                        <select class="custom-select d-block w-100" id="monitor" name="monitorId">
+                                            <option value="1">刘翔</option>
+                                            <option value="2">乔丹</option>
+                                            <option value="3">麦克</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="personnel" class="col-sm-2 control-label"><font size="2" color="red">*</font>人事抄送</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control" id="personnel" name="personnelId">
+                                            <option value="1">乔治</option>
+                                            <option value="2">科比</option>
+                                            <option value="3">詹姆斯</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group update_time" style="display: none">
+                                    <label for="updateTime" class="col-sm-2 control-label">修改时间</label>
+                                    <div class="col-sm-10">
+                                        <input id="updateTime" name="updateTime" disabled="disabled" class="form-control">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="submitBtn" class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-10">
+                                        <button type="button" id="submitBtn"
+                                                class="btn btn-outline-primary btn-lg btn-block" style="width: 100%" >
+                                            提交请假表
+                                        </button>
+                                    </div>
+                                    <!--<button type="button" id="submitBtn" class="btn btn-lg btn-primary">提交</button>-->
+                                </div>
+                            </form>
+                        </div>
+
+
+
+                        <div class="leave_list" style="display: none">
+                            <form class="form-inline mb-2" id="searchForm" style="margin-top: 10px;">
+                                <div class="form-group">
+                                    <!--<label for="status" class="sr-only">状态</label>-->
+                                    <div class="form-group  mb-2" style="margin-left: 1px!important;" id="div_leave_status">
+                                        <select id="status" class="form-control" name="leaveStatus">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group"  style="display: none" id="f_user_name">
+                                    <!---->
+                                    <label for="status" class="sr-only">状态</label>
+                                    <div class="form-group mb-2">
+                                        <input id="userName" class="form-control" name="userName" placeholder="用户名">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only">时间</label>
+                                    <div class="form-group mx-sm-3 mb-2">
+                                        <input id="beginTime" name="beginTime" class="form-control" placeholder="开始时间">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only">时间</label>
+                                    <div class="form-group  mb-2">
+                                        <input id="endTime" name="endTime" class="form-control" placeholder="结束时间">
+                                    </div>
+                                </div>
+                                <div style="padding-left: 10px"></div>
+                                        <button type="button" class="btn btn-outline-secondary  mb-2" id="leaveQueryBtn"  data-toggle="tooltip" data-placement="top" title="搜索">
+                                            <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16"
+                                                 fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                      d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z"
+                                                      clip-rule="evenodd"/>
+                                                <path fill-rule="evenodd"
+                                                      d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"
+                                                      clip-rule="evenodd"/>
+                                            </svg>
+                                        </button>
+                                        <div style="padding-left: 10px"></div>
+                                        <button  class="btn btn-outline-primary  mb-2" id="refreshBtn"  data-toggle="tooltip" data-placement="top" title="刷新" >
+                                            <svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M2.854 7.146a.5.5 0 00-.708 0l-2 2a.5.5 0 10.708.708L2.5 8.207l1.646 1.647a.5.5 0 00.708-.708l-2-2zm13-1a.5.5 0 00-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 00-.708.708l2 2a.5.5 0 00.708 0l2-2a.5.5 0 000-.708z" clip-rule="evenodd"/>
+                                                <path fill-rule="evenodd" d="M8 3a4.995 4.995 0 00-4.192 2.273.5.5 0 01-.837-.546A6 6 0 0114 8a.5.5 0 01-1.001 0 5 5 0 00-5-5zM2.5 7.5A.5.5 0 013 8a5 5 0 009.192 2.727.5.5 0 11.837.546A6 6 0 012 8a.5.5 0 01.501-.5z" clip-rule="evenodd"/>
+                                            </svg>
+                                        </button>
+                                <div style="padding-left: 10px"></div>
+                                <button type="button" class="btn btn-outline-danger mb-2" id="leaveDeleteBtn"  data-toggle="tooltip" data-placement="top" title="撤销选中项">
+                                    <svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16"
+                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/>
+                                        <path fill-rule="evenodd"
+                                              d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                                <div style="padding-left: 10px"></div>
+                                <button type="button" class="btn btn-outline-success  mb-2" id="leaveOkBtn" style="display: none" data-toggle="tooltip" data-placement="top" title="通过审批">
+                                    <svg class="bi bi-check-all" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M12.354 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" clip-rule="evenodd"/>
+                                        <path d="M6.25 8.043l-.896-.897a.5.5 0 1 0-.708.708l.897.896.707-.707zm1 2.414l.896.897a.5.5 0 0 0 .708 0l7-7a.5.5 0 0 0-.708-.708L8.5 10.293l-.543-.543-.707.707z"/>
+                                    </svg>
+                                </button>
+                                <div style="padding-left: 10px"></div>
+                                <button type="button" class="btn btn-outline-danger  mb-2" id="leaveNoBtn" style="display: none" data-toggle="tooltip" data-placement="top" title="拒绝审批">
+                                    <svg class="bi bi-x" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M11.854 4.146a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708-.708l7-7a.5.5 0 0 1 .708 0z" clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd" d="M4.146 4.146a.5.5 0 0 0 0 .708l7 7a.5.5 0 0 0 .708-.708l-7-7a.5.5 0 0 0-.708 0z" clip-rule="evenodd"/>
+                                    </svg>
+                                </button>
+                            </form>
+
+
+                            <!--&lt;!&ndash;修改成bootstrap-datatable&ndash;&gt;-->
+<!--leaveTable-->
+                            <table id="leaveTable" class="table table-hover" cellspacing="0"
+                                   style="width: 95%!important;margin-top: 10px">
+                                <thead>
+                                <tr>
+                                    <th width="8%">
+                                        <input id="checkAll" name="id" type="checkbox">
+                                    </th>
+                                    <th style="width: 10%;">请假类型</th>
+                                    <th style="width: 12%;">申请人</th>
+                                    <th style="width: 20%;">开始日期</th>
+                                    <th style="width: 15%;">结束日期</th>
+                                    <th style="width: 15%;">新增日期</th>
+                                    <th style="width: 15%;">审批状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody align="center">
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="wpp_content_quickLink">
+                        <ul>
+                            <li><a type="button" id="take_leave" style="cursor: pointer;">
+                                <div>
+                                    <div class="icon icon_4" ></div>
+                                    <span>请假申请</span>
+                                </div>
+                            </a></li>
+                            <li class="leave_record" style="display: none;cursor: pointer;"><a type="button" id="leave_record" >
+                                <div>
+                                    <div class="icon icon_3"></div>
+                                    <span>请假记录</span>
+                                </div>
+                            </a></li>
+                            <li class="checkRecord" style="display: none;cursor: pointer;"><a type="button" id ="checkRecord" >
+                                <div>
+                                    <div class="icon icon_2"></div>
+                                    <span>待我审批</span>
+                                </div>
+                            </a></li>
+                            <li><a type="button" id ="myRecord" style="cursor: pointer;">
+                                <div>
+                                    <div class="icon icon_1"></div>
+                                    <span>我的记录</span>
+                                </div>
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="row" style="height: 100px"></div>
+</div>
+
+<!--<div class="modal fade bs-example-modal-sm" id="delConfirm" tabindex="-1" role="dialog" aria-labelledby="delModalLabel">-->
+    <!--<div class="modal-dialog modal-sm" role="document">-->
+        <!--<div class="modal-content">-->
+            <!--<div class="modal-header">-->
+                <!--<h4 class="modal-title" id="delModalLabel"></h4>-->
+                <!--<a type="button" class="close" data-dismiss="modal" aria-label="Close"><span-->
+                        <!--aria-hidden="true">&times;</span>-->
+                <!--</a>-->
+
+            <!--</div>-->
+            <!--<div class="modal-body">-->
+                <!--确定撤销该条记录？-->
+            <!--</div>-->
+            <!--<div class="modal-footer">-->
+                <!--<button type="button" id="delete-submit" class="btn btn-primary">Ok</button>-->
+                <!--<button type="button" id="delete-close" class="btn btn-default" data-dismiss="modal">No</button>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div th:replace="commons/common::scriptSrc"></div>
+<script th:src="@{/asserts/js/my/leave.js}"></script>
+</body>
+
+</html>

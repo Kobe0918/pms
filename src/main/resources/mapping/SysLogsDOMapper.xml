@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mjrj.lzh.pms.dao.SysLogsDOMapper" >
+  <resultMap id="BaseResultMap" type="com.mjrj.lzh.pms.entity.SysLogsDO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="module" property="module" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="TINYINT" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.mjrj.lzh.pms.entity.SysLogsDO" extends="BaseResultMap" >
+    <result column="remark" property="remark" jdbcType="LONGVARCHAR" />
+
+    <!--<association property="userName" column="user_id" javaType="java.lang.String">-->
+      <!--<result column="user_name" property="userName"/>-->
+    <!--</association>-->
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, module, flag, createTime
+  </sql>
+  <sql id="Blob_Column_List" >
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_logs
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_logs
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mjrj.lzh.pms.entity.SysLogsDO" >
+    insert into sys_logs (id, user_id, module, 
+      flag, createTime, remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{module,jdbcType=VARCHAR}, 
+      #{flag,jdbcType=TINYINT}, #{createtime,jdbcType=TIMESTAMP}, #{remark,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mjrj.lzh.pms.entity.SysLogsDO" >
+    insert into sys_logs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="module != null" >
+        module,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="module != null" >
+        #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mjrj.lzh.pms.entity.SysLogsDO" >
+    update sys_logs
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="module != null" >
+        module = #{module,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.mjrj.lzh.pms.entity.SysLogsDO" >
+    update sys_logs
+    set user_id = #{userId,jdbcType=INTEGER},
+      module = #{module,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=TINYINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mjrj.lzh.pms.entity.SysLogsDO" >
+    update sys_logs
+    set user_id = #{userId,jdbcType=INTEGER},
+      module = #{module,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=TINYINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByPage" parameterType="com.mjrj.lzh.pms.dto.pagedto.SysLogsPageDTO" resultMap="ResultMapWithBLOBs">
+    <!--select-->
+    <!--<include refid="Base_Column_List" />-->
+    <!--,-->
+    <!--<include refid="Blob_Column_List" />-->
+    <!--from sys_logs-->
+    <!--<trim prefix="where" prefixOverrides="and">-->
+      <!--<if test="beginTime != null ">-->
+        <!--a.createTime &gt;= #{beginTime,jdbcType=TIMESTAMP}-->
+      <!--</if>-->
+      <!--<if test="endTime != null ">-->
+        <!--a.createTime &lt;= #{endTime,jdbcType=TIMESTAMP}-->
+      <!--</if>-->
+      <!--<if test="userName != null">-->
+        <!--instr(b.user_name,#{userName,jdbcType=VARCHAR}) >0-->
+      <!--</if>-->
+    <!--</trim>-->
+    <!--order by createTime desc-->
+
+    select a.*, b.user_name from sys_logs a left join sys_user b on(a.user_id = b.id)
+     <trim prefix="where" prefixOverrides="and">
+       <if test="beginTime != null ">
+          and a.createTime &gt;= #{beginTime,jdbcType=TIMESTAMP}
+       </if>
+       <if test="endTime != null ">
+         and a.createTime &lt;= #{endTime,jdbcType=TIMESTAMP}
+       </if>
+       <if test="userName != null">
+         and instr(b.user_name,#{userName,jdbcType=VARCHAR}) >0
+       </if>
+    </trim>
+    order by createTime desc
+  </select>
+
+  <delete id="deleteByIds" parameterType="java.util.Arrays">
+    delete from sys_logs where id in
+    <foreach collection="list" close=")" open="(" separator="," item="item" index="index">
+      #{item}
+    </foreach>
+  </delete>
+</mapper>

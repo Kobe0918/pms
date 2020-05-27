@@ -1,0 +1,153 @@
+spring:
+  profiles:
+    active: dev
+
+---
+
+server:
+     port: 8080
+     error:
+       path: /error
+ #    项目路径
+ #    servlet:
+ #      context-path: /pms
+
+#阿里云 短信设置
+aliyun:
+     regionId: cn-hangzhou
+     accessKeyId: LTAI4FqWPUjfqnm457z52s6u
+     secret: ogeCjPX93ZILjmLJ1pVbB4POXRi0JW
+     signName: 敏捷人事管理系统
+     templateCode: SMS_184826139
+
+#QQ邮件设置
+mail:
+     host: smtp.qq.com
+     userName: 1843058573@qq.com
+     passWord: btbhcqtsdmdedcji
+     reciver:  jr12796447@163.com
+     title:    短信发送失败消息提醒
+
+uploadFile:
+  resourceHandler: /uploadFiles/**    #请求 url 中的资源映射
+  location: E:/ylz-brt/zw_work/uploadFiles/        #自定义上传文件本地保存路径
+  leave-location: leave  #请假上传图片存放路径
+
+#spring配置
+spring:
+
+#多媒体上传配置
+    servlet:
+        multipart:
+            enabled: true
+             #临时存放地址
+            max-file-size: 1MB
+             #多文件上传最大容量
+            max-request-size: 10MB
+             #是否延迟解析
+            resolve-lazily: false
+
+    profiles: dev
+    thymeleaf:
+       cache: false
+       encoding: UTF-8
+    messages:
+       basename: i18n.login
+       encoding: UTF-8
+    datasource:
+#       username: scott
+#       password: tiger
+#       url: jdbc:oracle:thin:@localhost:1521:orcl
+#       driver-class-name: oracle.jdbc.driver.OracleDriver
+       username: root
+       password: root
+       url: jdbc:mysql://localhost:3306/bysj_pms?useUnicode=true&characterEncoding=utf-8
+       driver-class-name: com.mysql.jdbc.Driver
+       type: com.alibaba.druid.pool.DruidDataSource
+       initialSize: 5
+       minIdle: 5
+       maxActive: 20
+       maxWait: 60000
+       timeBetweenEvictionRunsMillis: 60000
+       minEvictableIdleTimeMillis: 300000
+       validationQuery: SELECT 1 FROM DUAL
+       testWhileIdle: true
+       testOnBorrow: false
+       testOnReturn: false
+       poolPreparedStatements: true
+       #   配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+       filters: stat,wall
+       maxPoolPreparedStatementPerConnectionSize: 20
+       useGlobalDataSourceStat: true
+       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    mvc:
+       date-format: yyyy/MM/dd
+    redis:
+       host: localhost
+       port: 6379
+       password: 123456
+       database: 0
+       jedis:
+             pool:
+               ## 连接池最大连接数（使用负值表示没有限制）
+               #spring.redis.pool.max-active=8
+               max-active: 8
+               ## 连接池最大阻塞等待时间（使用负值表示没有限制）
+               #spring.redis.pool.max-wait=-1
+               max-wait: -1
+               ## 连接池中的最大空闲连接
+               #spring.redis.pool.max-idle=8
+               max-idle: 8
+               ## 连接池中的最小空闲连接
+               #spring.redis.pool.min-idle=0
+               min-idle: 0
+           ## 连接超时时间（毫秒）
+       timeout: 1200
+
+#    activemq:
+#        broker-url: tcp://127.0.0.1:61616
+#        user: admin
+#        password: admin
+         #是否启用内存模式（就是不安装MQ，项目启动时同时启动一个MQ实例）
+#        in-memory: false
+#        packages:
+            #信任所有的包
+#            trust-all: true
+#        pool:
+           #是否替换默认的连接池，使用ActiveMQ的连接池需引入的依赖
+#           enabled: false
+
+
+#    rabbitmq 消息通信配置
+#    rabbitmq:
+#           host: 192.168.1.110
+#           port: 5672
+#           username: guest
+#           password: guest
+#           virtual-host:
+
+
+
+mybatis:
+  mapper-locations: classpath*:mapping/*.xml
+  type-aliases-package: com.mjrj.lzh.pms.entity
+  configuration:
+     map-underscore-to-camel-case: true
+     use-generated-keys: true
+
+#  日志打印层级为debug  显示sql语句
+logging:
+  level:
+    com.mjrj.lzh.pms.dao: debug
+
+jwt:
+  token:
+    secret: lzh123456
+    expiration: 120
+
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql

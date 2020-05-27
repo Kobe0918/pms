@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mjrj.lzh.pms.dao.DictionaryDOMapper" >
+  <resultMap id="BaseResultMap" type="com.mjrj.lzh.pms.entity.DictionaryDO" >
+    <id column="dictionary_id" property="dictionaryId" jdbcType="INTEGER" />
+    <result column="column_name" property="columnName" jdbcType="VARCHAR" />
+    <result column="column_code" property="columnCode" jdbcType="TINYINT" />
+    <result column="column_value" property="columnValue" jdbcType="VARCHAR" />
+    <result column="column_status" property="columnStatus" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    dictionary_id, column_name, column_code, column_value, column_status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dictionary
+    where dictionary_id = #{dictionaryId,jdbcType=INTEGER}
+  </select>
+  <select id="selectByColumnName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from dictionary
+    where column_name = #{name ,jdbcType=VARCHAR} and column_status = 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dictionary
+    where dictionary_id = #{dictionaryId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mjrj.lzh.pms.entity.DictionaryDO" >
+    insert into dictionary (dictionary_id, column_name, column_code, 
+      column_value, column_status)
+    values (#{dictionaryId,jdbcType=INTEGER}, #{columnName,jdbcType=VARCHAR}, #{columnCode,jdbcType=TINYINT},
+      #{columnValue,jdbcType=VARCHAR}, #{columnStatus,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.mjrj.lzh.pms.entity.DictionaryDO" >
+    insert into dictionary
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dictionaryId != null" >
+        dictionary_id,
+      </if>
+      <if test="columnName != null" >
+        column_name,
+      </if>
+      <if test="columnCode != null" >
+        column_code,
+      </if>
+      <if test="columnValue != null" >
+        column_value,
+      </if>
+      <if test="columnStatus != null" >
+        column_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dictionaryId != null" >
+        #{dictionaryId,jdbcType=INTEGER},
+      </if>
+      <if test="columnName != null" >
+        #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="columnCode != null" >
+        #{columnCode,jdbcType=TINYINT},
+      </if>
+      <if test="columnValue != null" >
+        #{columnValue,jdbcType=VARCHAR},
+      </if>
+      <if test="columnStatus != null" >
+        #{columnStatus,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mjrj.lzh.pms.entity.DictionaryDO" >
+    update dictionary
+    <set >
+      <if test="columnName != null" >
+        column_name = #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="columnCode != null" >
+        column_code = #{columnCode,jdbcType=TINYINT},
+      </if>
+      <if test="columnValue != null" >
+        column_value = #{columnValue,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        column_status = #{columnStatus,jdbcType=BIT},
+      </if>
+    </set>
+    where dictionary_id = #{dictionaryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mjrj.lzh.pms.entity.DictionaryDO" >
+    update dictionary
+    set column_name = #{columnName,jdbcType=VARCHAR},
+      column_code = #{columnCode,jdbcType=TINYINT},
+      column_value = #{columnValue,jdbcType=VARCHAR},
+      column_status = #{columnStatus,jdbcType=BIT}
+    where dictionary_id = #{dictionaryId,jdbcType=INTEGER}
+  </update>
+</mapper>

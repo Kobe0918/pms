@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mjrj.lzh.pms.dao.PmsConfigDOMapper" >
+  <resultMap id="BaseResultMap" type="com.mjrj.lzh.pms.entity.PmsConfigDO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="attendance_begin_time" property="attendanceBeginTime" jdbcType="TIME" />
+    <result column="attendance_end_time" property="attendanceEndTime" jdbcType="TIME" />
+    <result column="attendance_x1" property="attendanceX1" jdbcType="DOUBLE" />
+    <result column="attendance_y1" property="attendanceY1" jdbcType="DOUBLE" />
+    <result column="attendance_x2" property="attendanceX2" jdbcType="DOUBLE" />
+    <result column="attendance_y2" property="attendanceY2" jdbcType="DOUBLE" />
+    <result column="leave_dept_id" property="leaveDeptId" jdbcType="INTEGER" />
+    <result column="caigo_spiuser_id" property="caigoSpiuserId" jdbcType="INTEGER" />
+    <result column="init_position_id" property="initPositionId" jdbcType="INTEGER" />
+    <result column="log_cron" property="logCron" jdbcType="VARCHAR" />
+    <result column="attendance_cron" property="attendanceCron" jdbcType="VARCHAR" />
+
+    <!--该mapper传输到 对应一mapper的属性 property为实体类中对应存放的值   column 该mapper传输过去的参数   -->
+    <association property="leaveDeptName" column="leave_dept_id" javaType="com.mjrj.lzh.pms.entity.PmsConfigDO"
+                 select="com.mjrj.lzh.pms.dao.DeptDOMapper.selectNameByPrimaryKey">
+    </association>
+
+    <association property="caigoSpiuserName" column="caigo_spiuser_id" javaType="com.mjrj.lzh.pms.entity.PmsConfigDO"
+                 select="com.mjrj.lzh.pms.dao.SysUserDOMapper.selectNameById">
+    </association>
+
+    <association property="initPositionNmae" column="init_position_id" javaType="com.mjrj.lzh.pms.entity.PmsConfigDO"
+                 select="com.mjrj.lzh.pms.dao.PositionDOMapper.selectNameByPrimaryKey">
+    </association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, attendance_begin_time, attendance_end_time, attendance_x1, attendance_y1, attendance_x2, 
+    attendance_y2, leave_dept_id, caigo_spiuser_id, init_position_id, log_cron, attendance_cron
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pms_config
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pms_config
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mjrj.lzh.pms.entity.PmsConfigDO" >
+    insert into pms_config (id, attendance_begin_time, attendance_end_time, 
+      attendance_x1, attendance_y1, attendance_x2, 
+      attendance_y2, leave_dept_id, caigo_spiuser_id, 
+      init_position_id, log_cron, attendance_cron
+      )
+    values (#{id,jdbcType=INTEGER}, #{attendanceBeginTime,jdbcType=TIME}, #{attendanceEndTime,jdbcType=TIME}, 
+      #{attendanceX1,jdbcType=DOUBLE}, #{attendanceY1,jdbcType=DOUBLE}, #{attendanceX2,jdbcType=DOUBLE}, 
+      #{attendanceY2,jdbcType=DOUBLE}, #{leaveDeptId,jdbcType=INTEGER}, #{caigoSpiuserId,jdbcType=INTEGER}, 
+      #{initPositionId,jdbcType=INTEGER}, #{logCron,jdbcType=VARCHAR}, #{attendanceCron,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mjrj.lzh.pms.entity.PmsConfigDO" >
+    insert into pms_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="attendanceBeginTime != null" >
+        attendance_begin_time,
+      </if>
+      <if test="attendanceEndTime != null" >
+        attendance_end_time,
+      </if>
+      <if test="attendanceX1 != null" >
+        attendance_x1,
+      </if>
+      <if test="attendanceY1 != null" >
+        attendance_y1,
+      </if>
+      <if test="attendanceX2 != null" >
+        attendance_x2,
+      </if>
+      <if test="attendanceY2 != null" >
+        attendance_y2,
+      </if>
+      <if test="leaveDeptId != null" >
+        leave_dept_id,
+      </if>
+      <if test="caigoSpiuserId != null" >
+        caigo_spiuser_id,
+      </if>
+      <if test="initPositionId != null" >
+        init_position_id,
+      </if>
+      <if test="logCron != null" >
+        log_cron,
+      </if>
+      <if test="attendanceCron != null" >
+        attendance_cron,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="attendanceBeginTime != null" >
+        #{attendanceBeginTime,jdbcType=TIME},
+      </if>
+      <if test="attendanceEndTime != null" >
+        #{attendanceEndTime,jdbcType=TIME},
+      </if>
+      <if test="attendanceX1 != null" >
+        #{attendanceX1,jdbcType=DOUBLE},
+      </if>
+      <if test="attendanceY1 != null" >
+        #{attendanceY1,jdbcType=DOUBLE},
+      </if>
+      <if test="attendanceX2 != null" >
+        #{attendanceX2,jdbcType=DOUBLE},
+      </if>
+      <if test="attendanceY2 != null" >
+        #{attendanceY2,jdbcType=DOUBLE},
+      </if>
+      <if test="leaveDeptId != null" >
+        #{leaveDeptId,jdbcType=INTEGER},
+      </if>
+      <if test="caigoSpiuserId != null" >
+        #{caigoSpiuserId,jdbcType=INTEGER},
+      </if>
+      <if test="initPositionId != null" >
+        #{initPositionId,jdbcType=INTEGER},
+      </if>
+      <if test="logCron != null" >
+        #{logCron,jdbcType=VARCHAR},
+      </if>
+      <if test="attendanceCron != null" >
+        #{attendanceCron,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mjrj.lzh.pms.entity.PmsConfigDO" >
+    update pms_config
+    <set >
+      <if test="attendanceBeginTime != null" >
+        attendance_begin_time = #{attendanceBeginTime,jdbcType=TIME},
+      </if>
+      <if test="attendanceEndTime != null" >
+        attendance_end_time = #{attendanceEndTime,jdbcType=TIME},
+      </if>
+      <if test="attendanceX1 != null" >
+        attendance_x1 = #{attendanceX1,jdbcType=DOUBLE},
+      </if>
+      <if test="attendanceY1 != null" >
+        attendance_y1 = #{attendanceY1,jdbcType=DOUBLE},
+      </if>
+      <if test="attendanceX2 != null" >
+        attendance_x2 = #{attendanceX2,jdbcType=DOUBLE},
+      </if>
+      <if test="attendanceY2 != null" >
+        attendance_y2 = #{attendanceY2,jdbcType=DOUBLE},
+      </if>
+      <if test="leaveDeptId != null" >
+        leave_dept_id = #{leaveDeptId,jdbcType=INTEGER},
+      </if>
+      <if test="caigoSpiuserId != null" >
+        caigo_spiuser_id = #{caigoSpiuserId,jdbcType=INTEGER},
+      </if>
+      <if test="initPositionId != null" >
+        init_position_id = #{initPositionId,jdbcType=INTEGER},
+      </if>
+      <if test="logCron != null" >
+        log_cron = #{logCron,jdbcType=VARCHAR},
+      </if>
+      <if test="attendanceCron != null" >
+        attendance_cron = #{attendanceCron,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mjrj.lzh.pms.entity.PmsConfigDO" >
+    update pms_config
+    set attendance_begin_time = #{attendanceBeginTime,jdbcType=TIME},
+      attendance_end_time = #{attendanceEndTime,jdbcType=TIME},
+      attendance_x1 = #{attendanceX1,jdbcType=DOUBLE},
+      attendance_y1 = #{attendanceY1,jdbcType=DOUBLE},
+      attendance_x2 = #{attendanceX2,jdbcType=DOUBLE},
+      attendance_y2 = #{attendanceY2,jdbcType=DOUBLE},
+      leave_dept_id = #{leaveDeptId,jdbcType=INTEGER},
+      caigo_spiuser_id = #{caigoSpiuserId,jdbcType=INTEGER},
+      init_position_id = #{initPositionId,jdbcType=INTEGER},
+      log_cron = #{logCron,jdbcType=VARCHAR},
+      attendance_cron = #{attendanceCron,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

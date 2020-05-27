@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mjrj.lzh.pms.dao.LeaveDOMapper" >
+  <resultMap id="BaseResultMap" type="com.mjrj.lzh.pms.entity.LeaveDO" >
+    <id column="leave_id" property="leaveId" jdbcType="INTEGER" />
+    <result column="leave_style" property="leaveStyle" jdbcType="TINYINT" />
+    <result column="begin_time" property="beginTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="leave_reason" property="leaveReason" jdbcType="VARCHAR" />
+    <result column="monitor_id" property="monitorId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="personnel_id" property="personnelId" jdbcType="INTEGER" />
+    <result column="leave_status" property="leaveStatus" jdbcType="TINYINT" />
+    <result column="leave_img_url" property="leaveImgUrl" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    leave_id, user_id,leave_style, begin_time, end_time, leave_reason, monitor_id, personnel_id,
+    leave_status, leave_img_url,update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from leave_history
+    where leave_id = #{leaveId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from leave_history
+    where leave_id = #{leaveId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.mjrj.lzh.pms.entity.LeaveDO" >
+    insert into leave_history (leave_id, user_id,leave_style, begin_time,
+      end_time, leave_reason, monitor_id, 
+      personnel_id, leave_status, leave_img_url,update_time
+      )
+    values (#{leaveId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{leaveStyle,jdbcType=TINYINT}, #{beginTime,jdbcType=TIMESTAMP},
+      #{endTime,jdbcType=TIMESTAMP}, #{leaveReason,jdbcType=VARCHAR}, #{monitorId,jdbcType=INTEGER}, 
+      #{personnelId,jdbcType=INTEGER}, #{leaveStatus,jdbcType=TINYINT}, #{leaveImgUrl,jdbcType=VARCHAR},now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.mjrj.lzh.pms.entity.LeaveDO" >
+    insert into leave_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="leaveId != null" >
+        leave_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="leaveStyle != null" >
+        leave_style,
+      </if>
+      <if test="beginTime != null" >
+        begin_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="leaveReason != null" >
+        leave_reason,
+      </if>
+      <if test="monitorId != null" >
+        monitor_id,
+      </if>
+      <if test="personnelId != null" >
+        personnel_id,
+      </if>
+      <if test="leaveStatus != null" >
+        leave_status,
+      </if>
+      <if test="leaveImgUrl != null" >
+        leave_img_url,
+      </if>
+
+        update_time
+
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="leaveId != null" >
+        #{leaveId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="leaveStyle != null" >
+        #{leaveStyle,jdbcType=TINYINT},
+      </if>
+      <if test="beginTime != null" >
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaveReason != null" >
+        #{leaveReason,jdbcType=VARCHAR},
+      </if>
+      <if test="monitorId != null" >
+        #{monitorId,jdbcType=INTEGER},
+      </if>
+      <if test="personnelId != null" >
+        #{personnelId,jdbcType=INTEGER},
+      </if>
+      <if test="leaveStatus != null" >
+        #{leaveStatus,jdbcType=TINYINT},
+      </if>
+      <if test="leaveImgUrl != null" >
+        #{leaveImgUrl,jdbcType=VARCHAR},
+      </if>
+      now()
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.mjrj.lzh.pms.entity.LeaveDO" >
+    update leave_history
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="leaveStyle != null" >
+        leave_style = #{leaveStyle,jdbcType=TINYINT},
+      </if>
+      <if test="beginTime != null" >
+        begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="leaveReason != null" >
+        leave_reason = #{leaveReason,jdbcType=VARCHAR},
+      </if>
+      <if test="monitorId != null" >
+        monitor_id = #{monitorId,jdbcType=INTEGER},
+      </if>
+      <if test="personnelId != null" >
+        personnel_id = #{personnelId,jdbcType=INTEGER},
+      </if>
+      <if test="leaveStatus != null" >
+        leave_status = #{leaveStatus,jdbcType=TINYINT},
+      </if>
+      <if test="leaveImgUrl != null" >
+        leave_img_url = #{leaveImgUrl,jdbcType=VARCHAR},
+      </if>
+
+        update_time =now(),
+
+    </set>
+    where leave_id = #{leaveId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.mjrj.lzh.pms.entity.LeaveDO" >
+    update leave_history
+    set leave_style = #{leaveStyle,jdbcType=TINYINT},
+    user_id = #{userId,jdbcType=INTEGER},
+      begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      leave_reason = #{leaveReason,jdbcType=VARCHAR},
+      monitor_id = #{monitorId,jdbcType=INTEGER},
+      personnel_id = #{personnelId,jdbcType=INTEGER},
+      leave_status = #{leaveStatus,jdbcType=TINYINT},
+      leave_img_url = #{leaveImgUrl,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where leave_id = #{leaveId,jdbcType=INTEGER}
+  </update>
+  <update id="updateStatus" parameterType="java.util.List">
+    update leave_history set leave_status = 6 ,update_time = now() where
+    <if test=" id != null and id.size()!=0 ">
+       leave_id  in
+      <foreach collection="id" index="index" item="item" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+  </update>
+
+  <update id="updateleaveStatusByIds" >
+    update leave_history set leave_status = #{status,jdbcType=TINYINT} ,update_time = now() where
+    <if test=" list != null and list.size()!=0 ">
+      leave_id  in
+      <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+  </update>
+
+  <select id="selectByPage" parameterType="com.mjrj.lzh.pms.dto.pagedto.LeavePageDTO" resultType="com.mjrj.lzh.pms.entity.LeaveDO">
+    select  a.*,b.user_name,c.dept_name
+    from leave_history a left join sys_user b on(a.user_id = b.id)
+    left join dept c on (b.dept_id = c.dept_id)
+    <trim prefix="where" prefixOverrides="and">
+      <if test="userId != null" >
+        and user_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="userName != null" >
+       and  instr(b.user_name,#{userName,jdbcType=VARCHAR})>0
+      </if>
+      <if test="leaveStatus != null" >
+        and leave_status = #{leaveStatus,jdbcType=TINYINT}
+      </if>
+      <if test="beginTime != null" >
+        and begin_time <![CDATA[>=]]> #{beginTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endTime != null" >
+        and end_time <![CDATA[<=]]> #{endTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="personnelId != null" >
+        and  personnel_id = #{personnelId,jdbcType=INTEGER}
+        and leave_status in (2)
+      </if>
+      <if test="monitorId != null" >
+        and  monitor_id = #{monitorId,jdbcType=INTEGER}
+        and leave_status in (1)
+      </if>
+    </trim>
+    order by a.update_time desc
+  </select>
+</mapper>

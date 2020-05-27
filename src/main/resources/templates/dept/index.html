@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="commons/common::cssLink(~{::title},~{::link})">
+    <title>部门管理</title>
+    <link th:href="@{/asserts/css/dept.css}" rel="stylesheet">
+
+</head>
+
+<body>
+<div th:replace="~{commons/bar::topbar}"></div>
+
+<style type="text/css">
+    .no-footer {
+        width: 93%;
+    }
+
+    .dataTables_length {
+        padding-top: 10.570px;
+        padding-left: 20px;
+    }
+
+    .table-hover th {
+        text-align: center;
+    }
+
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="commons/bar :: #sidebar(activeUri='/dashboard')"></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="chartjs-size-monitor"
+                 style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+            </div>
+
+            <div class="wpp_main">
+                <div class="wpp_main_content">
+                    <div class="wpp_header">部门详情</div>
+
+
+                    <div class="leave_content">
+
+
+                        <div class="leave_list">
+                            <form class="form-inline mb-2" id="deptSearchForm" style="margin-top: 10px;">
+                                <div class="form-group" id="f_user_name">
+                                    <div class="form-group  mb-2">
+                                        <input id="searchDeptName" class="form-control" name="deptName"
+                                               placeholder="部门名称">
+                                    </div>
+                                </div>
+                                <div style="padding-left: 10px"></div>
+                                <button type="button" class="btn btn-outline-secondary  mb-2" id="deptQueryBtn"
+                                        data-toggle="tooltip" data-placement="top" title="搜索">
+                                    <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16"
+                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                              d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z"
+                                              clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd"
+                                              d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                    <!--<i class="fa fa-search" aria-hidden="true"></i>-->
+                                </button>
+                                <div style="padding-left: 10px"></div>
+                                <button type="button" class="btn btn-outline-success  mb-2" id="addDeptBtn"
+                                        data-toggle="tooltip" data-placement="top" title="添加">
+                                    <svg class="bi bi-plus-circle" width="1em" height="1em" viewBox="0 0 16 16"
+                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                              d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"
+                                              clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd"
+                                              d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"
+                                              clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd"
+                                              d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                    <!--<i class="fa fa-plus-circle" aria-hidden="true"></i>-->
+                                </button>
+                                <div style="padding-left: 10px"></div>
+                                <button type="button" class="btn btn-outline-primary  mb-2" id="deptResetBtn"
+                                        data-toggle="tooltip" data-placement="top" title="刷新">
+                                    <svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16"
+                                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                              d="M2.854 7.146a.5.5 0 00-.708 0l-2 2a.5.5 0 10.708.708L2.5 8.207l1.646 1.647a.5.5 0 00.708-.708l-2-2zm13-1a.5.5 0 00-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 00-.708.708l2 2a.5.5 0 00.708 0l2-2a.5.5 0 000-.708z"
+                                              clip-rule="evenodd"/>
+                                        <path fill-rule="evenodd"
+                                              d="M8 3a4.995 4.995 0 00-4.192 2.273.5.5 0 01-.837-.546A6 6 0 0114 8a.5.5 0 01-1.001 0 5 5 0 00-5-5zM2.5 7.5A.5.5 0 013 8a5 5 0 009.192 2.727.5.5 0 11.837.546A6 6 0 012 8a.5.5 0 01.501-.5z"
+                                              clip-rule="evenodd"/>
+                                    </svg>
+                                    <!--<i class="fa fa-refresh fa-spin  fa-fw"></i>-->
+                                    <!--<i class="fa fa-refresh" aria-hidden="true"></i>-->
+                                </button>
+                            </form>
+
+
+
+                            <!--leaveTable-->
+                            <table id="deptTable" class="table table-hover" cellspacing="0"
+                                   style="width: 95%!important;margin-top: 10px">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>name</th>
+                                    <th>status</th>
+                                    <th>remark</th>
+                                    <th>updatetime</th>
+                                    <th></th>
+
+                                </tr>
+                                </thead>
+                                <tbody align="center">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!--<div class="wpp_content_quickLink">-->
+                    <!--<ul>-->
+                    <!--<li><a type="button" id="take_leave" style="cursor: pointer;">-->
+                    <!--<div>-->
+                    <!--<div class="icon icon_4" ></div>-->
+                    <!--<span>请假申请</span>-->
+                    <!--</div>-->
+                    <!--</a></li>-->
+                    <!--<li><a type="button" id="leave_record" style="cursor: pointer;">-->
+                    <!--<div>-->
+                    <!--<div class="icon icon_3"></div>-->
+                    <!--<span>请假记录</span>-->
+                    <!--</div>-->
+                    <!--</a></li>-->
+                    <!--</ul>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="row" style="height: 100px"></div>
+
+</div>
+
+
+<div class="modal fade " id="deptAddModal" tabindex="-1" role="dialog" aria-labelledby="delModalLabel">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="deptAddModalLabel"></h4>
+                <a type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </a>
+
+            </div>
+            <div class="modal-body">
+                <form class="form" id="addDeptForm">
+                    <!--<span th:text="${ms}" th:if="${not #strings.isEmpty(ms)}" style="color: red"></span>-->
+                    <input type="hidden" name="deptId">
+                    <div class="form-group">
+                        <label style="float: left;"><font size="2" color="red">*</font>部门名称</label>
+                        <input type="text" class="form-control" placeholder="请填写部门名称" required="" autofocus=""
+                               name="deptName" id="add_deptName">
+                    </div>
+
+                    <div class="form-group">
+                        <label style="float: left;">负责人</label>
+                        <div class="form-group">
+                            <select id="userConnect" name="connectUserId"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group time-updateDept" style="display: none">
+                        <label style="float: left;">更新时间</label>
+                        <input type="text" class="form-control"  required="" autofocus=""
+                               name="updateTime" disabled>
+                    </div>
+                    <div class="form-group time-createDept" style="display: none">
+                        <label style="float: left;">创建时间</label>
+                        <input type="text" class="form-control"  required="" autofocus=""
+                               name="createTime" disabled>
+                    </div>
+                    <div class="form-group" >
+                        <label style="float: left;">简介</label>
+                        <div class="form-group">
+                            <textarea name="remark" id="addDeptRemark" class="form-control" placeholder="部门简介"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label >岗位分配</label>
+                        <div class="form-group">
+                        <select  class="js-multiselect form-control" id="right_menu" size="8"
+                                multiple="multiple">
+                        </select>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="deptSaveBtn" class="btn btn-outline-primary">save</button>
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div th:replace="commons/common::scriptSrc"></div>
+<script src="https://cdn.bootcss.com/jquery.quicksearch/2.4.0/jquery.quicksearch.js"></script>
+<script th:src="@{/asserts/js/my/dept.js}"></script>
+
+</body>
+
+</html>

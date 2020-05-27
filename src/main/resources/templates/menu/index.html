@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head th:replace="commons/common::cssLink(~{::title},~{::link})">
+        <title>角色</title>
+
+        <link th:href="@{/asserts/css/leave.css}" rel="stylesheet">
+        <link href="https://cdn.bootcss.com/bootstrap-table/1.11.1/bootstrap-table.min.css" rel="stylesheet">
+        <!--<link rel="stylesheet" th:href="@{/asserts/ztree/demo.css}" type="text/css">-->
+        <link rel="stylesheet" href="https://cdn.bootcss.com/jquery-treegrid/0.2.0/css/jquery.treegrid.min.css">
+
+    </head>
+
+    <body>
+        <div th:replace="~{commons/bar::topbar}"></div>
+
+        <style type="text/css">
+            .hideBtn {
+                display: none;
+            }
+            .no-footer {
+                width: 93%;
+            }
+
+            .dataTables_length {
+                padding-top: 10.570px;
+                padding-left: 20px;
+            }
+
+            .table-hover th {
+                text-align: center;
+            }
+
+            .help-block {
+                color: #c21a13;
+            }
+            #file {
+                display: none;
+            }
+
+            ul.ztree {
+                margin-top: 10px;
+                border: 1px solid #617775;
+                background: #f0f6e4;
+                width: 220px;
+                height: 360px;
+                overflow-y: scroll;
+                overflow-x: auto;
+            }
+        </style>
+        <div class="container-fluid">
+            <div class="row">
+                <!--(activeUri='/dashboard')-->
+                <div th:replace="commons/bar :: #sidebar"></div>
+                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                    <div class="chartjs-size-monitor"
+                         style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                        <div class="chartjs-size-monitor-expand"
+                             style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                            <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink"
+                             style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                            <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                        </div>
+                    </div>
+
+                    <div class="wpp_main">
+                        <div class="wpp_main_content">
+                            <div class="wpp_header">菜单列表</div>
+
+
+                            <div class="leave_content">
+
+                                <div class="caigo_list">
+                                    <!--<form class="form-inline mb-2" style="margin-top: 10px;">-->
+                                        <!--<div class="form-group " >-->
+                                            <!--&lt;!&ndash;&ndash;&gt;-->
+                                            <!--<label for="roleName" class="sr-only">名称</label>-->
+                                            <!--<div class="form-group  mx-2 mb-2">-->
+                                                <!--<input id="roleName"  class="form-control"  placeholder="角色名">-->
+                                            <!--</div>-->
+                                        <!--</div>-->
+
+
+                                        <!--<button type="button" class="btn btn-outline-secondary  mb-2" id="roleQueryBtn"  data-toggle="tooltip" data-placement="top" title="搜索">-->
+                                            <!--<svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16"-->
+                                                 <!--fill="currentColor" xmlns="http://www.w3.org/2000/svg">-->
+                                                <!--<path fill-rule="evenodd"-->
+                                                      <!--d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z"-->
+                                                      <!--clip-rule="evenodd"/>-->
+                                                <!--<path fill-rule="evenodd"-->
+                                                      <!--d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z"-->
+                                                      <!--clip-rule="evenodd"/>-->
+                                            <!--</svg>-->
+                                        <!--</button>-->
+                                        <!--<div style="padding-left: 10px"></div>-->
+                                        <!--<button  class="btn btn-outline-primary  mb-2" id="resetBtn"  data-toggle="tooltip" data-placement="top" title="刷新" >-->
+                                            <!--<svg class="bi bi-arrow-repeat" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">-->
+                                                <!--<path fill-rule="evenodd" d="M2.854 7.146a.5.5 0 00-.708 0l-2 2a.5.5 0 10.708.708L2.5 8.207l1.646 1.647a.5.5 0 00.708-.708l-2-2zm13-1a.5.5 0 00-.708 0L13.5 7.793l-1.646-1.647a.5.5 0 00-.708.708l2 2a.5.5 0 00.708 0l2-2a.5.5 0 000-.708z" clip-rule="evenodd"/>-->
+                                                <!--<path fill-rule="evenodd" d="M8 3a4.995 4.995 0 00-4.192 2.273.5.5 0 01-.837-.546A6 6 0 0114 8a.5.5 0 01-1.001 0 5 5 0 00-5-5zM2.5 7.5A.5.5 0 013 8a5 5 0 009.192 2.727.5.5 0 11.837.546A6 6 0 012 8a.5.5 0 01.501-.5z" clip-rule="evenodd"/>-->
+                                            <!--</svg>-->
+                                        <!--</button>-->
+                                        <!--<div style="padding-left: 10px"></div>-->
+                                        <!--<button type="button" class="btn btn-outline-success  mb-2" id="addRoleBtn"-->
+                                                <!--data-toggle="tooltip" data-placement="top" title="添加">-->
+                                            <!--<svg class="bi bi-plus-circle" width="1em" height="1em" viewBox="0 0 16 16"-->
+                                                 <!--fill="currentColor" xmlns="http://www.w3.org/2000/svg">-->
+                                                <!--<path fill-rule="evenodd"-->
+                                                      <!--d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"-->
+                                                      <!--clip-rule="evenodd"/>-->
+                                                <!--<path fill-rule="evenodd"-->
+                                                      <!--d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"-->
+                                                      <!--clip-rule="evenodd"/>-->
+                                                <!--<path fill-rule="evenodd"-->
+                                                      <!--d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"-->
+                                                      <!--clip-rule="evenodd"/>-->
+                                            <!--</svg>-->
+                                            <!--&lt;!&ndash;<i class="fa fa-plus-circle" aria-hidden="true"></i>&ndash;&gt;-->
+                                        <!--</button>-->
+                                        <!--<div style="padding-left: 10px"></div>-->
+                                        <!--<button type="button" class="btn btn-outline-danger mb-2" id="rolesDeleteBtn"  data-toggle="tooltip" data-placement="top" title="删除选中记录">-->
+                                            <!--<svg class="bi bi-trash" width="1em" height="1em" viewBox="0 0 16 16"-->
+                                                 <!--fill="currentColor" xmlns="http://www.w3.org/2000/svg">-->
+                                                <!--<path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z"/>-->
+                                                <!--<path fill-rule="evenodd"-->
+                                                      <!--d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"-->
+                                                      <!--clip-rule="evenodd"/>-->
+                                            <!--</svg>-->
+                                        <!--</button>-->
+                                    <!--</form>-->
+
+
+                                    <!--&lt;!&ndash;修改成bootstrap-datatable&ndash;&gt;-->
+                                    <!--leaveTable-->
+                                    <table id="table" class="table table-hover" cellspacing="0"
+                                           style="width: 95%!important;margin-top: 10px">
+
+                                    </table>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </main>
+            </div>
+            <div class="row" style="height: 100px"></div>
+        </div>
+
+
+        <!--<div class="modal fade " id="rolesModal" tabindex="-1" role="dialog" aria-labelledby="rolesModalLabel">-->
+            <!--<div class="modal-dialog " role="document">-->
+                <!--<div class="modal-content">-->
+                    <!--<div class="modal-header">-->
+                        <!--<h4 class="modal-title" id="rolesModalLabel"></h4>-->
+                        <!--<a type="button" class="close" data-dismiss="modal" aria-label="Close"><span-->
+                                <!--aria-hidden="true">&times;</span>-->
+                        <!--</a>-->
+                    <!--</div>-->
+                    <!--<div class="modal-body">-->
+                        <!--<form  id="roleForm" style="margin-top: 10px">-->
+                            <!--<input type="hidden" name="id">-->
+                            <!--<div class="form-group " >-->
+                                <!--<label for="roleStatus" class="col-sm-3 control-label">角色名</label>-->
+                                <!--<div class="col-sm-12">-->
+                                    <!--<input  name="roleName" class="form-control"-->
+                                            <!--data-bv-notempty="true"-->
+                                            <!--data-bv-notempty-message="角色 不能为空">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group " >-->
+                                <!--<label for="roleStatus" class="col-sm-3 control-label">状态</label>-->
+                                <!--<div class="col-sm-12">-->
+                                    <!--<select id="roleStatus" name="roleStatus" class="form-control">-->
+                                        <!--<option value="1">激活</option>-->
+                                        <!--<option value="0">禁用</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group">-->
+                                <!--<label for="roleDescription" class="col-sm-9 control-label">角色描述</label>-->
+                                <!--<div class="col-sm-12">-->
+                                    <!--&lt;!&ndash;id="beginTime"&ndash;&gt;-->
+                                    <!--<textarea id="roleDescription" name="roleDescription" class="form-control"  style="height: 60px"></textarea>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="form-group " >-->
+                                <!--<label for="roleStatus" class="col-sm-3 control-label">拥有权限</label>-->
+                                <!--<div class="col-sm-12" >-->
+                                    <!--&lt;!&ndash;style="height: 300px;overflow: auto;"&ndash;&gt;-->
+                                    <!--&lt;!&ndash;treegrid   treetable&ndash;&gt;-->
+                                    <!--&lt;!&ndash;<table id="table"></table>&ndash;&gt;-->
+                                    <!--<ul id="permissionTable" class="ztree"></ul>-->
+                                <!--</div>-->
+                            <!--</div>-->
+
+                        <!--</form>-->
+
+                    <!--</div>-->
+                    <!--<div class="modal-footer">-->
+                        <!--<button type="button" id="roleSaveBtn" class="btn btn-outline-primary">save</button>-->
+                        <!--<button type="button" class="btn btn-outline-secondary" data-dismiss="modal">close</button>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+
+
+        <div th:replace="commons/common::scriptSrc"></div>
+        <script src="https://cdn.bootcss.com/bootstrap-table/1.12.1/bootstrap-table.min.js"></script>
+        <script src="https://cdn.bootcss.com/bootstrap-table/1.12.0/extensions/treegrid/bootstrap-table-treegrid.js"></script>
+        <script src="https://cdn.bootcss.com/jquery-treegrid/0.2.0/js/jquery.treegrid.min.js"></script>
+
+        <script th:src="@{/asserts/js/my/menu.js}"></script>
+
+
+    </body>
+
+</html>

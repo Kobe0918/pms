@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://getbootstrap.com/docs/4.0/examples/dashboard/ -->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="commons/common::cssLink(~{::title},~{::link})">
+    <title>工作台</title>
+    <link th:href="@{/asserts/css/daka.css}" rel="stylesheet">
+</head>
+
+<body>
+
+<div th:replace="~{commons/bar::topbar}"></div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="commons/bar :: #sidebar(activeUri='/emp')" ></div>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+            <div class="chartjs-size-monitor"
+                 style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;">
+                <div class="chartjs-size-monitor-expand"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink"
+                     style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;">
+                    <div style="position:absolute;width:200%;height:200%;left:0; top:0"></div>
+                </div>
+            </div>
+
+            <div class="wpp_main">
+                <div class="wpp_main_content">
+                    <div class="wpp_header" >职场常用业务流程</div>
+                    <div class="wpp_content">
+                        <div class="wpp_content_item wpp_content_item_1">
+                            <ul>
+                                <span class="item_span_1">人事</span>
+                                <li class="first_child"><a th:href="@{/leave}" target="_blank" >  <!--target="_blank"-->
+                                    <div class="wpp_content_spanContent" title="请假申请">请假申请</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=12f32e3d9067a33cff47a6242ddb936c" target="_blank">
+                                    <div class="wpp_content_spanContent" title="转正申请">转正申请</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=12ee6603ca36d127a9ea4c0449aa32f0" target="_blank">
+                                    <div class="wpp_content_spanContent" title="招调干（工）申请">招调干（工）申请</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=13b980a65b7e8bda66c732a4f5ab8f29" target="_blank">
+                                    <div class="wpp_content_spanContent" title="通讯费补贴申请">通讯费补贴申请</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=132372c7b64ece3e5c0763546179cb7a" target="_blank">
+                                    <div class="wpp_content_spanContent" title="年假延期申请">年假延期申请</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=12d978ba5c5e88748e9696444f6a1de9" target="_blank">
+                                    <div class="wpp_content_spanContent" title="销假申请">销假申请</div>
+                                </a></li>
+                            </ul>
+                        </div>
+                        <div class="wpp_content_item wpp_content_item_2">
+                            <ul>
+                                <span class="item_span_2">行政</span>
+                                <li class="first_child"><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=15c76cce503c367e7ef12a249ba9b338&.fdTemplate=15c76cce503c367e7ef12a249ba9b338&i.docTemplate=15c76cce503c367e7ef12a249ba9b338" target="_blank">
+                                    <div class="wpp_content_spanContent" title="用车申请">用车申请</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/oitems/#mydoc=create&j_path=%2FlistCreate" target="_blank">
+                                    <div class="wpp_content_spanContent" title="办公用品申请">办公用品申请</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=16adee50b01bdfc6d3ca79c4964bdaa7&.fdTemplate=16adee50b01bdfc6d3ca79c4964bdaa7&i.docTemplate=16adee50b01bdfc6d3ca79c4964bdaa7" target="_blank">
+                                    <div class="wpp_content_spanContent" title="人力资源需求">人力资源需求</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=160719fa7e17718d24f813f4fa6947bc&.fdTemplate=160719fa7e17718d24f813f4fa6947bc&i.docTemplate=160719fa7e17718d24f813f4fa6947bc" target="_blank">
+                                    <div class="wpp_content_spanContent" title="档案利用登记">档案利用登记</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=1685f827b82a7cb3c5463524853b484f" target="_blank">
+                                    <div class="wpp_content_spanContent" title="成本领料申请">成本领料申请</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=1448770b6f946830d77c255410fa560b" target="_blank">
+                                    <div class="wpp_content_spanContent" title="证照申请">证照申请</div>
+                                </a></li>
+                            </ul>
+                        </div>
+                        <div class="wpp_content_item wpp_content_item_3">
+                            <ul>
+                                <span class="item_span_3">财务</span>
+                                <li class="first_child"><a href="https://demo.landray.com.cn/fssc/expense/index.jsp?j_module=true#j_path=%2FlistDaiFuKuan&fdPaymentStatus=1" target="_blank">
+                                    <div class="wpp_content_spanContent" title="报销申请">报销申请</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=14b158b8fa15db74da6b3694380bd87f" target="_blank">
+                                    <div class="wpp_content_spanContent" title="借款申请">借款申请</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/fssc/loan/index.jsp?j_module=true#j_path=%2FlistFsscLoanRepayment" target="_blank">
+                                    <div class="wpp_content_spanContent" title="还款申请">还款申请</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/comminfo/km_comminfo_main/kmComminfoMain.do?method=view&fdId=16ab606ea5d32d8305558754b1f860cc" target="_blank">
+                                    <div class="wpp_content_spanContent" title="社保查询">社保查询</div>
+                                </a></li>
+                            </ul>
+                        </div>
+                        <div class="wpp_content_item wpp_content_item_4">
+                            <ul>
+                                <span class="item_span_4">业务</span>
+                                <li class="first_child"><a href="https://demo.landray.com.cn/km/contract/km_contract_main/kmContractMain.do?method=add&fdTemplateId=16a6c4b90c214788cd36f704262b3017&.fdTemplate=16a6c4b90c214788cd36f704262b3017&i.docTemplate=16a6c4b90c214788cd36f704262b3017" target="_blank">
+                                    <div class="wpp_content_spanContent" title="合同申请">合同申请</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/sys/portal/page.jsp?j_module=true#j_start=%2Fkm%2Fimeeting%2Findex.jsp&j_target=_iframe&j_path=%2FmyWorkbench" target="_blank">
+                                    <div class="wpp_content_spanContent" title="会议室预定">会议室预定</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=15a2356cefcb0d65ec8f8a94d6ea330b&.fdTemplate=15a2356cefcb0d65ec8f8a94d6ea330b&i.docTemplate=15a2356cefcb0d65ec8f8a94d6ea330b" target="_blank">
+                                    <div class="wpp_content_spanContent" title="客户拜访登记">客户拜访登记</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=16e1bdfd56118955714715a485284baa&.fdTemplate=16e1bdfd56118955714715a485284baa&i.docTemplate=16e1bdfd56118955714715a485284baa" target="_blank">
+                                    <div class="wpp_content_spanContent" title="采购申请">采购申请</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=15c76d8dcd5391137d1d8d94c58acc20&.fdTemplate=15c76d8dcd5391137d1d8d94c58acc20&i.docTemplate=15c76d8dcd5391137d1d8d94c58acc20" target="_blank">
+                                    <div class="wpp_content_spanContent" title="项目立项">项目立项</div>
+                                </a></li>
+                                <li><a href="https://demo.landray.com.cn/km/review/km_review_main/kmReviewMain.do?method=add&fdTemplateId=16d6270356e2460fea1820d4c1e82243&.fdTemplate=16d6270356e2460fea1820d4c1e82243&i.docTemplate=16d6270356e2460fea1820d4c1e82243" target="_blank">
+                                    <div class="wpp_content_spanContent" title="培训申请">培训申请</div>
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!--<div class="wpp_content_quickLink">-->
+                    <!--<ul>-->
+                    <!--<li><a href="-->
+                    <!--https://demo.landray.com.cn/kms/multidoc/kms_multidoc_knowledge/kmsMultidocKnowledge.do?method=view&fdId=1705c7908a9f5690a1fb5ab431b980b0" target="_blank">-->
+                    <!--<div>-->
+                    <!--<div class="icon icon_1"></div>-->
+                    <!--<span>了解EKP</span>-->
+                    <!--</div>-->
+                    <!--</a></li>-->
+                    <!--<li><a href="https://demo.landray.com.cn/kms/multidoc/#j_path=%2FdocCategory&docCategory=1705c69e11b877b26bf4dc34d9d96471" target="_blank">-->
+                    <!--<div>-->
+                    <!--<div class="icon icon_4"></div>-->
+                    <!--<span>功能介绍</span>-->
+                    <!--</div>-->
+                    <!--</a></li>-->
+                    <!--<li><a href="https://demo.landray.com.cn/demo/feedback/#j_path=%2FdemoFeedbackProblem" target="_blank">-->
+                    <!--<div>-->
+                    <!--<div class="icon icon_2"></div>-->
+                    <!--<span>常见问题</span>-->
+                    <!--</div>-->
+                    <!--</a></li>-->
+                    <!--<li><a href="https://demo.landray.com.cn/map/map.jsp" target="_blank">-->
+                    <!--<div>-->
+                    <!--<div class="icon icon_3"></div>-->
+                    <!--<span>数据大屏</span>-->
+                    <!--</div>-->
+                    <!--</a></li>-->
+                    <!--</ul>-->
+                    <!--</div>-->
+                </div>
+            </div>
+
+
+            <div class="hot">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom" style="margin-top: 15px">
+                    <h1 class="h2">热门</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <!--<div class="btn-group mr-2">-->
+                        <!--<button class="btn btn-sm btn-outline-secondary">Share</button>-->
+                        <!--<button class="btn btn-sm btn-outline-secondary">Export</button>-->
+                        <!--</div>-->
+                        <!--<button class="btn btn-sm btn-outline-secondary dropdown-toggle">-->
+                        <!--<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"-->
+                        <!--stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"-->
+                        <!--class="feather feather-calendar">-->
+                        <!--<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>-->
+                        <!--<line x1="16" y1="2" x2="16" y2="6"></line>-->
+                        <!--<line x1="8" y1="2" x2="8" y2="6"></line>-->
+                        <!--<line x1="3" y1="10" x2="21" y2="10"></line>-->
+                        <!--</svg>-->
+                        <!--This week-->
+                        <!--</button>-->
+                    </div>
+                </div>
+
+
+                <div style="width: 100%;height: 20%;margin-bottom: 15px;">
+                    <a  style="color: black" id="attendance">
+                        <div class="task" >
+                            <div class="element" >
+                                <img th:src="@{/asserts/img/daka.png}"  >
+                                <!--<svg class="bi bi-bookmark-check" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">-->
+                                <!--<path fill-rule="evenodd" d="M4.5 2a.5.5 0 00-.5.5v11.066l4-2.667 4 2.667V8.5a.5.5 0 011 0v6.934l-5-3.333-5 3.333V2.5A1.5 1.5 0 014.5 1h4a.5.5 0 010 1h-4z" clip-rule="evenodd"/>-->
+                                <!--<path fill-rule="evenodd" d="M15.854 2.146a.5.5 0 010 .708l-3 3a.5.5 0 01-.708 0l-1.5-1.5a.5.5 0 01.708-.708L12.5 4.793l2.646-2.647a.5.5 0 01.708 0z" clip-rule="evenodd"/>-->
+                                <!--</svg>-->
+                            </div>
+                            <div  style="text-align: center;margin-top: 10px">
+                                <span  ><font size="2">考勤打卡</font></span>
+                            </div>
+                        </div>
+                    </a>
+                    <a  style="color: black" id="leave">
+                        <div class="task" >
+                            <div class="element">
+                                <img th:src="@{/asserts/img/logo.png}" >
+                            </div>
+                            <div  style="text-align: center;margin-top: 10px">
+                                <span ><font size="2">请假申请</font></span>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="/#" style="color: black">
+                        <div class="task" >
+                            <div class="element">
+                                <img th:src="@{/asserts/img/logo.png}" >
+                            </div>
+                            <div  style="text-align: center;margin-top: 10px">
+                                <span ><font size="2">补卡申请</font></span>
+                            </div>
+                        </div>
+                    </a>
+                    <a th:href="@{/login}" style="color: black">
+                        <div class="task" >
+                            <div class="element">
+                                <img th:src="@{/asserts/img/logo.png}" >
+                            </div>
+                            <div style="text-align: center;margin-top: 10px">
+                                <span ><font size="2">加班申请</font></span>
+                            </div>
+                        </div>
+                    </a>
+
+
+                </div>
+                <!--线形图-->
+                <!--<canvas class="my-4 chartjs-render-monitor" id="myChart" width="1076" height="454"-->
+                <!--style="display: block; width: 1076px; height: 454px;"></canvas>-->
+            </div>
+
+
+        </main>
+    </div>
+</div>
+
+
+<!--打卡框-->
+<div class="modal fade " id="addAttendance" tabindex="-1" role="dialog" aria-labelledby="addModalLabel">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <h4 class="modal-title" id="addAttendanceLabel"></h4>
+                <a type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="form-add">
+                    <div class="form-group" >
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p class="card-text">打卡日期</p>
+                                        <input id="dakaTime" class="col-12">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--上班-->
+                    <div class="form-group" >
+                        <label for="upAttendance" class="col-sm-6 control-label" style="font-weight: 100">上班时间  08:30</label>
+
+                        <div class="col-sm-10">
+                            <div id="upMsg" ></div>
+                            <a type="button"  id="upAttendance"  class="circle">
+                                <span class="span1"><font size="3" >上班打卡</font></span>
+                                <span class="span3" id="upPlace"></span>
+                                <span class="span2" id="upTime"></span>
+                            </a>
+                        </div>
+                    </div>
+                    <div style="height: 50px"></div>
+                    <!--下班-->
+                    <div class="form-group"  >
+                        <label for="downAttendance" class="col-sm-6 control-label" style="font-weight: 100">下班时间  17:30</label>
+                        <div class="col-sm-10" >
+                            <div id="downMsg" ></div>
+                            <a type="button"  id="downAttendance" class="circle"
+                               name="beginNum" >
+                                <span class="span1"><font size="4">下班打卡</font></span>
+                                <span class="span3" id="downPlace"></span>
+                                <span class="span2" id="downTime"></span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div style="height: 50px"></div>
+                    <div class="form-group"  id="remark_textarea">
+                        <label class="col-sm-2 control-label" for="remark" style="font-weight: 100">备注:</label>
+                        <div class="col-sm-12">
+                            <textarea class="form-control" id="remark" name="remark" cols="12"></textarea>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="button" id="add-submit" class="btn btn-primary">Save</button>-->
+                <!--<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:replace="commons/common::scriptSrc"></div>
+<script th:src="@{/asserts/js/my/daka.js}"></script>
+
+
+
+
+</body>
+</html>
