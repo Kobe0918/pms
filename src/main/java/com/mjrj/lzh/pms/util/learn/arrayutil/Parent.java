@@ -27,6 +27,8 @@ public class Parent {
         System.out.println("P....p2 =" + P2);
     }
     private void privatePrintProperty(){
+        //1.0 add
+        System.out.println("P....Parent private 方法");
         System.out.println("P....Parent private 方法");
         System.out.println("P....p1 =" + P1);
         System.out.println("P....p2 =" + P2);
