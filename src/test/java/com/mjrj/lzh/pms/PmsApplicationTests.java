@@ -1,10 +1,14 @@
 package com.mjrj.lzh.pms;
 
 
+import cc.ebatis.impl.Init;
+import cc.ebatis.pojo.ActionContext;
+import cc.ebatis.pojo.SheetInfo;
 import com.google.common.collect.Lists;
 import com.mjrj.lzh.pms.dao.*;
 import com.mjrj.lzh.pms.dto.CurrentUserDTO;
 import com.mjrj.lzh.pms.dto.LeaveDTO;
+import com.mjrj.lzh.pms.dto.Lw_familyPayMentDTO;
 import com.mjrj.lzh.pms.dto.pagedto.*;
 import com.mjrj.lzh.pms.dto.response.ResponseResult;
 import com.mjrj.lzh.pms.entity.*;
@@ -48,11 +52,11 @@ class PmsApplicationTests {
     @Autowired
     private PmsConfigDOMapper mapper;
 
-    @Test
-    public void test(){
-        PmsConfigDO configDO = (PmsConfigDO) mapper.selectConfig(1);
-        System.out.println(configDO.getCaigoSpiuserId());
-    }
+//    @Test
+//    public void test(){
+//        PmsConfigDO configDO = (PmsConfigDO) mapper.selectConfig(1);
+//        System.out.println(configDO.getCaigoSpiuserId());
+//    }
 
 
     @Test
@@ -466,182 +470,291 @@ class PmsApplicationTests {
 //        positionService.deletePosition(15);
 //    }
 
-    @Test
-    public void test456(){
-
-        List<String> list = Lists.newArrayList(
-                "bcd", "cde", "def", "ab");
-        List<String> result = list.stream()
-                //.parallel()
-                .filter(e -> e.length() >= 3)
-                .map(e -> e.charAt(0))
-                //.peek(System.out :: println)
-                //.sorted()
-                //.peek(e -> System.out.println("++++" + e))
-                .map(e -> String.valueOf(e))
-                .collect(Collectors.toList());
-        System.out.println("----------------------------");
-        System.out.println(result);
-
-    }
-
-
-    @Test
-    public void test789(){
-
-        List<String> list = Lists.newArrayList(
-                "bcd", "cde", "def", "abc");
-
-        List<String> result = Lists.newArrayListWithCapacity(list.size());
-        for (String str : list) {
-            if (str.length() >= 3) {
-                char e = str.charAt(0);
-                String tempStr = String.valueOf(e);
-                result.add(tempStr);
-            }
-        }
-        System.out.println("----------------------------");
-        System.out.println(result);
-
-    }
-
-@Test
-public void test2023() throws IOException {
-    parseExcelFile("F:/ErrorData");
-}
-
-    public void parseExcelFile(String path ) throws IOException {
-        List <File> files = new ArrayList <>();
-        File file = new File(path);
-        if(file.exists()){
-            File[] listFiles = file.listFiles();
-            log.info(String.valueOf(listFiles.length));
-            if(null == listFiles | listFiles.length == 0){
-               log.info("文件夹下没有文件");
-            }else{
-                for(File f : listFiles){
-                    if(f.isDirectory()){
-                        parseExcelFile(f.getPath());
-                    }
-                       String fileName = f.getName();
-                       log.info(f.getPath() + " : f.getPath()");
-                        if(fileName.endsWith(".xlsx")){
-                             xlsxFile(f.getPath());
-                        }
-                        if(fileName.endsWith(".xls")){
-                            xlsFile(f.getPath());
-                        }
-                }
-            }
-        }else{
-            log.info("不存在该目录");
-        }
-    }
-
-
-    public void xlsxFile(String path ) throws IOException {
-        //用流的方式先读取到你想要的excel的文件
-        FileInputStream fis=new FileInputStream(new File(path));
-        //解析excel
+//    @Test
+//    public void test456(){
+//
+//        List<String> list = Lists.newArrayList(
+//                "bcd", "cde", "def", "ab");
+//        List<String> result = list.stream()
+//                //.parallel()
+//                .filter(e -> e.length() >= 3)
+//                .map(e -> e.charAt(0))
+//                //.peek(System.out :: println)
+//                //.sorted()
+//                //.peek(e -> System.out.println("++++" + e))
+//                .map(e -> String.valueOf(e))
+//                .collect(Collectors.toList());
+//        System.out.println("----------------------------");
+//        System.out.println(result);
+//
+//    }
+//
+//
+//    @Test
+//    public void test789(){
+//
+//        List<String> list = Lists.newArrayList(
+//                "bcd", "cde", "def", "abc");
+//
+//        List<String> result = Lists.newArrayListWithCapacity(list.size());
+//        for (String str : list) {
+//            if (str.length() >= 3) {
+//                char e = str.charAt(0);
+//                String tempStr = String.valueOf(e);
+//                result.add(tempStr);
+//            }
+//        }
+//        System.out.println("----------------------------");
+//        System.out.println(result);
+//
+//    }
+//
+//    private static Map<String,Integer> map = new HashMap <String,Integer>(){
+//        {
+//            put("跨省异地就医登记信息",1);
+//            put("特殊病种登记",2);
+//        }
+//    };
+//
+//
+//@Test
+//public void test2023() throws IOException {
+//    parseExcelFile("F:/ErrorData");
+//}
+//
+//    /**
+//     * 1.读取指定路径下的文件夹(1.不存在：日志打印无数据 2.存在：xlsx文件和xls文件区分开读取)
+//     * 2.根据文件名判断读取文件对应的类型，循环读取文件夹下的文件（100条插入一次数据库）
+//     * 3.新建错误数据存放的表，用这个表关联数据获取对应的最新的数据继续推送
+//     */
+//    private static int VALUE =0;
+//    public void parseExcelFile(String path ) throws IOException {
+//        List <File> files = new ArrayList <>();
+//        File file = new File(path);
+//        if(file.exists()){
+//            File[] listFiles = file.listFiles();
+////            log.info(String.valueOf(listFiles.length));
+//            if(null == listFiles | listFiles.length == 0){
+////               log.info("文件夹下没有文件");
+//            }else{
+//                for(File f : listFiles){
+//
+//                    if(f.isDirectory()){
+////                        根据文件夹名称判断类别
+//                        String tableName = f.getName();
+//                        VALUE = map.get(tableName);
+//                        parseExcelFile(f.getPath());
+//                    }
+//                    if(VALUE == 0){
+//                       log.info("文件需要放在相应的表名文件夹下，才可识别");
+//                       return;
+//                    }
+//                     switch (VALUE){
+//                        case 1: ;break;
+//                        case 2: zwKa08(f.getPath());break;
+//                     }
+////                       String fileName = f.getName();
+////                       log.info(f.getPath() + " : f.getPath()");
+////                        if(fileName.endsWith(".xlsx")){
+////                             xlsxFile(f.getPath(),value);
+////                        }
+////                        if(fileName.endsWith(".xls")){
+////                            xlsFile(f.getPath(),value);
+////                        }
+//                }
+//            }
+//        }else{
+//            log.info("不存在该目录");
+//        }
+//    }
+//
+//
+//    public void xlsxFile(String path ,int value) throws IOException {
+//        //用流的方式先读取到你想要的excel的文件
+//        FileInputStream fis=new FileInputStream(new File(path));
+//        //获取整个excel
+//        XSSFWorkbook xb = new XSSFWorkbook(fis);
+//        //获取第一个表单sheet
+//        XSSFSheet sheet = xb.getSheetAt(0);
+//        //获取第一行
+//        int firstrow=    sheet.getFirstRowNum();
+//        log.info(firstrow + " : 第一行");
+//        //获取最后一行
+//        int lastrow=    sheet.getLastRowNum();
+//        log.info(lastrow + " : 最后一行");
+//        //循环行数依次获取列数
+//        for (int i = firstrow; i < lastrow+1; i++) {
+//            //获取哪一行i
+//            XSSFRow row = sheet.getRow(i);
+//            if (row!=null) {
+//                //获取这一行的第一列
+//                int firstcell=    row.getFirstCellNum();
+//                //获取这一行的最后一列
+//                int lastcell=    row.getLastCellNum();
+//                //创建一个集合，用处将每一行的每一列数据都存入集合中
+//                List<String> list=new ArrayList<>();
+//                for (int j = firstcell; j <lastcell; j++) {
+//                    //获取第j列
+//                    XSSFCell cell = row.getCell(j);
+//
+//                    if (cell!=null) {
+//                        log.info(cell+"\t");
+//                        list.add(cell.toString());
+//                    }
+//                }
+//
+//                System.out.println(list.toString());
+//            }
+//        }
+//        fis.close();
+//
+//    }
+//
+//
+//    public void xlsFile(String path ,int value) throws IOException {
+//        //用流的方式先读取到你想要的excel的文件
+//        FileInputStream fis=new FileInputStream(new File(path));
+//        //解析excel
 //        POIFSFileSystem pSystem=new POIFSFileSystem(fis);
-        //获取整个excel
-        XSSFWorkbook xb = new XSSFWorkbook(fis);
+//        //获取整个excel
 //        HSSFWorkbook hb=new HSSFWorkbook(pSystem);
 //        System.out.println(hb.getNumCellStyles());
-        //获取第一个表单sheet
-        XSSFSheet sheet = xb.getSheetAt(0);
+//        //获取第一个表单sheet
 //        HSSFSheet sheet=hb.getSheetAt(0);
-        //获取第一行
-        int firstrow=    sheet.getFirstRowNum();
-        log.info(firstrow + " : 第一行");
-        //获取最后一行
-        int lastrow=    sheet.getLastRowNum();
-        log.info(lastrow + " : 最后一行");
-        //循环行数依次获取列数
-        for (int i = firstrow; i < lastrow+1; i++) {
-            //获取哪一行i
-            XSSFRow row = sheet.getRow(i);
-            if (row!=null) {
-                //获取这一行的第一列
-                int firstcell=    row.getFirstCellNum();
-                //获取这一行的最后一列
-                int lastcell=    row.getLastCellNum();
-                //创建一个集合，用处将每一行的每一列数据都存入集合中
-                List<String> list=new ArrayList<>();
-                for (int j = firstcell; j <lastcell; j++) {
-                    //获取第j列
-                    XSSFCell cell = row.getCell(j);
-
-                    if (cell!=null) {
-                        log.info(cell+"\t");
-                        list.add(cell.toString());
-                    }
-                }
-
-//                User user=new User();
-//                if (list.size()>0) {
-//                    user.setUsername(list.get(1));
-//                    user.setPassword(list.get(2));
+//        //获取第一行
+//        int firstrow=    sheet.getFirstRowNum();
+//        log.info(firstrow + " : 第一行");
+//        //获取最后一行
+//        int lastrow=    sheet.getLastRowNum();
+//        log.info(lastrow + " : 最后一行");
+//        //循环行数依次获取列数
+//        for (int i = firstrow; i < lastrow+1; i++) {
+//            //获取哪一行i
+//            HSSFRow row = sheet.getRow(i);
+//            if (row!=null) {
+//                //获取这一行的第一列
+//                int firstcell=    row.getFirstCellNum();
+//                //获取这一行的最后一列
+//                int lastcell=    row.getLastCellNum();
+//                //创建一个集合，用处将每一行的每一列数据都存入集合中
+//                List<String> list=new ArrayList<>();
+//                for (int j = firstcell; j <lastcell; j++) {
+//                    //获取第j列
+//                    HSSFCell cell = row.getCell(j);
+//
+//                    if (cell!=null) {
+//                        log.info(cell+"\t");
+//                        list.add(cell.toString());
+//                    }
 //                }
-//                BaseDAO dao=new BaseDAO();
-//                dao.save(user);
-                System.out.println(list.toString());
-            }
+//
+//                System.out.println(list.toString());
+//            }
+//        }
+//        fis.close();
+//
+//    }
+//
+//    @Test
+//    public void test33(){
+//        String s = "姓名(必填)";
+//        if(s.contains("必填")){
+//            System.out.println("可判断");
+//        }else{
+//            System.out.println("不可判断");
+//        }
+//    }
+//
+//
+//
+//    public void zwKa08(String path){
+//        File file = new File(path);
+//        Init<ZwKa08Temp> init = new Init<ZwKa08Temp>(file, ZwKa08Temp.class, false);
+//        ActionContext<ZwKa08Temp> act = init.start();
+//        List <SheetInfo <ZwKa08Temp>> sheets = act.getSheets();
+//        log.info(String.valueOf(sheets.size())+":  sheets 长度");//2
+//        for(SheetInfo <ZwKa08Temp> s :sheets){
+//            List <ZwKa08Temp> info = s.getInfo();
+//            log.info(String.valueOf(info.size())+":  info 长度");
+//            for(ZwKa08Temp zw : info){
+//                   log.info(zw.toString());
+//            }
+//        }
+//    }
+//
+//    public void zwKslw(String path){
+//        File file = new File(path);
+//        Init<ZwKslwTemp> init = new Init<ZwKslwTemp>(file, ZwKslwTemp.class, false);
+//        ActionContext<ZwKslwTemp> act = init.start();
+//        List <SheetInfo <ZwKslwTemp>> sheets = act.getSheets();
+//        log.info(String.valueOf(sheets.size())+":  sheets 长度");//2
+//        for(SheetInfo <ZwKslwTemp> s :sheets){
+//            List <ZwKslwTemp> info = s.getInfo();
+//            log.info(String.valueOf(info.size())+":  info 长度");
+//            for(ZwKslwTemp zw : info){
+//                log.info(zw.toString());
+//            }
+//        }
+//    }
+//
+//    @Autowired
+//    private SysLogsService sysLogsService;
+//
+//    @Test
+//    public void test3236(){
+//     List<String> strings  = Arrays.asList("I","love","you");
+//        List <String> list = strings.stream().filter(s -> !s.equalsIgnoreCase("i")).collect(Collectors.toList());
+//        Random random = new Random();
+//        random.nextInt(10);
+//        random.ints().limit(10).map(i -> i*i).sorted().forEach(s->{
+//            log.info(String
+//                    .valueOf(s));
+//        });
+//        strings.parallelStream().forEach(log::info);
+//        log.info(list.toString());
+////        sysLogsService.deleteLogs();
+//    }
+//
+//
+//    @Test
+//    public void test165(){
+//        Lw_familyPayMentDTO dto = new Lw_familyPayMentDTO();
+//        int aka078 = 60;
+//        switch(Integer.valueOf(aka078)){
+//            case 10: dto.setBaz105("10");dto.setBaz106("普通门诊收费"); break;
+//            case 50: dto.setBaz105("12");dto.setBaz106("特殊门诊收费"); break;
+//            case 60: dto.setBaz105("80");dto.setBaz106("健康体检"); break;
+//            default : dto.setBaz105("99");dto.setBaz106("其他"); break;
+//        }
+//        log.info(dto.getBaz105());
+//        log.info(dto.getBaz106());
+//    }
+
+
+    @Test
+    public void yesy1(){
+        try{
+            test7();
+        }catch(Exception e){
+            System.out.println("在这里解决");
+            e.printStackTrace();
         }
-        fis.close();
+    }
+
+
+    public void test7 (){
+
+        test8();
+
+        int i = 1 / 0;
 
     }
 
 
-    public void xlsFile(String path ) throws IOException {
-        //用流的方式先读取到你想要的excel的文件
-        FileInputStream fis=new FileInputStream(new File(path));
-        //解析excel
-        POIFSFileSystem pSystem=new POIFSFileSystem(fis);
-        //获取整个excel
-        HSSFWorkbook hb=new HSSFWorkbook(pSystem);
-        System.out.println(hb.getNumCellStyles());
-        //获取第一个表单sheet
-        HSSFSheet sheet=hb.getSheetAt(0);
-        //获取第一行
-        int firstrow=    sheet.getFirstRowNum();
-        log.info(firstrow + " : 第一行");
-        //获取最后一行
-        int lastrow=    sheet.getLastRowNum();
-        log.info(lastrow + " : 最后一行");
-        //循环行数依次获取列数
-        for (int i = firstrow; i < lastrow+1; i++) {
-            //获取哪一行i
-            HSSFRow row = sheet.getRow(i);
-            if (row!=null) {
-                //获取这一行的第一列
-                int firstcell=    row.getFirstCellNum();
-                //获取这一行的最后一列
-                int lastcell=    row.getLastCellNum();
-                //创建一个集合，用处将每一行的每一列数据都存入集合中
-                List<String> list=new ArrayList<>();
-                for (int j = firstcell; j <lastcell; j++) {
-                    //获取第j列
-                    HSSFCell cell = row.getCell(j);
+    public void test8 (){
 
-                    if (cell!=null) {
-                        log.info(cell+"\t");
-                        list.add(cell.toString());
-                    }
-                }
-
-//                User user=new User();
-//                if (list.size()>0) {
-//                    user.setUsername(list.get(1));
-//                    user.setPassword(list.get(2));
-//                }
-//                BaseDAO dao=new BaseDAO();
-//                dao.save(user);
-                System.out.println(list.toString());
-            }
-        }
-        fis.close();
-
+        List list= new ArrayList();
+        list.get(2);
     }
 }
 

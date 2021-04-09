@@ -33,12 +33,4 @@ public class PmsApplication {
         return new OkHttpClient.Builder().build();
     }
 
-    @Bean
-    public ServletRegistrationBean statViewServlet() {
-        ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet());
-        bean.addUrlMappings("/druid/*");
-        bean.addInitParameter("loginUsername", "admin");
-        bean.addInitParameter("loginPassword", "123");
-        return bean;
-    }
 }

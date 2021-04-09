@@ -10,11 +10,15 @@ import com.mjrj.lzh.pms.entity.SysLogsDO;
 import com.mjrj.lzh.pms.service.BaseService;
 import com.mjrj.lzh.pms.service.SysLogsService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,5 +63,13 @@ public class SysLogsServiceImpl extends BaseServiceImpl<SysLogsDOMapper,SysLogsD
         return ResponseTool.success();
     }
 
+
+    @Override
+    public void deleteLogs(){
+        Date date = DateUtils.addMonths(new Date(), -3);
+        String delBeginTime = DateFormatUtils.format(date, DateFormatUtils.ISO_8601_EXTENDED_DATE_FORMAT.getPattern());
+        int n = mapper.deleteLogs(delBeginTime);
+        log.info("删除{}之前日志{}条",delBeginTime,n);
+    }
 
 }

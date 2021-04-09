@@ -22,4 +22,6 @@ public interface SysLogsService<T> extends BaseService<T>{
    SysLogsPageDTO<SysLogsDO> getLogsByPage(SysLogsPageDTO dto);
 
    ResponseResult deleteByIds(List<Integer> ids);
+
+    void deleteLogs();
 }
